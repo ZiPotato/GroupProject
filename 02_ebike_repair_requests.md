@@ -1,5 +1,7 @@
 # Path A: E-Bike Repair Requests (Beginner Level)
 
+Original material: [02_ebike_repair_requests.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/02_ebike_repair_requests.md)
+
 This is a small console or WinForms application for teams that want a clear and manageable project. It gives you enough work for the course without making the scope too large.
 
 ## Objective
@@ -63,7 +65,7 @@ Testing is mandatory in Path A.
 
 ## Required GitHub Practices
 
-Follow the same process as Path B. See [01_git_github_theory.md](01_git_github_theory.md) for details.
+Follow the same process as Path B. See [01_git_github_theory.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/01_git_github_theory.md) for details.
 
 ### Mandatory Workflow
 

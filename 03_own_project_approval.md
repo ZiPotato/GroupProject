@@ -1,5 +1,7 @@
 # Path B: Your Own Project and Approval Criteria
 
+Original material: [03_own_project_approval.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/03_own_project_approval.md)
+
 If you choose Path B, your team will propose a small software project for instructor approval. This path gives you more freedom, but it also requires realistic planning and a clear scope.
 
 ## Phase 1: Project Proposal
