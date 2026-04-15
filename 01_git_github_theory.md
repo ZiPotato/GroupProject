@@ -70,6 +70,55 @@ Your team will use a GitHub Projects board to organize work. It typically has th
 
 Move your issues through the board as you work. This keeps everyone informed.
 
+## From User Stories to MVP
+
+Before you start coding, build a large backlog first. In the first planning session, your goal is quantity, not perfection.
+
+1. Write as many user stories as possible in 15-20 minutes.
+2. Use the format: `As a [user], I want [goal], so that [benefit]`.
+3. Avoid technical discussion at first. Focus on user needs and outcomes.
+4. Merge duplicates and rewrite unclear stories.
+5. Mark the stories needed for the first usable version as **MVP**.
+6. Leave nice-to-have ideas for later with a stretch label.
+
+Example user stories:
+
+- `As a student, I want to add a task, so that I do not forget my homework.`
+- `As a student, I want to mark a task completed, so that I can track progress.`
+- `As a student, I want to filter tasks by status, so that I can focus on unfinished work.`
+
+### Where to Find Labels in GitHub
+
+- Open your repository on GitHub.
+- Go to **Issues**.
+- Click **Labels** near the top of the Issues page.
+- Create labels such as `mvp`, `stretch`, `bug`, `docs`, and `technical task`.
+- When you open or edit an issue, labels are available in the right sidebar under **Labels**.
+
+Recommended label usage:
+
+- `mvp` = required for the first working version
+- `stretch` = useful, but only after MVP works
+- `bug` = defect to fix
+- `docs` = documentation work
+- `technical task` = internal implementation or refactoring work
+
+## Turning a User Story into Issues
+
+One user story can become one issue or several smaller issues.
+
+- If the story is small and clear, create one issue.
+- If the story needs UI, logic, persistence, or testing work, split it into several issues.
+- Link the smaller issues back to the original user story.
+
+Practical workflow:
+
+1. Create the user story issue first.
+2. Add the `mvp` label if the story belongs to the first usable version.
+3. Create 1-3 implementation issues from that story.
+4. Move the implementation issues to **Backlog**.
+5. Start work only when the issue has clear acceptance criteria.
+
 ## Issues and Tasks
 
 Break down the work into small, testable issues. Each issue should:
@@ -78,18 +127,60 @@ Break down the work into small, testable issues. Each issue should:
 - Be assigned to one person
 - Include an estimate of effort if possible
 
-Example issue:
+Example user story issue:
 ```
-## Create RepairRequest class
+## User Story: View All Order Data in One Place
 
-Create a RepairRequest class to represent a single repair request.
+As a user, I want to see all my order data in one form, so that I do not need to access email to view it all the time.
+
+Why this matters:
+- Users should be able to view their order information directly in the app instead of searching old emails.
 
 Acceptance Criteria:
-- Class has IssueTitle (string), Status (enum), CreatedDate (DateTime)
-- All properties are accessible but immutable except Status
-- Code is documented with XML comments
-- Merged via PR with review approval
+- User can open one view that shows their order data
+- The view shows the key order details clearly
+- Loading state is shown while data is being fetched
+- Empty state is shown if no orders exist
+- Error state is shown if loading fails
+
+Labels:
+- mvp
+
+Possible child issues:
+- Fetch order data
+- Build order overview screen
+- Handle loading, empty, and error states
+- Add tests for order overview
 ```
+
+Example implementation issue:
+```
+## Task: Build Order Overview Screen
+
+Related user story: View All Order Data in One Place
+
+Build the screen or form that lets the user view all order data in one place.
+
+Acceptance Criteria:
+- App has a dedicated order overview screen
+- Screen shows the key order information clearly
+- User can reach the screen from the main navigation
+- Layout is readable on the target device size
+- Merged via PR with review approval
+
+Estimated effort: 2-4 hours
+```
+
+## Where to Find the Templates
+
+This repository includes ready-made GitHub issue templates in:
+
+- `.github/ISSUE_TEMPLATE/user-story.md`
+- `.github/ISSUE_TEMPLATE/task-from-user-story.md`
+
+In GitHub, these appear automatically when you click **New issue**. If you browse the repository files directly, open the same files from the `.github/ISSUE_TEMPLATE` folder.
+
+If you later add a pull request template, GitHub looks for it in `.github/pull_request_template.md`.
 
 ## Handling Merge Conflicts
 

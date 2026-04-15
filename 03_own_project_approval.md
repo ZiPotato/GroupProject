@@ -81,11 +81,33 @@ Once the instructor approves your project, your team can:
    - In Progress
    - Review
    - Done
-3. **Break MVP into issues** and add to Backlog
-   - Each issue describes a concrete, testable task
-   - Example: "Create ConsoleUI class with menu display" (not "build UI")
-4. **Prioritize and plan sprints** (e.g., 1 week sprint)
-5. **Assign roles:** who is Project Lead, who reviews code, who integrates. This can be difficult and teacher helps with the project lead, but it is advisable to rotate roles during the project.
+3. **Write as many user stories as possible** before choosing what to build first
+   - Use the format: `As a [user], I want [goal], so that [benefit]`
+   - Aim for a large list first, then merge duplicates and remove unclear stories
+4. **Mark your MVP stories**
+   - Open **Issues -> Labels** in GitHub and create labels such as `mvp`, `stretch`, `bug`, `docs`, and `technical task`
+   - Add the `mvp` label to the stories required for the first working version of the app
+   - Put everything else under `stretch` or leave it for later discussion
+5. **Turn MVP stories into issues** and add them to Backlog
+   - A small story may become one issue
+   - A larger story often becomes several issues such as UI, logic, persistence, and tests
+   - Each issue must describe a concrete, testable task
+   - Example: "Create ConsoleUI class with menu display" is good, but "build UI" is too vague
+6. **Prioritize and plan sprints** (e.g., 1 week sprint)
+7. **Assign roles:** who is Project Lead, who reviews code, who integrates. This can be difficult and teacher helps with the project lead, but it is advisable to rotate roles during the project.
+
+### Suggested Backlog Workflow
+
+Use this order during the first planning session:
+
+1. Brainstorm user stories for 15-20 minutes.
+2. Label the must-have stories with `mvp`.
+3. Check whether the `mvp` stories alone already give a usable first version.
+4. Split each `mvp` story into concrete issues.
+5. Add acceptance criteria to every issue before anyone starts coding.
+6. Move the selected issues to **Backlog** on the project board.
+
+You can use the issue templates in `.github/ISSUE_TEMPLATE/` when creating the story and task issues.
 
 ---
 
