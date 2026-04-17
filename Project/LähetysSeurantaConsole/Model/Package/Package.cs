@@ -9,12 +9,12 @@ namespace LähetysSeurantaConsole.Model.Package
         public string ID { get; set; }
         public string Company;
         public string Url;
-
-
+        
         /// <summary>
         /// Technically we should make it so we parse out the incorrectly formatted information out before this state
         /// but for the sake of testing and the origin I am doing it this way for the start atleast
         /// </summary>
+   
         public Package(string iD)
         {
             ID = iD.ToUpper();    
@@ -35,10 +35,10 @@ namespace LähetysSeurantaConsole.Model.Package
                 var result = JsonConvert.DeserializeObject<Parcel>(json);
             }
 
-
         }
         /// <summary
         /// This method turns the given tracking identifier into an url
+        /// 
         /// </summary>
         /// <param name="id"> The tracking identifier </param>
         /// <returns> The URL for the intended API </returns>
@@ -59,8 +59,8 @@ namespace LähetysSeurantaConsole.Model.Package
                     throw new ArgumentException("Could not find the firm");
             }
         }
-
-        /// <summary>
+        
+,       /// <summary>
         /// This is just a place holder to ensure that there are no immediate errors in the deserialize line.
         /// We will need to create probably an actual class that will be able to take the information from every company,
         /// but for it we probably will need to create different methods that we we'll be able to first just assign variables before sending them to the class / record which ever way we go.
