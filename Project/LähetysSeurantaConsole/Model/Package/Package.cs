@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Reflection.PortableExecutable;
 
 namespace LähetysSeurantaConsole.Model.Package
 {
@@ -20,7 +19,7 @@ namespace LähetysSeurantaConsole.Model.Package
 
         public async Task UpdateTheParcel()
         {
-            if (string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(ID)) Url = TurningIDToUrl(ID);    // We don't recreate the url again if it is a working url.
+            if (string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(ID)) Url = TurningIDToUrl(ID);
 
             using HttpResponseMessage response = await Client.GetAsync(Url);
 
@@ -28,7 +27,7 @@ namespace LähetysSeurantaConsole.Model.Package
 
             string json = await response.Content.ReadAsStringAsync();
 
-            var result = JsonConvert.DeserializeObject<Parcel>(json);         // In here we need to make the class for the parcel itself
+            var result = JsonConvert.DeserializeObject<Parcel>(json);
 
         }
         /// <summary>
@@ -43,18 +42,21 @@ namespace LähetysSeurantaConsole.Model.Package
 
             switch (idarray.Take(2).ToString())
             {
-                case ("FI"): return $"HTTPS://Posti.Fi/Seuranta/{id}";                                                // Here goes the firm url potentially with the already altered uri elements
-                case ("MA"): return $"HTTPS://Matkahuolto.fi/Seuranta/{id}";
+                case ("FI"): return $"HTTPS://Posti.Fi/Seuranta/{id}";                                                
+                case ("MA"): return $"HTTPS://Matkahuolto.fi/Seuranta/{id}";    // These are not ready urls
 
-                default: throw new ArgumentException("Could not find the firm");                                     // We probably will need to create our own exception class that will inform the user precicely the way we want
+                default: throw new ArgumentException("Could not find the firm");                                     
             }
 
         }
-        public record Parcel()      // A place holder, we should probably create another file where we have the parcel for the company that we need
-        {                           // It is dependant on the actual information given to us by the API
-                                    // https://www.aftership.com/carriers/matkahuolto/api We can actually use the competing sites solutions for this.
+        /// <summary>
+        /// This is just a place holder to ensure that there are no immediate errors in the deserialize line.
+        /// We will need to create probably an actual class that will be able to take the information from every company,
+        /// but for it we probably will need to create different methods that we we'll be able to first just assign variables before sending them to the class / record which ever way we go.
+        /// </summary>
+        public record Parcel()
+        {
 
         }
-
     }
 }
