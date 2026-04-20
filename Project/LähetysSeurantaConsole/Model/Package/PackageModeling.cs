@@ -1,24 +1,20 @@
-﻿using Newtonsoft.Json;
-using System.Net.Sockets;
-using System.Reflection;
-
-namespace LähetysSeurantaConsole.Model.Package
+﻿namespace LähetysSeurantaConsole.Model.Package
 {
-    internal class Package : IPackage
+    internal class PackageModeling : IPackage
     {
         private static readonly HttpClient Client = new();
         public string ID { get; set; }
         public string Company;
         public string Url;
         IPackage _model;
-        Parcel IPackage.Parcel { get ; set ; }
+        Parcel IPackage.LastParcel { get ; set ; }
         List<Parcel> IPackage.Parcels { get => new(); set; }
 
         /// <summary>
         /// Technically we should make it so we parse out the incorrectly formatted information out before this state
         /// but for the sake of testing and the origin I am doing it this way for the start atleast
         /// </summary>
-        public Package(string iD, IPackage model)
+        public PackageModeling(string iD, IPackage model)
         {
             _model = model;
             _model.Parcels = new List<Parcel>();
@@ -37,14 +33,14 @@ namespace LähetysSeurantaConsole.Model.Package
             string json = await response.Content.ReadAsStringAsync();
 
             CompanyDTOs s = new(json, Company);
-            _model.Parcel = s.Completed;
+            _model.LastParcel = s.Completed;
+            _model.Parcels.Add(_model.LastParcel);
         }
-        /// <summary
-        /// This method turns the given tracking identifier into an url
+        /// <summary>
+        /// This is how we handle the ID and turn it into the url we need, it currently is rough and unready, since we do not even handle the APIs.
         /// </summary>
-        /// <param name="id"> The tracking identifier </param>
-        /// <returns> The URL for the intended API </returns>
-        /// <exception cref="ArgumentException"> Later in the development we should likely create our own exception class </exception>
+        /// <returns> Eventually the completed url </returns>
+        /// <exception cref="ArgumentException"></exception>
         private string TurningIDToUrl()
         {
             char[] idarray = ID.ToCharArray();
@@ -53,10 +49,10 @@ namespace LähetysSeurantaConsole.Model.Package
             {
                 case ("FI"):
                     Company = "Posti";
-                    return $"HTTPS://Posti.Fi/Seuranta/{ID}";
+                    return $"HTTPS://Posti.Fi/Seuranta/{ID}";   // These are not the completed urls. 
                 case ("MA"):
                     Company = "Matkahuolto";
-                    return $"HTTPS://Matkahuolto.fi/Seuranta/{ID}";                     // These are not ready urls
+                    return $"HTTPS://Matkahuolto.fi/Seuranta/{ID}";                     
                 default:
                     throw new ArgumentException("Could not find the firm");
             }

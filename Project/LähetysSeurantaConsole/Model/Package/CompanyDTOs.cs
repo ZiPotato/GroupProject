@@ -20,19 +20,24 @@ namespace LähetysSeurantaConsole.Model.Package
             switch (company)
             {
                 case ("Matkahuolto"):
-                    return ToParcel(temp.ToObject<MatkahuoltoDTO>());
+                    return MatkahuoltoToParcel(temp.ToObject<MatkahuoltoDTO>());
                 case ("Posti"):
-                    return ToParcel(temp.ToObject<PostiDTO>()); 
+                    return PostiToParcel(temp.ToObject<PostiDTO>()); 
                 default: 
                     throw new ArgumentException("The desired company was not found");
             }
         }
-        private static Parcel ToParcel(MatkahuoltoDTO dto)
+        /// <summary>
+        /// This is how we turn the MatkahuoltoDTO into a parcel.
+        /// </summary>
+        /// <param name="dto"> This is the DTO generated from the Json data given to us by the API </param>
+        /// <returns> The completed Parcel </returns>
+        private static Parcel MatkahuoltoToParcel(MatkahuoltoDTO dto)
         {
             return new Parcel
             {
                 TrackingId = dto.TrackingCode ?? string.Empty,
-                Company = dto.Carrier ?? "Matkahuolto",
+                Company = "Matkahuolto",
                 CurrentStatus = dto.Status,
                 StatusDescription = dto.StatusDescription,
                 EstimatedDelivery = dto.EstimatedDeliveryTime,
@@ -43,6 +48,30 @@ namespace LähetysSeurantaConsole.Model.Package
                 {
                     Timestamp = e.Timestamp,
                     Status = e.Status,
+                    Description = e.Description,
+                    Location = e.Location
+                }).ToList()
+            };
+        }
+        /// <summary>
+        /// Will not work currently. I am still researching the format in which the Json will come.
+        /// </summary>
+        private static Parcel PostiToParcel(PostiDTO dto)
+        {
+            return new Parcel
+            {
+                TrackingId = dto.TrackingCode ?? string.Empty,
+                Company = "Posti",
+                CurrentStatus = dto.Phase,
+                StatusDescription = dto.PhaseDescription,
+                EstimatedDelivery = dto.EstimatedDeliveryTime,
+                DeliveredAt = dto.DeliveredTime,
+                RecipientName = dto.RecipientName,
+                ServiceName = dto.ServiceName,
+                Events = dto.Events.Select(e => new ParcelEvent
+                {
+                    Timestamp = e.Timestamp,
+                    Status = e.Phase,
                     Description = e.Description,
                     Location = e.Location
                 }).ToList()
@@ -98,9 +127,6 @@ namespace LähetysSeurantaConsole.Model.Package
             [JsonExtensionData]
             public IDictionary<string, JToken> ExtraData { get; init; } = new Dictionary<string, JToken>();
         }
-        /// <summary>
-        /// Will not work currently. I am still researching the format in which the Json will come.
-        /// </summary>
         internal sealed record PostiDTO
         {
             [JsonProperty("trackingCode")]

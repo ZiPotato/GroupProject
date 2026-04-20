@@ -8,6 +8,6 @@ namespace LähetysSeurantaConsole.Model.Package
     {
         Task UpdateTheParcel();
         List<Parcel> Parcels { get ; set; }
-        Parcel Parcel { get; set; }
+        Parcel LastParcel { get; set; }
     }
 }
