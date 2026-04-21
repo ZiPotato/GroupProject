@@ -7,7 +7,12 @@ namespace LähetysSeurantaConsole.Model.Package
     internal class CompanyDTO
     {
         public Parcel Completed { get; }
-
+        /// <summary>
+        /// Currently we just have a singular company, but it will be easy to add more by creating a new DTO the same way.
+        /// Originally I thought about creating all of the DTOs here, but decided against that after finishing the first one.
+        /// </summary>
+        /// <param name="json"> The raw string of Json data gathered from the API </param>
+        /// <param name="company"> Company identifier that was previously extracted </param>
         public CompanyDTO(string json, string company)
         {
             Completed = DTOHandle(json, company);

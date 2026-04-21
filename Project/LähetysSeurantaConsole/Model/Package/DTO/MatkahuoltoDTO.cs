@@ -9,6 +9,12 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
 {
     internal static class MatkahuoltoDTO
     {
+        /// <summary>
+        /// This is basically how we return the Parcel from here.
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns> The completed and modeled parcel </returns>
+        /// <exception cref="JsonSerializationException"></exception>
         public static Parcel ToParcel(string json)
         {
             JObject temp = JObject.Parse(json);
@@ -16,10 +22,13 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
             Response dto = temp.ToObject<Response>()
                 ?? throw new JsonSerializationException("Matkahuolto JSON could not be deserialized.");
 
-            return ToParcel(dto);
+            return DTOtoParcel(dto);
         }
 
-        private static Parcel ToParcel(Response dto)
+        /// <summary>
+        /// Here we use the gathered DTO data to parcel.
+        /// </summary>
+        private static Parcel DTOtoParcel(Response dto)
         {
             if (dto.MHTrackingEvents?.Error is not null)
             {
@@ -63,7 +72,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                     .ToList()
             };
         }
-
         private static string EventToDescription(Event e)
         {
             string description = DecipherEvent(e.EventCode) ?? "Unknown event";
@@ -76,6 +84,12 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
             return description;
         }
 
+        /// <summary>
+        /// Matkahuolto API uses a numberbased system to inform us about the state of the package,
+        /// So here we decipher the information using the documentation that is in the project folder.
+        /// </summary>
+        /// <param name="eventCode"> The number given to us by the API </param>
+        /// <returns> A string that describes the state of the parcel </returns>
         private static string? DecipherEvent(string? eventCode)
         {
             return eventCode switch
