@@ -6,8 +6,8 @@
         // And ofcourse if we do want to look at the "give me your Email" way, I guess it will work.
 
         public int Id { get; private set; }
-        public string Email { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
 
         public Customer(int id, string email="", string phoneNumber="")
         {

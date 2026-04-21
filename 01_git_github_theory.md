@@ -1,5 +1,7 @@
 # Git and GitHub: The Foundation of Teamwork
 
+Original material: [01_git_github_theory.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/01_git_github_theory.md)
+
 Git and GitHub are at the core of this course. This document explains how you'll work together and manage shared code. The same process applies to both Path A (E-Bike Repair Requests) and Path B (your own project).
 
 ## Why GitHub?
