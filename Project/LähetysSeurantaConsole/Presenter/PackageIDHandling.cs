@@ -14,19 +14,6 @@ namespace LähetysSeurantaConsole.Presenter
             
         }
 
-        private static string FirmHandling(string id)
-        {
-            char[] idarray = id.ToCharArray();
-            string firmID = null;
-            if (char.IsLetter(idarray[0]) && char.IsLetter(idarray[1])) firmID = idarray.Take(2).ToString();
-            
-            switch (firmID)
-            {
-                case (null): throw new ArgumentNullException();
-                case ("FI"): return $"";                                                // Here goes the firm url potentially with the already altered uri elements
-                default: throw new ArgumentException("Could not find the firm");
-            }
-                
-        }
+        
     }
 }
