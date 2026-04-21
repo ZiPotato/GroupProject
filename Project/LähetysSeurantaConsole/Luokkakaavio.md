@@ -20,3 +20,13 @@
 	
 	- PackageIDHandling : 
 	    Will handle the package ID and make sure that the format is atleast close to correct and deliver the string set to Upper to the model
+
+## Interfaces
+- ICustomer
+	- Customer information.
+- IPackage
+	- Package ID
+	- Way to call the method to get a parcel.
+- IView
+  	- Way to get the ID from the user
+  	- Way to display the parcel to the user
