@@ -18,7 +18,6 @@ namespace LähetysSeurantaConsole.Model.Package
             return company switch
             {
                 "MA" => MatkahuoltoDTO.ToParcel(json),
-                "FI" => PostiDTO.ToParcel(json),
                 _ => throw new ArgumentException("Couldn't find the firm")
             };
         }

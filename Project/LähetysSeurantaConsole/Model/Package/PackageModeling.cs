@@ -45,9 +45,6 @@
             char[] idarray = ID.ToCharArray();
             switch (idarray.Take(2).ToString())
             {
-                case ("FI"):
-                    Company = "FI";
-                    return $"HTTPS://Posti.Fi/Seuranta/{ID}";
                 case ("MA"):
                     Company = "MA";
                     return $"HTTPS://extservicetest.matkahuolto.fi/mpaketti/public/tracking/?ids=<{ID}>&from={weekago}>&to=<{DateTime.Now}>";  // Currently we are using the API meant for testing (found in their own documentation)
