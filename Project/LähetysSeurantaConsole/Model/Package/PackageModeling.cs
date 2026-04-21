@@ -11,12 +11,12 @@
 
         public PackageModeling()
         {
-            UpdateTheParcel();
+            GetTheParcel();
         }
         /// <summary>
         /// Updating the information of the parcel using the tracking identifyer.
         /// </summary>
-        public async Task UpdateTheParcel()
+        public async Task GetTheParcel()
         {
             if (string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(ID)) Url = TurningIDToUrl();
             using HttpResponseMessage response = await Client.GetAsync(Url);
