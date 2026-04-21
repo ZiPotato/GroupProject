@@ -3,9 +3,23 @@
 	 - Customer :
 		Will handle the customer information
 - Package
-	- Package : 
+	- PackageModeling : 
 		Will handle the "Seurantatunnus" given by the presenter and turn it into an usable object with provided information
+	- CompanyDTO :
+		Currently CompanyDTO will handle the shifting of the json data to the correct DTO which in turn will return a Parcel to the CompanyDTO which is then transfered to IPackage
+	- DTO : 
+		This folder is generally just to model the received Json data into a parcel
+	- Parcel :
+		This is the record we extract from the information given to us by the API.  
 
+
+TLDR : 
+1. We use ID to extract the correct company and the URL
+2. We use the URL to call the API
+3. We send the gotten Json data into CompanyDTO
+4. CompanyDTO sends the Json data to the correct DTO with an expectation of a Parcel
+5. We attach the gotten parcel to a variable
+6. We give the Parcel to the IPackage
 ## View
 - UI : 
    Nothing to worry about yet, all we need to do is actually decide what information and in what form will we gather from the user.
@@ -23,10 +37,17 @@
 
 ## Interfaces
 - ICustomer
-	- Customer information.
+	- Customer information
+		- Name
+		- Email
+		- Phone
 - IPackage
 	- Package ID
-	- Way to call the method to get a parcel.
+	- Way to call the method to get a parcel
 - IView
   	- Way to get the ID from the user
   	- Way to display the parcel to the user
+	- Way to get the User information
+		- Name
+		- Email
+		- Phone

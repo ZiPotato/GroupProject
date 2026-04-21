@@ -92,6 +92,7 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
         /// <returns> A string that describes the state of the parcel </returns>
         private static string? DecipherEvent(string? eventCode)
         {
+
             return eventCode switch
             {
                 "02" => "Electronic advance information received",
