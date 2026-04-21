@@ -3,6 +3,7 @@ namespace LähetysSeurantaConsole.Model.Package
 {
     /// <summary>
     /// This is what we use to actually mold all of the companyDTO:s into same shape so it will be easier to use later.
+    /// It is a basic record that we just use to get the desired variables later when we are for example presenting data to the user.
     /// </summary>
     public sealed record Parcel
     {

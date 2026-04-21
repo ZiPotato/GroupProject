@@ -18,10 +18,8 @@
         {
             _model = model;
             _model.Parcels = new List<Parcel>();
-            ID = iD.ToUpper();    
             UpdateTheParcel();
         }
-
         /// <summary>
         /// Updating the information of the parcel using the tracking identifyer.
         /// </summary>
@@ -32,8 +30,8 @@
             response.EnsureSuccessStatusCode();
             string json = await response.Content.ReadAsStringAsync();
 
-            CompanyDTOs s = new(json, Company);
-            _model.LastParcel = s.Completed;
+            CompanyDTO dto = new(json, Company);
+            _model.LastParcel = dto.Completed;
             _model.Parcels.Add(_model.LastParcel);
         }
         /// <summary>
@@ -43,16 +41,16 @@
         /// <exception cref="ArgumentException"></exception>
         private string TurningIDToUrl()
         {
+            DateTime weekago = DateTime.Now.AddDays(-7);
             char[] idarray = ID.ToCharArray();
-
             switch (idarray.Take(2).ToString())
             {
                 case ("FI"):
-                    Company = "Posti";
-                    return $"HTTPS://Posti.Fi/Seuranta/{ID}";   // These are not the completed urls. 
+                    Company = "FI";
+                    return $"HTTPS://Posti.Fi/Seuranta/{ID}";
                 case ("MA"):
-                    Company = "Matkahuolto";
-                    return $"HTTPS://Matkahuolto.fi/Seuranta/{ID}";                     
+                    Company = "MA";
+                    return $"HTTPS://extservicetest.matkahuolto.fi/mpaketti/public/tracking/?ids=<{ID}>&from={weekago}>&to=<{DateTime.Now}>";  // Currently we are using the API meant for testing (found in their own documentation)
                 default:
                     throw new ArgumentException("Could not find the firm");
             }
