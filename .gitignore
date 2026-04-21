@@ -351,3 +351,5 @@ MigrationBackup/
 
 *.pdf
 Bank/.vs
+/Project/LähetysSeurantaConsole/.vs/LähetysSeurantaConsole/CopilotIndices/18.4.114.215/CodeChunks.db
+/Project/LähetysSeurantaConsole/.vs/LähetysSeurantaConsole/CopilotIndices/18.4.114.215/SemanticSymbols.db
