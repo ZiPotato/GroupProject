@@ -6,6 +6,7 @@ The function of this method is to turn the json into the selected DTO.
 To do this we need to create a `internal sealed record Response` which will be used to extract the information given to us by the Json in the format it was intended. This will be done through:  
 `[JsonProperty("The name of the variable being extracted currently")]`
 3. When these variablehave been extracted, we modify them to make sure that they fit the *Parcel* in the intended way. I personally just created `DTOtoParcel()` method in which I set the Parcel information.
+4. Finally go to the CompanyDTO and add the added company to the DTOHandle switch.
 
 ## Things you should do before adding a DTO
 
