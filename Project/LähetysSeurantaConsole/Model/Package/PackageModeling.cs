@@ -7,17 +7,10 @@
         public string Company;
         public string Url;
         IPackage _model;
-        Parcel IPackage.LastParcel { get ; set ; }
-        List<Parcel> IPackage.Parcels { get => new(); set; }
+        Parcel IPackage.CompletedParcel { get ; set ; }
 
-        /// <summary>
-        /// Technically we should make it so we parse out the incorrectly formatted information out before this state
-        /// but for the sake of testing and the origin I am doing it this way for the start atleast
-        /// </summary>
-        public PackageModeling(string iD, IPackage model)
+        public PackageModeling()
         {
-            _model = model;
-            _model.Parcels = new List<Parcel>();
             UpdateTheParcel();
         }
         /// <summary>
@@ -31,8 +24,7 @@
             string json = await response.Content.ReadAsStringAsync();
 
             CompanyDTO dto = new(json, Company);
-            _model.LastParcel = dto.Completed;
-            _model.Parcels.Add(_model.LastParcel);
+            _model.CompletedParcel = dto.Completed;
         }
         /// <summary>
         /// This is how we handle the ID and turn it into the url we need, it currently is rough and unready, since we do not even handle the APIs.

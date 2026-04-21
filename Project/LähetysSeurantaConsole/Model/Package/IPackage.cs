@@ -7,7 +7,6 @@
     internal interface IPackage
     {
         Task UpdateTheParcel();
-        List<Parcel> Parcels { get ; set; }
-        Parcel LastParcel { get; set; }
+        Parcel CompletedParcel { get; set; }
     }
 }
