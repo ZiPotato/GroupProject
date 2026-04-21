@@ -6,5 +6,7 @@ namespace LähetysSeurantaConsole.View
 {
     internal interface IView
     {
+        public string TrackingId { get; set; }
+        public string Display { get; set; }
     }
 }
