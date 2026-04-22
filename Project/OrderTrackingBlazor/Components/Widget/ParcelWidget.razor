@@ -1,0 +1,30 @@
+﻿@using LähetysSeurantaConsole.Model.Package;
+<style>
+    .body{
+        background-color : lightgray;
+    }
+</style>
+
+<body class="body">
+<h3>@ParcelID The carrier of this package is: @ParcelCarrier</h3>
+
+<p2>@ParcelState</p2>
+
+</body>
+
+@code {
+    string ParcelID;
+    string ParcelState;
+    string ParcelCarrier;
+
+    /// <summary>
+    /// Here we are assuming a check already happened that the package is not yet delivered.
+    /// </summary>
+    /// <param name="p"></param>
+    public ParcelWidget(Parcel p)
+    {
+        ParcelID = p.TrackingId ?? "Couldn't find the tracking ID";
+        ParcelCarrier = p.Company ?? "Couldn't find the company";
+        ParcelState = p.StatusDescription ?? "Couldn't find the status description";
+    }
+}
