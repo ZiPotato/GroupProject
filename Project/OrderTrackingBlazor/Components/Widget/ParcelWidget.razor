@@ -2,13 +2,14 @@
 <style>
     .body{
         background-color : lightgray;
+        padding-bottom : 10px
     }
 </style>
 
-<body class="body">
+<div class="body">
     <h3>@ParcelID The carrier of this package is: @ParcelCarrier</h3>
-    <p2>@ParcelState</p2>
-    <p2> @ParcelETA.ToString()</p2>
+        <p2>@ParcelState</p2>
+        <p2>@ParcelETA.ToString()</p2>
     @if(ParcelETA != null)
     {
         <p2>Estimated time of arrival: @ParcelETA</p2>
@@ -18,7 +19,7 @@
         <p>We couldn't fetch the ETA for this package.</p>
     }
 
-</body>
+</div>
 
 @code {
     string ParcelID;
@@ -28,9 +29,13 @@
 
     /// <summary>
     /// Here we are assuming a check already happened that the package is not yet delivered.
+    /// 
+    /// Currently we are extracting the bare minimum of the potential information into the widget.
+    /// If we do not need other information we will be likely deleting it from the Parcel record,
+    /// but we probably still do want to use hopefully the events at the very least.
     /// </summary>
 
-    public ParcelWidget(Parcel p)
+    public ParcelWidget(Parcel p) 
     {
         ParcelID = p.TrackingId ?? "Couldn't find the tracking ID";
         ParcelCarrier = p.Company ?? "Couldn't find the company";
