@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LähetysSeurantaConsole.Model.Package;
+
 
 namespace LähetysSeurantaConsole.View
 {
@@ -14,6 +13,7 @@ namespace LähetysSeurantaConsole.View
         public string PhoneNumber { get; set; }
         public string Name { get; set; }
 
+        public List<Parcel> ParcelList { get; set; }
 
         public bool AddPackage();
         public bool DisplayLatestPackage();
