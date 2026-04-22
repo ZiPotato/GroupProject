@@ -17,5 +17,6 @@ namespace LähetysSeurantaConsole.View
 
         public bool AddPackage();
         public bool DisplayLatestPackage();
+        public bool UserLogin();
     }
 }

@@ -7,6 +7,7 @@
     internal interface IPackage
     {
         Task GetTheParcel();
+        Parcel UpdateParcel();
         Parcel CompletedParcel { get; set; }
     }
 }
