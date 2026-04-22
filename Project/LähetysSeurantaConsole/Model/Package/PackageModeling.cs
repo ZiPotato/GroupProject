@@ -1,4 +1,6 @@
-﻿namespace LähetysSeurantaConsole.Model.Package
+﻿using System.Security.Principal;
+
+namespace LähetysSeurantaConsole.Model.Package
 {
     internal class PackageModeling : IPackage
     {
@@ -9,13 +11,21 @@
         IPackage _model;
         Parcel IPackage.CompletedParcel { get ; set ; }
 
-        public PackageModeling()
+        public Parcel UpdateParcel(Parcel par)
         {
+            ID = par.TrackingId;
+            Url = par.URL;
             GetTheParcel();
+            return _model.CompletedParcel;
         }
-        /// <summary>
-        /// Updating the information of the parcel using the tracking identifyer.
-        /// </summary>
+
+        public Parcel GetTheParcel(string id)
+        {
+            ID = id;
+            GetTheParcel();
+            return _model.CompletedParcel;
+        }
+
         public async Task GetTheParcel()
         {
             if (string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(ID)) Url = TurningIDToUrl();
@@ -25,7 +35,10 @@
 
             CompanyDTO dto = new(json, Company);
             _model.CompletedParcel = dto.Completed;
+            _model.CompletedParcel.URL = Url;
+            Url = string.Empty;
         }
+
         /// <summary>
         /// This is how we handle the ID and turn it into the url we need, it currently is rough and unready, since we do not even handle the APIs.
         /// </summary>

@@ -9,7 +9,7 @@ namespace LähetysSeurantaConsole.Model.Package
     {
         public required string TrackingId { get; init; }
         public required string Company { get; init; }
-
+        public string URL { get; set; }
         public string? CurrentStatus { get; init; }
         public string? StatusDescription { get; init; }
 
