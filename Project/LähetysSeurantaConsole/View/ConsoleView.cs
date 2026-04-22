@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LähetysSeurantaConsole.Model.Package;
+
 
 namespace LähetysSeurantaConsole.View
 {
@@ -14,20 +13,44 @@ namespace LähetysSeurantaConsole.View
         public string PhoneNumber { get; set; }
         public string Name { get; set; }
 
+        public List<Parcel> ParcelList { get; set; }
+
 
         public bool AddPackage()
         {
+            TrackingId = ReadInput("Tracking ID: ");
             return true;
         }
 
         public bool DisplayLatestPackage()
         {
+            // temp
+            Parcel latestParcel = ParcelList.FirstOrDefault();
+            ArgumentNullException.ThrowIfNull(latestParcel);
+            Console.WriteLine(latestParcel);
             return true;
         }
 
         public bool UserLogin()
         {
-            return true;
+            string input = ReadInput("Login: ");
+            if (input.ToLower() == Email.ToLower())
+                return true;
+
+            Console.WriteLine("Error: invalid email");
+            return false;
+        }
+
+        private void PrintMenu()
+        {
+            Console.WriteLine("[1] Add Tracking ID\n" +
+                              "[0] Exit\n");
+        }
+
+        private string ReadInput(string message)
+        {
+            Console.Write(message);
+            return Console.ReadLine();
         }
     }
 }
