@@ -13,33 +13,19 @@ namespace LähetysSeurantaConsole.View
         public string PhoneNumber { get; set; }
         public string Name { get; set; }
 
-        public List<Parcel> ParcelList { get; set; }
+        public event EventHandler AddPackage;
+        public event EventHandler DisplayLatestPackage;
+        public event EventHandler UserLogin;
 
-
-        public bool AddPackage()
+        public void Menu()
         {
-            TrackingId = ReadInput("Tracking ID: ");
-            return true;
-        }
+            PrintMenu();
 
-        public bool DisplayLatestPackage()
-        {
-            // temp
-            Parcel latestParcel = ParcelList.FirstOrDefault();
-            ArgumentNullException.ThrowIfNull(latestParcel);
-            Console.WriteLine(latestParcel);
-            return true;
-        }
+            string input;
+            do { input = ReadInput(); } while (!int.TryParse(input, out int _));
 
-        public bool UserLogin()
-        {
-            string input = ReadInput("Login: ");
-            if (input.ToLower() == Email.ToLower())
-                return true;
-
-            // temp
-            Console.WriteLine("Error: invalid email");
-            return false;
+            if (input == "1")
+                AddPackage?.Invoke(this, EventArgs.Empty);
         }
 
         private void PrintMenu()
@@ -48,9 +34,9 @@ namespace LähetysSeurantaConsole.View
                               "[0] Exit\n");
         }
 
-        private string ReadInput(string message)
+        private string ReadInput()
         {
-            Console.Write(message);
+            Console.Write("> ");
             return Console.ReadLine();
         }
     }
