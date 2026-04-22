@@ -37,6 +37,7 @@ namespace LähetysSeurantaConsole.View
             if (input.ToLower() == Email.ToLower())
                 return true;
 
+            // temp
             Console.WriteLine("Error: invalid email");
             return false;
         }
