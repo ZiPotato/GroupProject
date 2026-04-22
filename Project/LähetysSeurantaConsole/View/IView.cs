@@ -13,5 +13,10 @@ namespace LähetysSeurantaConsole.View
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Name { get; set; }
+
+
+        public bool AddPackage();
+        public bool DisplayLatestPackage();
+        public bool UserLogin();
     }
 }
