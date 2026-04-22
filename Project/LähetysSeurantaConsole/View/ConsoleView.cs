@@ -12,6 +12,8 @@ namespace LähetysSeurantaConsole.View
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Name { get; set; }
+        public string Password { get; set; }
+
 
         public event EventHandler AddPackage;
         public event EventHandler DisplayLatestPackage;
@@ -22,10 +24,13 @@ namespace LähetysSeurantaConsole.View
             PrintMenu();
 
             string input;
-            do { input = ReadInput(); } while (!int.TryParse(input, out int _));
+            do { input = ReadInput("> "); } while (!int.TryParse(input, out int _));
 
             if (input == "1")
+            {
+                Id = ReadInput("ID: ");
                 AddPackage?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void PrintMenu()
@@ -34,9 +39,9 @@ namespace LähetysSeurantaConsole.View
                               "[0] Exit\n");
         }
 
-        private string ReadInput()
+        private string ReadInput(string message)
         {
-            Console.Write("> ");
+            Console.Write(message);
             return Console.ReadLine();
         }
     }

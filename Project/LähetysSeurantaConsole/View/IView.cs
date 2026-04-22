@@ -14,8 +14,6 @@ namespace LähetysSeurantaConsole.View
         public string Name { get; set; }
         public string Password { get; set; }
 
-        public List<Parcel> ParcelList { get; set; }
-
         event EventHandler AddPackage;
         event EventHandler DisplayLatestPackage;
         event EventHandler UserLogin;
