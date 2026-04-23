@@ -12,7 +12,7 @@ namespace LähetysSeurantaConsole.Model.Customer
         public string PhoneNumber { get; set; }
         public string Name { get; set; }
         public List<Parcel> ParcelList { get; set; }
-
+        public string Password { get; set; }
         public Customer(string id, string email="", string phoneNumber="", string name="")
         {
             Id = id;

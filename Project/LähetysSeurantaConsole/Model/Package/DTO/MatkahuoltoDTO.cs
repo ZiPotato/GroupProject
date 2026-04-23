@@ -17,10 +17,22 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
         /// <exception cref="JsonSerializationException"></exception>
         public static Parcel ToParcel(string json)
         {
-            JObject temp = JObject.Parse(json);
+            JObject root = JObject.Parse(json);
 
-            Response dto = temp.ToObject<Response>()
-                ?? throw new JsonSerializationException("Matkahuolto JSON could not be deserialized.");
+            JToken trackingEventsToken = root["MHTrackingEvents"] ?? root;
+
+            JToken? eventToken = trackingEventsToken["Event"];
+            if (eventToken is JObject singleEvent)
+            {
+                trackingEventsToken["Event"] = new JArray(singleEvent);
+            }
+
+            TrackingEvents trackingEvents = trackingEventsToken.ToObject<TrackingEvents>() ?? throw new JsonSerializationException("Matkahuolto JSON could not be deserialized.");
+
+            Response dto = new()
+            {
+                MHTrackingEvents = trackingEvents
+            };
 
             return DTOtoParcel(dto);
         }
@@ -72,6 +84,7 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                     .ToList()
             };
         }
+
         private static string EventToDescription(Event e)
         {
             string description = DecipherEvent(e.EventCode) ?? "Unknown event";
@@ -92,7 +105,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
         /// <returns> A string that describes the state of the parcel </returns>
         private static string? DecipherEvent(string? eventCode)
         {
-
             return eventCode switch
             {
                 "02" => "Electronic advance information received",

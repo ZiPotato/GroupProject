@@ -2,5 +2,6 @@
   <Folder Name="/Solution Items/">
     <File Path="../../.gitignore" />
   </Folder>
+  <Project Path="../Project_Tests/Project_Tests.csproj" Id="2c787f36-df52-4a04-821f-1e5ff4f75266" />
   <Project Path="LähetysSeurantaConsole.csproj" />
 </Solution>
