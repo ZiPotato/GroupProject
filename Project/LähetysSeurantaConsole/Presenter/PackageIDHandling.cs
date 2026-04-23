@@ -19,9 +19,6 @@ namespace LähetysSeurantaConsole.Presenter
             _view.AddPackage += AddPackage;
             _view.DisplayLatestPackage += DisplayTheLatestPackage;
         }
-
-
-
         private void AddPackage(object sender, EventArgs e)
         {
             string iD = _view.Id;
