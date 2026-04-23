@@ -31,11 +31,16 @@ namespace LähetysSeurantaConsole.View
                 Id = ReadInput("ID: ");
                 AddPackage?.Invoke(this, EventArgs.Empty);
             }
+            if (input == "2") 
+            {
+                DisplayLatestPackage?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void PrintMenu()
         {
-            Console.WriteLine("[1] Add Tracking ID\n" +
+            Console.WriteLine("[2] Display the latest package\n" +
+                              "[1] Add Tracking ID\n" +
                               "[0] Exit\n");
         }
 

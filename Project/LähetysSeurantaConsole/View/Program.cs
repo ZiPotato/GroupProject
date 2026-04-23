@@ -1,11 +1,14 @@
-﻿namespace LähetysSeurantaConsole.View
+﻿using LähetysSeurantaConsole.Presenter;
+
+namespace LähetysSeurantaConsole.View
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-            Console.ReadKey();
+            ConsoleView view = new ConsoleView();
+            new PackageIDHandling(view);
+            view.Menu();
         }
     }
 }
