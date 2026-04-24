@@ -18,7 +18,9 @@ namespace LähetysSeurantaConsole.View
         public event EventHandler AddPackage;
         public event EventHandler DisplayLatestPackage;
         public event EventHandler UserLogin;
-
+        /// <summary>
+        /// One of the currently known bugs is that the menu does not wait for the API response to be printed before printing the menu again
+        /// </summary>
         public void Menu()
         {
             PrintMenu();

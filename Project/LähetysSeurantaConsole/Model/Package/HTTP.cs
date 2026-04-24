@@ -23,13 +23,13 @@ namespace LähetysSeurantaConsole.Model.Package
 
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
-
             HttpClient Client = new();
 
             using HttpResponseMessage response = await Client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             string json = await response.Content.ReadAsStringAsync();
+
             return json;
         }
         private string CreateAuth()
@@ -55,9 +55,8 @@ namespace LähetysSeurantaConsole.Model.Package
         /// </summary>
         private static string MHAuthentication()
         {
-            string? username = "UlkAPIAvoin";              
-            string? password = "BUs28DefuNab?8aj3p3eqega";      
-
+            string? username = "";                // UlkAPIAvoin
+            string? password = "";                // BUs28DefuNab?8aj3p3eqega
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
         }
 
@@ -66,15 +65,11 @@ namespace LähetysSeurantaConsole.Model.Package
             DateTime now = DateTime.Now;
             DateTime anHourAgo = now.AddHours(-1);
 
-            if (ID.Length < 2)
-            {
-                throw new ArgumentException("Tracking ID must contain at least two characters.");
-            }
-
             string id = ID[..2];
-                    string from = Uri.EscapeDataString(anHourAgo.ToString("yyyy-MM-ddTHH:mm:ss"));
-                    string to = Uri.EscapeDataString(now.ToString("yyyy-MM-ddTHH:mm:ss"));
-                    string trackingId = Uri.EscapeDataString(ID);
+            string from = Uri.EscapeDataString(anHourAgo.ToString("yyyy-MM-ddTHH:mm:ss"));
+            string to = Uri.EscapeDataString(now.ToString("yyyy-MM-ddTHH:mm:ss"));
+            string trackingId = Uri.EscapeDataString(ID);
+
             switch (id)
             {
                 case "MH":
@@ -88,9 +83,10 @@ namespace LähetysSeurantaConsole.Model.Package
                     {
                         case "SE":
                             Company = "SE";
-                            return $"https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json?apikey={" This portion is ridiculous way to hide your APIkey "}&id={trackingId}&locale=fi";
+                            return $"https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json?apikey={" This portion is ridiculous way to hide your APIkey "}&id={trackingId}&locale=fi"; // We will not be using this at the end portion of this
+                        
+                        default: throw new ArgumentException("Could not find the firm");
                     }
-                    throw new ArgumentException("Could not find the firm");
             }
         }
 

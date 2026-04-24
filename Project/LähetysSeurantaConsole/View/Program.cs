@@ -4,6 +4,9 @@ namespace LähetysSeurantaConsole.View
 {
     internal class Program
     {
+        /// <summary>
+        /// Extremely simple "now we just run the code" code
+        /// </summary>
         static void Main(string[] args)
         {
             ConsoleView view = new ConsoleView();

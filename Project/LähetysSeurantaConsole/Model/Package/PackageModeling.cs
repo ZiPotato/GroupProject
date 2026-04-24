@@ -12,15 +12,21 @@ namespace LähetysSeurantaConsole.Model.Package
         public string Url = string.Empty;
         public Parcel? CompletedParcel { get; set; }
 
+        /// <summary>
+        /// This is used to update the parcel information
+        /// </summary>
         public async Task<Parcel> UpdateParcelAsync(Parcel par)
         {
             ID = par.TrackingId;
             Url = par.URL;
-            string json = await _http.FindAndUseTheAPI(Url, ID);
+            string json = await _http.FindAndUseTheAPI(Url, ID);        // All of this can currently be simulated by
             JsonToParcel(json);
             return CompletedParcel ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
 
+        /// <summary>
+        /// This is used to generate a new parcel
+        /// </summary>
         public async Task<Parcel> GetTheParcelAsync(string id)
         {
             ID = id;
@@ -29,7 +35,9 @@ namespace LähetysSeurantaConsole.Model.Package
             JsonToParcel(json);
             return CompletedParcel ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
-
+        /// <summary>
+        /// Here we turn the json file from the API / whatever first into a dto and then to a parcel.
+        /// </summary>
         public void JsonToParcel(string json)
         {
             CompanyDTO dto = new(json, ID[..2]);

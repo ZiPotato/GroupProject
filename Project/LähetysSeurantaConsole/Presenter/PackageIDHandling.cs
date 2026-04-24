@@ -8,7 +8,7 @@ namespace LähetysSeurantaConsole.Presenter
     {
         IView _view;
         IPackage _package;
-        ICustomer _customer;
+        ICustomer _customer;        // All of customer is currently useless in our code
 
         public PackageIDHandling(IView view)
         {
@@ -27,19 +27,17 @@ namespace LähetysSeurantaConsole.Presenter
                 char[] iDarray = iD.ToCharArray();
 
                 if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
-                if (!char.IsLetter(iDarray[0]) || !char.IsLetter(iDarray[1])) throw new ArgumentException("First two characters of a trackingnumber should be letters");
+
+                if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) || 
+                    !char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2])) 
+                {
+                    throw new ArgumentException("Invalid tracking number");
+                }
 
                 Parcel p = await _package.GetTheParcelAsync(iD);
 
-                if (p != null)
-                {
-                    _customer.ParcelList.Add(p);
-                    Console.WriteLine($"Success\nParcel: {p}\nWas added.");
-                }
-                else
-                {
-                    Console.WriteLine("Something went wrong creating the parcel");
-                }
+                _customer.ParcelList.Add(p);
+                Console.WriteLine($"Success\nParcel: {p}\nWas added.");
             }
             catch (Exception ex)
             {
@@ -49,12 +47,14 @@ namespace LähetysSeurantaConsole.Presenter
 
         private void DisplayTheLatestPackage(object sender, EventArgs e)
         {
-            if (_customer.ParcelList == null || _customer.ParcelList.Last() == null)
+            try
             {
-                throw new ArgumentNullException("The last package doesn't seem to exist.");
+                Console.WriteLine(_customer.ParcelList.Last().ToString());
             }
-
-            Console.WriteLine(_customer.ParcelList.Last().ToString());
+            catch (Exception ex)
+            {
+                throw new ArgumentNullException($"Fetching Parcel failed: {ex.Message}");
+            }
         }
     }
 }
