@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path="../../.gitignore" />
-    <File Path="Matkahuolto.md" />
   </Folder>
   <Project Path="../Project_Tests/Project_Tests.csproj" Id="2c787f36-df52-4a04-821f-1e5ff4f75266">
     <Build Solution="Debug|*" Project="false" />
