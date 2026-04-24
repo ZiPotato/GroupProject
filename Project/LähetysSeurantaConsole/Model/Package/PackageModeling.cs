@@ -1,69 +1,50 @@
-﻿using System.Security.Principal;
+﻿using System.Net.Http.Headers;
+using System.Text;
 
 namespace LähetysSeurantaConsole.Model.Package
 {
     public class PackageModeling : IPackage
     {
-        private static readonly HttpClient Client = new();
-        public string ID { get; set; }
-        public string Company;
-        public string Url;
-        IPackage _model;
-        Parcel IPackage.CompletedParcel { get ; set ; }
 
-        public Parcel UpdateParcel(Parcel par)
+        private readonly HTTP _http = new();
+        public string ID { get; set; } = string.Empty;
+        public string Company = string.Empty;
+        public string Url = string.Empty;
+        public Parcel? CompletedParcel { get; set; }
+
+        /// <summary>
+        /// This is used to update the parcel information
+        /// </summary>
+        public async Task<Parcel> UpdateParcelAsync(Parcel par)
         {
             ID = par.TrackingId;
             Url = par.URL;
-            FindAndUseTheAPI();
-            return _model.CompletedParcel;
+            string json = await _http.FindAndUseTheAPI(Url, ID);        // All of this can currently be simulated by
+            JsonToParcel(json);
+            return CompletedParcel ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
 
-        public Parcel GetTheParcel(string id)
+        /// <summary>
+        /// This is used to generate a new parcel
+        /// </summary>
+        public async Task<Parcel> GetTheParcelAsync(string id)
         {
             ID = id;
-            FindAndUseTheAPI();
-            return _model.CompletedParcel;
-        }
-
-        public async Task FindAndUseTheAPI()
-        {
-            if (string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(ID)) Url = TurningIDToUrl();
-            using HttpResponseMessage response = await Client.GetAsync(Url);
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
-
-            JsonToParcel(json);
+            Url = string.Empty;
+            string json = await _http.FindAndUseTheAPI(Url, ID);
+            JsonToParcel(json);         // I've thought about just turning this into the parcel that is returned after the current changes. It wouldn't be that hard to make work, but I have been reluctant.
+            return CompletedParcel ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
         /// <summary>
-        /// Decided to extract this to be its own method for the sake of testing
-        /// and I guess it does make it easier to read especiallý if I stop making these comments.
+        /// Here we turn the json file from the API / whatever first into a dto and then to a parcel.
         /// </summary>
-
         public void JsonToParcel(string json)
         {
-            CompanyDTO dto = new(json, Company);
-            _model.CompletedParcel = dto.Completed;
-            _model.CompletedParcel.URL = Url;
+            CompanyDTO dto = new(json, ID[..2]);
+            CompletedParcel = dto.Completed with { URL = Url };
             Url = string.Empty;
         }
 
-        /// <summary>
-        /// This is how we handle the ID and turn it into the url we need, it currently is rough and unready, since we do not even handle the APIs.
-        /// </summary>
-        /// <returns> Eventually the completed url </returns>
-        private string TurningIDToUrl()
-        {
-            DateTime anHourAgo = DateTime.Now.AddHours(-1);
-            char[] idarray = ID.ToCharArray();
-            switch (idarray.Take(2).ToString())
-            {
-                case ("MH"):
-                    Company = "MH";
-                    return $"HTTPS://extservicetest.matkahuolto.fi/mpaketti/public/tracking/?ids=<{ID}>&from={anHourAgo}>&to=<{DateTime.Now}>";  // Currently we are using the API meant for testing (found in their own documentation)
-                default:
-                    throw new ArgumentException("Could not find the firm");
-            }
-        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Dynamic;
+using System.Threading.Tasks;
 
 namespace LähetysSeurantaConsole.Model.Package
 {
@@ -8,8 +9,8 @@ namespace LähetysSeurantaConsole.Model.Package
     /// </summary>
     public interface IPackage
     {
-        Parcel GetTheParcel(string id); 
-        Parcel UpdateParcel(Parcel par);
-        Parcel CompletedParcel { get; set; }
+        Task<Parcel> GetTheParcelAsync(string id);
+        Task<Parcel> UpdateParcelAsync(Parcel par);
+        Parcel? CompletedParcel { get; set; }
     }
 }

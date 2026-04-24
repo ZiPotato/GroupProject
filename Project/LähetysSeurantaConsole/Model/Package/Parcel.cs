@@ -22,7 +22,7 @@ namespace LähetysSeurantaConsole.Model.Package
         public IReadOnlyList<ParcelEvent> Events { get; init; } = [];
 
         public bool IsDelivered => DeliveredAt is not null;
-        public override string ToString() { return $"{TrackingId},\n{CurrentStatus}, \n{StatusDescription}, \nETA: {EstimatedDelivery.ToString()}"; }
+        public override string ToString() { return $"{TrackingId},\n{CurrentStatus}, \n{StatusDescription}"; }
     }
 
     public sealed record ParcelEvent
