@@ -32,7 +32,7 @@ namespace LähetysSeurantaConsole.Model.Package
             ID = id;
             Url = string.Empty;
             string json = await _http.FindAndUseTheAPI(Url, ID);
-            JsonToParcel(json);
+            JsonToParcel(json);         // I've thought about just turning this into the parcel that is returned after the current changes. It wouldn't be that hard to make work, but I have been reluctant.
             return CompletedParcel ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
         /// <summary>

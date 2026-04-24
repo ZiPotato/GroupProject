@@ -46,12 +46,10 @@ namespace LähetysSeurantaConsole.Model.Package
                     }
             }
         }
-
         /// <summary>
-        /// Here we generate the Matkahuolto credentials so we can use their API, but currently doesn't seem to be working. 
-        /// We might need to actually contact them by email and ask if they're willing to provide us with basic credentials.
-        /// 
-        /// V-P T: Díbs not it.
+        /// Generates a Base64-encoded HTTP Basic Authentication header value using a predefined username and password.
+        /// We need to create a local file that is referenced rather than the code, but since we don't have any keys this is low priority.
+        /// The keys in the comments are just there so I remember that they don't work for our purposes.
         /// </summary>
         private static string MHAuthentication()
         {
@@ -60,6 +58,9 @@ namespace LähetysSeurantaConsole.Model.Package
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
         }
 
+        /// <summary>
+        /// Generates a tracking URL for a shipment based on the provided tracking ID.
+        /// </summary>                                     
         private string TurningIDToUrl(string ID)
         {
             DateTime now = DateTime.Now;
@@ -75,16 +76,15 @@ namespace LähetysSeurantaConsole.Model.Package
                 case "MH":
                     Company = "MH";
                     return $"https://extservicestest.matkahuolto.fi/mpaketti/public/tracking?ids={trackingId}&from={from}&to={to}"; // Likely real.
-                case "FI":
-                    Company = "FI";
-                    return $"https://api.posti.fi/tracking/7/shipments/trackingnumber/{trackingId}"; // Potentially not real.
+//                case "FI":
+//                    Company = "FI";
+//                    return $"https://api.posti.fi/tracking/7/shipments/trackingnumber/{trackingId}"; Potentially not real.
                 default:
                     switch (ID[(ID.Length - 3)..])
                     {
-                        case "SE":
-                            Company = "SE";
-                            return $"https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json?apikey={" This portion is ridiculous way to hide your APIkey "}&id={trackingId}&locale=fi"; // We will not be using this at the end portion of this
-                        
+//                        case "SE":
+//                            Company = "SE";
+//                            return $"https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json?apikey={" This portion is ridiculous way to hide your APIkey "}&id={trackingId}&locale=fi"; // We will not be using this at the end portion of this                      
                         default: throw new ArgumentException("Could not find the firm");
                     }
             }

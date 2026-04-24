@@ -29,14 +29,14 @@ namespace LähetysSeurantaConsole.Presenter
                 if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
 
                 if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) || 
-                    !char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2])) 
+                    !char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2]))
                 {
                     throw new ArgumentException("Invalid tracking number");
                 }
 
                 Parcel p = await _package.GetTheParcelAsync(iD);
 
-                _customer.ParcelList.Add(p);
+                // _customer.ParcelList.Add(p);
                 Console.WriteLine($"Success\nParcel: {p}\nWas added.");
             }
             catch (Exception ex)
