@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -7,7 +8,6 @@ namespace LähetysSeurantaConsole.Model.Package
 {
     internal class HTTP
     {
-        private static readonly HttpClient Client = new();
         public string Company = string.Empty;
         public async Task<string> FindAndUseTheAPI(string Url, string ID)
         {
@@ -16,42 +16,51 @@ namespace LähetysSeurantaConsole.Model.Package
                 Url = TurningIDToUrl(ID);
             }
 
+            string credentials = CreateAuth();
+        
             using HttpRequestMessage request = new(HttpMethod.Get, Url);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            CreateAuth(request);
+
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+
+            HttpClient Client = new();
+
             using HttpResponseMessage response = await Client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             string json = await response.Content.ReadAsStringAsync();
             return json;
         }
-        private void CreateAuth(HttpRequestMessage request)
+        private string CreateAuth()
         {
             switch (Company)
             {
                 case ("MH"):
                     {
-                        MHAuthentication(request);
-                        break;
+                        return MHAuthentication();
+                    }
+                default:
+                    {
+                        throw new ArgumentException("How did you get this far with a wrong firm? ");
                     }
             }
         }
-        private static void MHAuthentication(HttpRequestMessage request)
+
+        /// <summary>
+        /// Here we generate the Matkahuolto credentials so we can use their API, but currently doesn't seem to be working. 
+        /// We might need to actually contact them by email and ask if they're willing to provide us with basic credentials.
+        /// 
+        /// V-P T: Díbs not it.
+        /// </summary>
+        private static string MHAuthentication()
         {
-            string? username = "UlkAPIAvoin";                   // These are the test credentials provided in : https://www.matkahuolto.fi/matkahuolto-open-interfaces
+            string? username = "UlkAPIAvoin";              
             string? password = "BUs28DefuNab?8aj3p3eqega";      
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
-            {
-                throw new InvalidOperationException(
-                    "Matkahuolto credentials are missing. Set MATKAHUOLTO_USERNAME and MATKAHUOLTO_PASSWORD environment variables.");
-            }
-
-            string rawCredentials = $"{username}:{password}";
-            string encodedCredentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(rawCredentials));
-
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
         }
+
         private string TurningIDToUrl(string ID)
         {
             DateTime now = DateTime.Now;
@@ -63,19 +72,24 @@ namespace LähetysSeurantaConsole.Model.Package
             }
 
             string id = ID[..2];
-
+                    string from = Uri.EscapeDataString(anHourAgo.ToString("yyyy-MM-ddTHH:mm:ss"));
+                    string to = Uri.EscapeDataString(now.ToString("yyyy-MM-ddTHH:mm:ss"));
+                    string trackingId = Uri.EscapeDataString(ID);
             switch (id)
             {
                 case "MH":
                     Company = "MH";
-
-                    string from = Uri.EscapeDataString(anHourAgo.ToString("yyyy-MM-ddTHH:mm:ss"));
-                    string to = Uri.EscapeDataString(now.ToString("yyyy-MM-ddTHH:mm:ss"));
-                    string trackingId = Uri.EscapeDataString(ID);
-
-                    return $"https://extservicestest.matkahuolto.fi/mpaketti/public/tracking?ids={trackingId}&from={from}&to={to}";
-
+                    return $"https://extservicestest.matkahuolto.fi/mpaketti/public/tracking?ids={trackingId}&from={from}&to={to}"; // Likely real.
+                case "FI":
+                    Company = "FI";
+                    return $"https://api.posti.fi/tracking/7/shipments/trackingnumber/{trackingId}"; // Potentially not real.
                 default:
+                    switch (ID[(ID.Length - 3)..])
+                    {
+                        case "SE":
+                            Company = "SE";
+                            return $"https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json?apikey={" This portion is ridiculous way to hide your APIkey "}&id={trackingId}&locale=fi";
+                    }
                     throw new ArgumentException("Could not find the firm");
             }
         }

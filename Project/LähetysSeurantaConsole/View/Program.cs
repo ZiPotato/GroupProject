@@ -8,7 +8,10 @@ namespace LähetysSeurantaConsole.View
         {
             ConsoleView view = new ConsoleView();
             new PackageIDHandling(view);
-            view.Menu();
+            while (view.running)
+            {
+                view.Menu();
+            }
         }
     }
 }

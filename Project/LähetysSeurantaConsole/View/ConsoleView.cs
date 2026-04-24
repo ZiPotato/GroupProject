@@ -13,7 +13,7 @@ namespace LähetysSeurantaConsole.View
         public string PhoneNumber { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
-
+        public bool running = true;
 
         public event EventHandler AddPackage;
         public event EventHandler DisplayLatestPackage;
@@ -31,9 +31,13 @@ namespace LähetysSeurantaConsole.View
                 Id = ReadInput("ID: ");
                 AddPackage?.Invoke(this, EventArgs.Empty);
             }
-            if (input == "2") 
+            else if (input == "2") 
             {
                 DisplayLatestPackage?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                running = false;
             }
         }
 
