@@ -11,6 +11,5 @@ namespace LähetysSeurantaConsole.Model.Package
     {
         Task<Parcel> GetTheParcelAsync(string id);
         Task<Parcel> UpdateParcelAsync(Parcel par);
-        Parcel? CompletedParcel { get; set; }
     }
 }

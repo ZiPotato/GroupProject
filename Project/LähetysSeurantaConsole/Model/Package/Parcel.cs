@@ -9,13 +9,10 @@ namespace LähetysSeurantaConsole.Model.Package
     {
         public required string TrackingId { get; init; }
         public required string Company { get; init; }
-        public string URL { get; set; }
+        public string? URL { get; set; }
         public string? StatusDescription { get; init; }
-
         public DateTimeOffset? DeliveredAt{ get; init; }
-        public string? RecipientName { get; init; }
-        public string? ServiceName { get; init; }
-
+        public DateTime LastUpdated = DateTime.Now;
         public IReadOnlyList<ParcelEvent> Events { get; init; } = [];
 
         public bool IsDelivered => DeliveredAt is not null;

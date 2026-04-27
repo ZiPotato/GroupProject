@@ -30,17 +30,16 @@ namespace Project_Tests.Package
         /// <returns> The Parcel that is run through the PackageModeling.JsonToParcel </returns>
         private Parcel RunJsonToParcel()
         {
-            testmodel.JsonToParcel(json);
-            return testmodel.CompletedParcel!;
+            return testmodel.JsonToParcel(json);
         }
 
         [TestMethod]
         public void APIsimulation_Matkahuolto_SeeingIfTheSimulationWorks()
         {
             string json = APIsimulation.SimulationFromTheXML(testmodel.ID);
-            testmodel.JsonToParcel(json);
-            
-            Console.WriteLine(testmodel.CompletedParcel.ToString());
+            Parcel c = testmodel.JsonToParcel(json);
+            Assert.IsNotNull(c);
+            Console.WriteLine(c);
         }
         [TestMethod]
         public void JsonToParcel_Matkahuolto_WillReturnParcel()
