@@ -30,6 +30,14 @@ Mitä tietoa haluamme kerätä tietokantaan?
 
 Lähettäjä | Saaja | Sijainti | Tila ? Onko nämä riittävät vai onko nämä liikaa? Tarvitsemmeko tietokantaa kyseiseen?
 
+
+## To-DO
+
+- Exception luokka.
+- CustomerHandling.
+- Yritysten simulointi ilman API avainta.
+- Blazor UI
+
 ### Clean architechture
 
 [Arkkitehtuurista](https://github.com/gmagana/clean-architecture-example-csharp?tab=readme-ov-file)
