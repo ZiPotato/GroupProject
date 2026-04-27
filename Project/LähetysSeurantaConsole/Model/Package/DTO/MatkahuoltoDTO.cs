@@ -66,9 +66,7 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                     ?? latestEvent?.ParcelNumber
                     ?? string.Empty,
                 Company = "Matkahuolto",
-                CurrentStatus = latestEvent?.EventCode,
                 StatusDescription = DecipherEvent(latestEvent?.EventCode),
-                EstimatedDelivery = null,
                 DeliveredAt = deliveredAt,
                 RecipientName = latestEvent?.Signature,
                 ServiceName = null,
@@ -77,7 +75,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                     .Select(e => new ParcelEvent
                     {
                         Timestamp = e.EventTime,
-                        Status = e.EventCode,
                         Description = EventToDescription(e),
                         Location = e.EventPlace
                     })

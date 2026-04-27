@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using LähetysSeurantaConsole.Model.Package.API;
+using LähetysSeurantaConsole.Model.Package.DTO;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace LähetysSeurantaConsole.Model.Package
@@ -19,7 +21,8 @@ namespace LähetysSeurantaConsole.Model.Package
         {
             ID = par.TrackingId;
             Url = par.URL;
-            string json = await _http.FindAndUseTheAPI(Url, ID);        // All of this can currently be simulated by
+            // string json = await _http.FindAndUseTheAPI(Url, ID);
+            string json = APIsimulation.SimulationFromTheXML(ID);
             JsonToParcel(json);
             return CompletedParcel ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
@@ -31,8 +34,9 @@ namespace LähetysSeurantaConsole.Model.Package
         {
             ID = id;
             Url = string.Empty;
-            string json = await _http.FindAndUseTheAPI(Url, ID);
-            JsonToParcel(json);         // I've thought about just turning this into the parcel that is returned after the current changes. It wouldn't be that hard to make work, but I have been reluctant.
+            //string json = await _http.FindAndUseTheAPI(Url, ID);
+            string json = APIsimulation.SimulationFromTheXML(ID);
+            JsonToParcel(json); // I've thought about just turning this into the parcel that is returned after the current changes. It wouldn't be that hard to make work, but I have been reluctant.
             return CompletedParcel ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
         /// <summary>

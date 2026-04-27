@@ -4,10 +4,11 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace LähetysSeurantaConsole.Model.Package
+namespace LähetysSeurantaConsole.Model.Package.API
 {
     internal class HTTP
     {
+        
         public string Company = string.Empty;
         public async Task<string> FindAndUseTheAPI(string Url, string ID)
         {
@@ -84,7 +85,7 @@ namespace LähetysSeurantaConsole.Model.Package
                     {
 //                        case "SE":
 //                            Company = "SE";
-//                            return $"https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json?apikey={" This portion is ridiculous way to hide your APIkey "}&id={trackingId}&locale=fi"; // We will not be using this at the end portion of this                      
+//                            return $"https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json?apikey={This portion is ridiculous way to hide your APIkey}&id={trackingId}&locale=fi"; // We will not be using this at the end portion of this                      
                         default: throw new ArgumentException("Could not find the firm");
                     }
             }

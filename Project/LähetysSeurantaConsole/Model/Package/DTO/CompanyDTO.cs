@@ -1,8 +1,7 @@
-﻿using LähetysSeurantaConsole.Model.Package.DTO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace LähetysSeurantaConsole.Model.Package
+namespace LähetysSeurantaConsole.Model.Package.DTO
 {
     public class CompanyDTO
     {
