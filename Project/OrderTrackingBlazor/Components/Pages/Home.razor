@@ -2,6 +2,13 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<!-- basic test loop -->
+@foreach (var parcel in parcelList)
+{
+	<ParcelWidget Parcel="parcel" />
+}
 
-Welcome to your new app.
+
+@code {
+	private List<Parcel> parcelList = new() { null, null }; // replace this if we don't want to have the parcel list here
+}
