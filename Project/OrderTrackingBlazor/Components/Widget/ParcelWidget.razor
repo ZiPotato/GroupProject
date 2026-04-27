@@ -5,14 +5,12 @@
     <p2>@ParcelState</p2>
     @if(ParcelETA != null)
     {
-        <p2>Estimated time of arrival: @ParcelETA</p2>
+        <p>Estimated time of arrival: @ParcelETA</p>
     }
     else 
     {
         <p>We couldn't fetch the ETA for this package.</p>
     }
-
-    <h1></h1> <!-- temp? seperator -->
 </div>
 
 @code {
@@ -48,6 +46,6 @@
         ParcelID = "AB12334";
         ParcelCarrier = "Matkahuolto";
         ParcelState = "In Delivery";
-        ParcelETA = null;
+        ParcelETA = DateTimeOffset.Now;
     }
 }
