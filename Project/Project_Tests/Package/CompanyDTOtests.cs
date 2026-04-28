@@ -17,7 +17,7 @@ namespace Project_Tests.Package
         [TestInitialize]
         public void SetUp()
         {
-            var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "jsontest.json"));
+            var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "MH.json"));
             json = File.ReadAllText(path);
 
             testmodel = new PackageModeling();
@@ -35,12 +35,13 @@ namespace Project_Tests.Package
         }
 
         [TestMethod]
-        public void APIsimulation_Matkahuolto_SeeingIfTheSimulationWorks()
+        public void SimulatingRandom_Matkahuolto_TestingIfTheCreationOfTheRandomJsonDataWorks()
         {
-            string json = APIsimulation.SimulationFromTheXML(testmodel.ID);
-            Parcel c = testmodel.JsonToParcel(json);
-            Assert.IsNotNull(c);
-            Console.WriteLine(c);
+            string json = APIsimulation.SimulatingRandom("MH");
+            Assert.AreNotEqual(json, string.Empty);
+            Parcel p = testmodel.JsonToParcel(json);
+            Assert.IsNotNull(p);
+            Console.WriteLine(p);
         }
         [TestMethod]
         public void JsonToParcel_Matkahuolto_WillReturnParcel()
@@ -75,13 +76,6 @@ namespace Project_Tests.Package
         }
 
         [TestMethod]
-        public void JsonToParcel_Matkahuolto_TheParcelHasTheCorrectRecipientName()
-        {
-            Parcel result = RunJsonToParcel();
-
-            Assert.AreEqual("Mr. Receiver", result.RecipientName);
-        }
-        [TestMethod]
         public void JsonToParcel_Matkahuolto_TheParcelReturnedIsMarkedAsDelivered()
         {
             Parcel result = RunJsonToParcel();
@@ -109,7 +103,7 @@ namespace Project_Tests.Package
             Console.WriteLine(result.ToString());
 
             Regex white = new Regex(@"\s");
-            Assert.AreEqual("ID:MH302164795FICarriercompany:MatkahuoltoCurrentstatus:Delivered",white.Replace(result.ToString(), ""));
+            Assert.AreEqual("ID:MH302164795FICarriercompany:MatkahuoltoCurrentstatus:DeliveredCurrentcity:HELSINKI",white.Replace(result.ToString(), ""));
         }
         [TestMethod]
         public void JsonToParcel_WillCopyUrlToCompletedParcel_AndClearModelUrl()

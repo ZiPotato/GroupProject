@@ -27,6 +27,10 @@ namespace LähetysSeurantaConsole.Model.Package.API
             }
         }
 
+        /// <summary>
+        /// I read about a library called "Json schema faker" that potentially could've made this by itself, 
+        /// but honestly I just wanted the challenge at this point.
+        /// </summary>
         public static string SimulatingRandom(string id)
         {
             string shipmentNumber = id;
@@ -51,7 +55,7 @@ namespace LähetysSeurantaConsole.Model.Package.API
                     ReturnShipmentNumber = string.Empty
                 }
             };
-
+            
             return JsonConvert.SerializeObject(data);
         }
 
