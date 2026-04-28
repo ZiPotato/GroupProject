@@ -30,5 +30,12 @@ namespace LähetysSeurantaConsole.Model.Package
         public DateTimeOffset? Timestamp { get; init; }
         public string? Description { get; init; }
         public string? Location { get; init; }
+        public override string ToString()
+        {
+            return $"" +
+                $"Time     : {Timestamp}\n" +
+                $"Status   : {Description}\n" +
+                $"Location : {Location}\n";
+        }
     }
 }
