@@ -14,7 +14,7 @@ namespace LähetysSeurantaConsole.Presenter
         {
             _view = view;
             _view.AddPackage += AddPackage;
-            _view.DisplayLatestPackage += DisplayTheLatestPackage;
+            // _view.DisplayLatestPackage += DisplayTheLatestPackage;
             _package = new PackageModeling();
         }
 
