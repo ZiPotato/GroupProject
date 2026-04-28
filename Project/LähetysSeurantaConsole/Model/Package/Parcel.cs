@@ -14,14 +14,14 @@ namespace LähetysSeurantaConsole.Model.Package
         public DateTimeOffset? DeliveredAt{ get; init; }
         public DateTime LastUpdated = DateTime.Now;
         public IReadOnlyList<ParcelEvent> Events { get; init; } = [];
-
         public bool IsDelivered => DeliveredAt is not null;
         public override string ToString() 
         {
              return $"" +            // Yes. There's probably a better way to do this...
             $"ID              : {TrackingId}\n" +
             $"Carrier company : {Company}\n" +
-            $"Current status  : {StatusDescription}\n"; 
+            $"Current status  : {StatusDescription}\n" +
+            $"Current city    : {Events.Last().Location}\n"; 
         }
     }
 

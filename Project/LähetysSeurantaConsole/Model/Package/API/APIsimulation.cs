@@ -29,9 +29,9 @@ namespace LähetysSeurantaConsole.Model.Package.API
 
         public static string SimulatingRandom(string id)
         {
-            string shipmentNumber = id.ToUpperInvariant();
+            string shipmentNumber = id;
             string status = GetTheStatus();
-            string eventPlace = GetTheCity().ToUpperInvariant();
+            string eventPlace = GetTheCity().ToUpper();
             DateTimeOffset eventTime = GetRandomEventTime();
 
             var data = new
