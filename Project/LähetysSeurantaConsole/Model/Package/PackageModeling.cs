@@ -36,7 +36,7 @@ namespace LähetysSeurantaConsole.Model.Package
             ID = id;
             Url = string.Empty;
             //string json = await _http.FindAndUseTheAPI(Url, ID);
-            string json = APIsimulation.SimulationFromTheXML(ID);
+            string json = APIsimulation.SimulatingRandom(ID);
             return JsonToParcel(json) ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
         /// <summary>
