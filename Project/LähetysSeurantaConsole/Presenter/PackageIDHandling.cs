@@ -14,7 +14,7 @@ namespace LähetysSeurantaConsole.Presenter
         {
             _view = view;
             _view.AddPackage += AddPackage;
-            _view.DisplayLatestPackage += DisplayTheLatestPackage;
+            // _view.DisplayLatestPackage += DisplayTheLatestPackage;
             _package = new PackageModeling();
         }
 
@@ -35,9 +35,8 @@ namespace LähetysSeurantaConsole.Presenter
                 }
 
                 Parcel p = await _package.GetTheParcelAsync(iD);
-
                 // _customer.ParcelList.Add(p);
-                Console.WriteLine($"Success\nParcel: {p}\nWas added.");
+                Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
             }
             catch (Exception ex)
             {

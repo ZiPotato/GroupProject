@@ -14,7 +14,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
         /// </summary>
         /// <param name="json"></param>
         /// <returns> The completed and modeled parcel </returns>
-        /// <exception cref="JsonSerializationException"></exception>
         public static Parcel ToParcel(string json)
         {
             JObject root = JObject.Parse(json);
@@ -66,18 +65,13 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                     ?? latestEvent?.ParcelNumber
                     ?? string.Empty,
                 Company = "Matkahuolto",
-                CurrentStatus = latestEvent?.EventCode,
                 StatusDescription = DecipherEvent(latestEvent?.EventCode),
-                EstimatedDelivery = null,
                 DeliveredAt = deliveredAt,
-                RecipientName = latestEvent?.Signature,
-                ServiceName = null,
                 Events = events
                     .OrderBy(e => e.EventTime)
                     .Select(e => new ParcelEvent
                     {
                         Timestamp = e.EventTime,
-                        Status = e.EventCode,
                         Description = EventToDescription(e),
                         Location = e.EventPlace
                     })
@@ -93,7 +87,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
             {
                 return $"{description} ({e.Remarks})";
             }
-
             return description;
         }
 
@@ -131,7 +124,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                 "70" => "Returned unclaimed",
                 "97" => "Delivery failed, transferred to office",
                 "104" => "Reservation added",
-                null => null,
                 _ => $"Unknown event code: {eventCode}"
             };
         }
@@ -153,17 +145,11 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
 
         internal sealed record Event
         {
-            [JsonProperty("EventId")]
-            public string? EventId { get; init; }
-
             [JsonProperty("ShipmentNumber")]
             public string? ShipmentNumber { get; init; }
 
             [JsonProperty("ParcelNumber")]
             public string? ParcelNumber { get; init; }
-
-            [JsonProperty("SenderReference")]
-            public string? SenderReference { get; init; }
 
             [JsonProperty("EventCode")]
             public string? EventCode { get; init; }
@@ -174,20 +160,8 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
             [JsonProperty("EventPlace")]
             public string? EventPlace { get; init; }
 
-            [JsonProperty("OfficeCode")]
-            public string? OfficeCode { get; init; }
-
-            [JsonProperty("Signature")]
-            public string? Signature { get; init; }
-
             [JsonProperty("Remarks")]
             public string? Remarks { get; init; }
-
-            [JsonProperty("ReturnShipmentNumber")]
-            public string? ReturnShipmentNumber { get; init; }
-
-            [JsonExtensionData]
-            public IDictionary<string, JToken> ExtraData { get; init; } = new Dictionary<string, JToken>();
         }
 
         internal sealed record Error
