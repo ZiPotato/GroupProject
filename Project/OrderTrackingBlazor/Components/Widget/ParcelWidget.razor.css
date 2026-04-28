@@ -9,7 +9,7 @@
     max-width: 420px;
     width: 100%;
     color: #1f2937;
-    transition: all 0.5s;
+    transition: all 0.3s;
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
@@ -42,4 +42,5 @@
     .body:hover {
         max-width: 440px;
         border-radius: 20px;
+        cursor: pointer
     }    
