@@ -14,7 +14,8 @@ namespace LähetysSeurantaConsole.View
         {
             ConsoleView view = new ConsoleView();
 
-               
+            // We should ask for the customer information here and create the customerhandling and the customer while creating the IDHandling.
+
             new PackageIDHandling(view);
             while (view.running)
             {
