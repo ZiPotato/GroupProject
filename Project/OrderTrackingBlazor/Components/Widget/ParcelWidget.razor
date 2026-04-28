@@ -1,6 +1,13 @@
 ﻿
 <div class="body">
-    <h2>@ParcelID</h2>
+    <div class="d-flex flex-row">
+        <div class="px-2 flex-grow-1">
+            <h2>@ParcelID</h2>
+        </div>
+        <div>
+            <button @onclick="HandleUpdate">Update</button>
+        </div>
+    </div>
     <h3>The carrier of this package is: @ParcelCarrier</h3>
     <p2>@ParcelState</p2>
     @if(ParcelETA != null)
@@ -18,10 +25,14 @@
     [Parameter, EditorRequired]
     public Parcel Parcel { get; init; }
 
+    [Parameter, EditorRequired]
+    public EventCallback<Parcel> OnUpdateCallBack { get; set; }
+
     string ParcelID;
     string ParcelState;
     string ParcelCarrier;
     DateTimeOffset? ParcelETA;
+
 
     /// <summary>
     /// Here we are assuming a check already happened that the package is not yet delivered.
@@ -47,5 +58,10 @@
         ParcelCarrier = "Matkahuolto";
         ParcelState = "In Delivery";
         ParcelETA = DateTimeOffset.Now;
+    }
+
+    private async Task HandleUpdate()
+    {
+        await OnUpdateCallBack.InvokeAsync(Parcel);
     }
 }
