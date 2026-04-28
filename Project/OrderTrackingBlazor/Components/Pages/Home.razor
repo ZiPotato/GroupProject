@@ -5,7 +5,7 @@
 <!-- basic test loop -->
 @foreach (var parcel in parcelList)
 {
-	<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateInfo" />
+	<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" />
 	<h1></h1> <!-- temp? seperator -->
 }
 
@@ -14,8 +14,8 @@
 	// replace this if we don't want to have the parcel list here
 	private List<Parcel> parcelList = new() { null, null }; // test null values
 
-	private void UpdateInfo()
+	private async Task UpdateParcelInfo(Parcel parcel)
 	{
-		
+		// update parcel info from api
 	}
 }

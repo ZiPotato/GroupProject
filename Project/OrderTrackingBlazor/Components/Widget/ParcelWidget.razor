@@ -62,6 +62,7 @@
 
     private async Task HandleUpdate()
     {
-        await OnUpdateCallBack.InvokeAsync(Parcel);
+        if (Parcel != null)
+            await OnUpdateCallBack.InvokeAsync(Parcel);
     }
 }
