@@ -1,16 +1,16 @@
 ﻿
 <div class="body">
-    <h2>@ParcelID</h2>
-    <h3>The carrier of this package is: @ParcelCarrier</h3>
-    <p2>@ParcelState</p2>
-    @if(ParcelETA != null)
-    {
-        <p2>Estimated time of arrival: @ParcelETA</p2>
-    }
-    else 
-    {
-        <p>We couldn't fetch the ETA for this package.</p>
-    }
+        <h2>@ParcelID</h2>
+        <h3>The carrier of this package is: @ParcelCarrier</h3>
+        <p2>@ParcelState</p2>
+        @if(ParcelETA != null)
+        {
+            <p2>Estimated time of arrival: @ParcelETA</p2>
+        }
+        else 
+        {
+            <p>We couldn't fetch the ETA for this package.</p>
+        }
 </div>
 
 @code {
