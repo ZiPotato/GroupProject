@@ -2,10 +2,10 @@
 <div class="body">
         <h2>@ParcelID</h2>
         <h3>The carrier of this package is: @ParcelCarrier</h3>
-        <p2>@ParcelState</p2>
+        <p>@ParcelState</p>
         @if(ParcelETA != null)
         {
-            <p2>Estimated time of arrival: @ParcelETA</p2>
+            <p>Estimated time of arrival: @ParcelETA</p>
         }
         else 
         {
@@ -16,23 +16,12 @@
 @code {
 
     [Parameter, EditorRequired]
-    public Parcel Parcel { get; init; }
+    public Parcel parcel { get; init; }
 
     string ParcelID;
     string ParcelState;
     string ParcelCarrier;
     DateTimeOffset? ParcelETA;
-
-    /// <summary>
-    /// Here we are assuming a check already happened that the package is not yet delivered.
-    /// 
-    /// Currently we are extracting the bare minimum of the potential information into the widget.
-    /// If we do not need other information we will be likely deleting it from the Parcel record,
-    /// but we probably still do want to use hopefully the events at the very least.
-    /// 
-    /// Basically the idea is that we will be able to call this layout in the main code as many times as we need and it will be drawn without a hitch.
-    /// The call should be as simple as @RenderPage() and it should render this here, but I have not tested it at all.
-    /// </summary>
 
     public ParcelWidget() 
     {

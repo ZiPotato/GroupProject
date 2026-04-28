@@ -9,6 +9,7 @@
     max-width: 420px;
     width: 100%;
     color: #1f2937;
+    transition: all 0.5s;
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
@@ -30,8 +31,7 @@
         line-height: 1.4;
     }
 
-    .body p,
-    .body p2 {
+    .body p {
         display: block;
         margin: 0.45rem 0;
         font-size: 0.95rem;
@@ -39,8 +39,7 @@
         color: #475569;
     }
 
-        .body p:last-child,
-        .body p2:last-child {
-            margin-bottom: 0;
-        }
-        /* I am currently contemplating if I should add a hover animation, but since it wouldn't have an use I am not sure */
+    .body:hover {
+        max-width: 440px;
+        border-radius: 20px;
+    }    
