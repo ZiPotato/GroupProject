@@ -1,9 +1,11 @@
 ﻿@page "/"
-@using LähetysSeurantaConsole.View; 
-@implements IView;
+@using LähetysSeurantaConsole.View;
+@using LähetysSeurantaConsole.Presenter;
 <PageTitle>Home</PageTitle>
 
-<input type="text" id="ID"/>
+<input type="text" @bind-value="ID"/>
+
+<button class="thisclass" onclick="@Click()">Add a package</button>
 <!-- basic test loop -->
 @foreach (var parcel in parcelList)
 {
@@ -13,37 +15,14 @@
 
 
 @code {
-    IView view;
-    string IView.Id { get; }
-    public LähetysSeurantaConsole.Presenter.PackageIDHandling
-    event EventHandler IView.AddPackage
-    {
-        add
-        {
-        }
+	private string ID { get; set; }
+	private PackageIDHandling _package = new();
 
-        remove
-        {
-            throw new NotImplementedException();
-        }
-    }
-    event EventHandler IView.DisplayLatestPackage
-    {
-        add
-        {
-            throw new NotImplementedException();
-        }
-
-        remove
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
-
-
-
-
-    // replace this if we don't want to have the parcel list here
+	public async Task<Parcel> Click()
+	{
+		if (!string.IsNullOrEmpty(ID)) return await _package.AddPackage(ID);
+		return null;
+	}
+	// replace this if we don't want to have the parcel list here
 	private List<Parcel> parcelList = new() { null, null }; // test null values
 }

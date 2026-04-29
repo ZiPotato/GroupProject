@@ -11,7 +11,6 @@ namespace LähetysSeurantaConsole.Presenter
         // We Receive the ID from the customer and construct it into the desired url
         IView _view;
         IPackage _package;
-        ICustomer _customer;
 
         public PackageIDHandling(IView view)
         {
@@ -20,9 +19,7 @@ namespace LähetysSeurantaConsole.Presenter
             _view.DisplayLatestPackage += DisplayTheLatestPackage;
         }
 
-
-
-        private void AddPackage(object sender, EventArgs e)
+        public void AddPackage(object sender, EventArgs e)
         {
             string iD = _view.Id;
             iD = iD.ToUpper().Trim();
@@ -35,7 +32,7 @@ namespace LähetysSeurantaConsole.Presenter
             
             if (p != null)
             {
-                _customer.ParcelList.Add(p);
+            //    _customer.ParcelList.Add(p);
                 Console.WriteLine("Success");
             }
             else Console.WriteLine("Something went wrong creating the parcel");
@@ -43,8 +40,8 @@ namespace LähetysSeurantaConsole.Presenter
 
         private void DisplayTheLatestPackage(object sender, EventArgs e)
         {
-            if (_customer.ParcelList.Last() == null) throw new ArgumentNullException("The list of packages is empty.");
-            Console.WriteLine(_customer.ParcelList.Last().ToString());
+            //if (_customer.ParcelList.Last() == null) throw new ArgumentNullException("The list of packages is empty.");
+            //Console.WriteLine(_customer.ParcelList.Last().ToString());
         }
     }
 }
