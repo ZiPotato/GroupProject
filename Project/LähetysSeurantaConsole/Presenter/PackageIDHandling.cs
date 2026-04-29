@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace LähetysSeurantaConsole.Presenter
 {
-    internal class PackageIDHandling
+    public class PackageIDHandling
     {
         // We Receive the ID from the customer and construct it into the desired url
         IView _view;
