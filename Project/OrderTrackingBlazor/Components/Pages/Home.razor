@@ -1,7 +1,37 @@
 ﻿@page "/"
+@implements IView
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<!-- basic test loop -->
+@foreach (var parcel in parcelList)
+{
+	<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" />
+	<h1></h1> <!-- temp? seperator -->
+}
 
-Welcome to your new app.
+
+@code {
+	// replace this if we don't want to have the parcel list here
+	private List<Parcel> parcelList = new() { null, null }; // test null values
+
+	public string Id { get; set; }
+	public event EventHandler AddPackage;
+
+	private async Task UpdateParcelInfo(Parcel parcel)
+	{
+		// update parcel info
+	}
+
+
+
+	// only here to complete IView
+	public string TrackingId { get; set; }
+	public string Display { get; set; }
+	public string Email { get; set; }
+	public string PhoneNumber { get; set; }
+	public string Name { get; set; }
+	public string Password { get; set; }
+	public event EventHandler DisplayLatestPackage;
+	public event EventHandler UserLogin;
+}

@@ -56,7 +56,7 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                 Company = "Matkahuolto",
                 CurrentStatus = latestEvent?.EventCode,
                 StatusDescription = DecipherEvent(latestEvent?.EventCode),
-                EstimatedDelivery = null,
+                EstimatedDelivery = null,   // I don't think we will be able to use this ever really, but who knows we might.
                 DeliveredAt = deliveredAt,
                 RecipientName = latestEvent?.Signature,
                 ServiceName = null,

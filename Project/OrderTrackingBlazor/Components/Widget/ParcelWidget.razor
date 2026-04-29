@@ -1,0 +1,68 @@
+﻿
+<div class="body">
+    <div class="d-flex flex-row">
+        <div class="flex-grow-1">
+            <h2>@ParcelID</h2>
+        </div>
+        <div>
+            <button @onclick="HandleUpdate">Update</button>
+        </div>
+    </div>
+    <h3>The carrier of this package is: @ParcelCarrier</h3>
+    <p2>@ParcelState</p2>
+    @if(ParcelETA != null)
+    {
+        <p2>Estimated time of arrival: @ParcelETA</p2>
+    }
+    else 
+    {
+        <p>We couldn't fetch the ETA for this package.</p>
+    }
+</div>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public Parcel Parcel { get; init; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<Parcel> OnUpdateCallBack { get; set; }
+
+    string ParcelID;
+    string ParcelState;
+    string ParcelCarrier;
+    DateTimeOffset? ParcelETA;
+
+
+    /// <summary>
+    /// Here we are assuming a check already happened that the package is not yet delivered.
+    /// 
+    /// Currently we are extracting the bare minimum of the potential information into the widget.
+    /// If we do not need other information we will be likely deleting it from the Parcel record,
+    /// but we probably still do want to use hopefully the events at the very least.
+    /// 
+    /// Basically the idea is that we will be able to call this layout in the main code as many times as we need and it will be drawn without a hitch.
+    /// The call should be as simple as @RenderPage() and it should render this here, but I have not tested it at all.
+    /// </summary>
+
+    public ParcelWidget() 
+    {
+        //ParcelID = Parcel.TrackingId ?? "Couldn't find the tracking ID";
+        //ParcelCarrier = Parcel.Company ?? "Couldn't find the company";
+        //ParcelState = Parcel.StatusDescription ?? "Couldn't find the status description";
+        //ParcelETA = Parcel.DeliveredAt;
+
+
+        // test values
+        ParcelID = "AB12334";
+        ParcelCarrier = "Matkahuolto";
+        ParcelState = "In Delivery";
+        ParcelETA = DateTimeOffset.Now;
+    }
+
+    private async Task HandleUpdate()
+    {
+        if (Parcel != null)
+            await OnUpdateCallBack.InvokeAsync(Parcel);
+    }
+}
