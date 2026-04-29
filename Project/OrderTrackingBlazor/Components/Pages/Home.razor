@@ -21,14 +21,14 @@
 	public string Id { get; set; }
 	public event EventHandler AddPackage;
 
-	private async Task UpdateParcelInfo(Parcel parcel)
-	{
-		// update parcel info
-	}
-
 	public async Task HandleAdd()
 	{
 		AddPackage?.Invoke(this, EventArgs.Empty);
+	}
+
+	private async Task UpdateParcelInfo(Parcel parcel)
+	{
+		// update parcel info
 	}
 
 
