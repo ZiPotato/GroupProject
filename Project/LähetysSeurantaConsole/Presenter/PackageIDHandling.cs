@@ -4,7 +4,7 @@ using LähetysSeurantaConsole.View;
 
 namespace LähetysSeurantaConsole.Presenter
 {
-    internal class PackageIDHandling
+    public class PackageIDHandling
     {
         IView _view;
         IPackage _package;
