@@ -3,7 +3,6 @@
     <File Path="../../.gitignore" />
   </Folder>
   <Project Path="../OrderTrackingBlazor/OrderTrackingBlazor.csproj" Id="0ddf5ba8-62d7-438d-9647-b845c198da6e">
-    <Build Solution="Debug|*" Project="false" />
   </Project>
   <Project Path="../Project_Tests/Project_Tests.csproj">
     <Build Solution="Debug|*" Project="false" />
