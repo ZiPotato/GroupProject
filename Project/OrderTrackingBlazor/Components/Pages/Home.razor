@@ -3,6 +3,9 @@
 
 <PageTitle>Home</PageTitle>
 
+<input @bind="Id" />
+<button onclick="@HandleAdd">Add ID</button>
+
 <!-- basic test loop -->
 @foreach (var parcel in parcelList)
 {
@@ -23,6 +26,10 @@
 		// update parcel info
 	}
 
+	public async Task HandleAdd()
+	{
+		AddPackage?.Invoke(this, EventArgs.Empty);
+	}
 
 
 	// only here to complete IView
