@@ -1,0 +1,18 @@
+.button {
+		flex-direction: column;
+		font-family: 'Segoe UI';
+		border-bottom-right-radius: 7px;
+		border-top-left-radius: 7px;
+		background: linear-gradient(to right, #f8fafc 0%, #b7c6de 100%);
+		border: 1px solid #d6dde8;
+		box-shadow: 0 6px 18px rgba(15, 23, 42, 0.2);
+		transition: all 0.3s;
+	}
+
+		.button:hover {
+			border-radius: 20px;
+			cursor: pointer
+		}
+.textbox{
+	border-radius: 4px; 
+}
