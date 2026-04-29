@@ -3,8 +3,8 @@
     <File Path="../../.gitignore" />
   </Folder>
   <Project Path="../OrderTrackingBlazor/OrderTrackingBlazor.csproj" Id="0ddf5ba8-62d7-438d-9647-b845c198da6e">
-  <Project Path="../Project_Tests/Project_Tests.csproj" Id="2c787f36-df52-4a04-821f-1e5ff4f75266">
     <Build Solution="Debug|*" Project="false" />
   </Project>
+  <Project Path="../Project_Tests/Project_Tests.csproj" />
   <Project Path="LähetysSeurantaConsole.csproj" />
 </Solution>
