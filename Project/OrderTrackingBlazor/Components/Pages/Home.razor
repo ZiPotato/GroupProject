@@ -21,7 +21,7 @@
 	public string Id { get; set; }
 	public event EventHandler AddPackage;
 
-	public async Task HandleAdd()
+	private async Task HandleAdd()
 	{
 		AddPackage?.Invoke(this, EventArgs.Empty);
 	}
