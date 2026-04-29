@@ -12,11 +12,11 @@
 
 
 @code {
-	public string Id { get; set; }
-	public event EventHandler AddPackage;
-
 	// replace this if we don't want to have the parcel list here
 	private List<Parcel> parcelList = new() { null, null }; // test null values
+
+	public string Id { get; set; }
+	public event EventHandler AddPackage;
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
