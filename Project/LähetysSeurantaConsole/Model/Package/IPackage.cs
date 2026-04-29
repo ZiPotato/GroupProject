@@ -1,4 +1,5 @@
 ﻿using System.Dynamic;
+using System.Threading.Tasks;
 
 namespace LähetysSeurantaConsole.Model.Package
 {
@@ -6,10 +7,9 @@ namespace LähetysSeurantaConsole.Model.Package
     /// Defines the contract for a package that manages a collection of parcels and provides operations to update parcel
     /// information from the presenter potentially.
     /// </summary>
-    internal interface IPackage
+    public interface IPackage
     {
-        Parcel GetTheParcel(string id); 
-        Parcel UpdateParcel(Parcel par);
-        Parcel CompletedParcel { get; set; }
+        Task<Parcel> GetTheParcelAsync(string id);
+        Task<Parcel> UpdateParcelAsync(Parcel par);
     }
 }

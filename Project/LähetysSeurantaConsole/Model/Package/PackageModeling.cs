@@ -1,61 +1,55 @@
-﻿using System.Security.Principal;
+﻿using LähetysSeurantaConsole.Model.Package.API;
+using LähetysSeurantaConsole.Model.Package.DTO;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace LähetysSeurantaConsole.Model.Package
 {
-    internal class PackageModeling : IPackage
+    public class PackageModeling : IPackage
     {
-        private static readonly HttpClient Client = new();
-        public string ID { get; set; }
-        public string Company;
-        public string Url;
-        IPackage _model;
-        Parcel IPackage.CompletedParcel { get ; set ; }
-
-        public Parcel UpdateParcel(Parcel par)
+        public string ID { get; set; } = string.Empty;
+        public string Url = string.Empty;
+        
+        /// <summary>
+        /// This is used to update the parcel information
+        /// </summary>
+        public async Task<Parcel> UpdateParcelAsync(Parcel par)
         {
+            if (par.LastUpdated.Hour == DateTime.Now.Hour) 
+            {
+                Console.WriteLine("It's been less than an hour from the last update");
+                return par;
+            }
             ID = par.TrackingId;
             Url = par.URL;
-            GetTheParcel();
-            return _model.CompletedParcel;
-        }
-
-        public Parcel GetTheParcel(string id)
-        {
-            ID = id;
-            GetTheParcel();
-            return _model.CompletedParcel;
-        }
-
-        public async Task GetTheParcel()
-        {
-            if (string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(ID)) Url = TurningIDToUrl();
-            using HttpResponseMessage response = await Client.GetAsync(Url);
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
-
-            CompanyDTO dto = new(json, Company);
-            _model.CompletedParcel = dto.Completed;
-            _model.CompletedParcel.URL = Url;
-            Url = string.Empty;
+            
+            // string json = await _http.FindAndUseTheAPI(Url, ID);
+            string json = APIsimulation.SimulationFromTheXML(ID);
+            return JsonToParcel(json)?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
 
         /// <summary>
-        /// This is how we handle the ID and turn it into the url we need, it currently is rough and unready, since we do not even handle the APIs.
+        /// This is used to generate a new parcel
         /// </summary>
-        /// <returns> Eventually the completed url </returns>
-        /// <exception cref="ArgumentException"></exception>
-        private string TurningIDToUrl()
+        public async Task<Parcel> GetTheParcelAsync(string id)
         {
-            DateTime weekago = DateTime.Now.AddDays(-7);
-            char[] idarray = ID.ToCharArray();
-            switch (idarray.Take(2).ToString())
-            {
-                case ("MA"):
-                    Company = "MA";
-                    return $"HTTPS://extservicetest.matkahuolto.fi/mpaketti/public/tracking/?ids=<{ID}>&from={weekago}>&to=<{DateTime.Now}>";  // Currently we are using the API meant for testing (found in their own documentation)
-                default:
-                    throw new ArgumentException("Could not find the firm");
-            }
+            ID = id;
+            Url = string.Empty;
+            //string json = await _http.FindAndUseTheAPI(Url, ID);
+            string json = APIsimulation.SimulatingRandom(ID);
+            return JsonToParcel(json) ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
+        /// <summary>
+        /// Here we turn the json file from the API / whatever first into a dto and then to a parcel.
+        /// </summary>
+        public Parcel JsonToParcel(string json)
+        {
+            CompanyDTO dto = new(json, ID[..2]);
+            Parcel completed =  dto.Completed with { URL = Url };
+            Url = string.Empty;
+            return completed;
+        }
+
+
     }
 }

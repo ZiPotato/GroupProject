@@ -14,13 +14,24 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
         /// </summary>
         /// <param name="json"></param>
         /// <returns> The completed and modeled parcel </returns>
-        /// <exception cref="JsonSerializationException"></exception>
         public static Parcel ToParcel(string json)
         {
-            JObject temp = JObject.Parse(json);
+            JObject root = JObject.Parse(json);
 
-            Response dto = temp.ToObject<Response>()
-                ?? throw new JsonSerializationException("Matkahuolto JSON could not be deserialized.");
+            JToken trackingEventsToken = root["MHTrackingEvents"] ?? root;
+
+            JToken? eventToken = trackingEventsToken["Event"];
+            if (eventToken is JObject singleEvent)
+            {
+                trackingEventsToken["Event"] = new JArray(singleEvent);
+            }
+
+            TrackingEvents trackingEvents = trackingEventsToken.ToObject<TrackingEvents>() ?? throw new JsonSerializationException("Matkahuolto JSON could not be deserialized.");
+
+            Response dto = new()
+            {
+                MHTrackingEvents = trackingEvents
+            };
 
             return DTOtoParcel(dto);
         }
@@ -54,24 +65,20 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                     ?? latestEvent?.ParcelNumber
                     ?? string.Empty,
                 Company = "Matkahuolto",
-                CurrentStatus = latestEvent?.EventCode,
                 StatusDescription = DecipherEvent(latestEvent?.EventCode),
-                EstimatedDelivery = null,   // I don't think we will be able to use this ever really, but who knows we might.
                 DeliveredAt = deliveredAt,
-                RecipientName = latestEvent?.Signature,
-                ServiceName = null,
                 Events = events
                     .OrderBy(e => e.EventTime)
                     .Select(e => new ParcelEvent
                     {
                         Timestamp = e.EventTime,
-                        Status = e.EventCode,
                         Description = EventToDescription(e),
                         Location = e.EventPlace
                     })
                     .ToList()
             };
         }
+
         private static string EventToDescription(Event e)
         {
             string description = DecipherEvent(e.EventCode) ?? "Unknown event";
@@ -80,7 +87,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
             {
                 return $"{description} ({e.Remarks})";
             }
-
             return description;
         }
 
@@ -92,7 +98,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
         /// <returns> A string that describes the state of the parcel </returns>
         private static string? DecipherEvent(string? eventCode)
         {
-
             return eventCode switch
             {
                 "02" => "Electronic advance information received",
@@ -119,7 +124,6 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
                 "70" => "Returned unclaimed",
                 "97" => "Delivery failed, transferred to office",
                 "104" => "Reservation added",
-                null => null,
                 _ => $"Unknown event code: {eventCode}"
             };
         }
@@ -141,17 +145,11 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
 
         internal sealed record Event
         {
-            [JsonProperty("EventId")]
-            public string? EventId { get; init; }
-
             [JsonProperty("ShipmentNumber")]
             public string? ShipmentNumber { get; init; }
 
             [JsonProperty("ParcelNumber")]
             public string? ParcelNumber { get; init; }
-
-            [JsonProperty("SenderReference")]
-            public string? SenderReference { get; init; }
 
             [JsonProperty("EventCode")]
             public string? EventCode { get; init; }
@@ -162,20 +160,8 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
             [JsonProperty("EventPlace")]
             public string? EventPlace { get; init; }
 
-            [JsonProperty("OfficeCode")]
-            public string? OfficeCode { get; init; }
-
-            [JsonProperty("Signature")]
-            public string? Signature { get; init; }
-
             [JsonProperty("Remarks")]
             public string? Remarks { get; init; }
-
-            [JsonProperty("ReturnShipmentNumber")]
-            public string? ReturnShipmentNumber { get; init; }
-
-            [JsonExtensionData]
-            public IDictionary<string, JToken> ExtraData { get; init; } = new Dictionary<string, JToken>();
         }
 
         internal sealed record Error
