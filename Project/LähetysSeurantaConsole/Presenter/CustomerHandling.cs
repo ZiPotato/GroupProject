@@ -20,12 +20,11 @@ namespace LähetysSeurantaConsole.Presenter
         CustomerHandling(IView view)
         {
             _view = view;
-            _view.UserLogin += UserLogin;
         }
         
         private void UserLogin(object sender, EventArgs e)
         {
-            if (_customer.Password != null && _customer.Password == _view.Password) Console.WriteLine("Logged in successfully... I guess... Not implemented yet");
+            if (_customer.Password != null ) Console.WriteLine("Logged in successfully... I guess... Not implemented yet");
             else Console.WriteLine("Wrong password..."); // Here is where we'd put the account creation probably.
         }
     }
