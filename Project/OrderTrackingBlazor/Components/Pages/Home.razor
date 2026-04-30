@@ -17,9 +17,11 @@
 
 @code {
 	// replace this if we don't want to have the parcel list here
-	private List<Parcel> parcelList = new() { null, null }; // test null values
+	private List<Parcel> parcelList = new() {}; // test null values
 
 	private PackageModeling _modeling = new();
+
+	public string Id { get; set; }
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
@@ -28,18 +30,38 @@
 	}
 
 
-
-
-	// only here to complete IView
-	public string Id { get; set; }
-	public event EventHandler AddPackage;
-
 	private async Task HandleAdd()
 	{
-		AddPackage?.Invoke(this, EventArgs.Empty);
+		try
+		{
+			string iD = Id;
+			iD = iD.ToUpper().Trim();
+			char[] iDarray = iD.ToCharArray();
+
+			if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
+
+			// MH302164795FI
+			if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) ||
+				!char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2]))
+			{
+				throw new ArgumentException("Invalid tracking number");
+			}
+
+			Parcel p = await _modeling.GetTheParcelAsync(iD);
+			parcelList.Add(p);
+			//Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Exception: {ex.Message}");
+		}
 	}
 
 
+
+	// only here to complete IView
+	public event EventHandler AddPackage;
 	public string TrackingId { get; set; }
 	public string Display { get; set; }
 	public string Email { get; set; }
