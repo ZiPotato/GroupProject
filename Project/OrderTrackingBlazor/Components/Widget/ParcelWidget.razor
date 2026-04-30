@@ -2,17 +2,17 @@
 <div class="body">
     <div class="d-flex flex-row">
         <div class="flex-grow-1">
-            <h2>@ParcelID</h2>
+            <h2>@Parcel.TrackingId</h2>
         </div>
         <div>
             <button @onclick="HandleUpdate">Update</button>
         </div>
     </div>
-    <h3>The carrier of this package is: @ParcelCarrier</h3>
-    <p2>@ParcelState</p2>
-    @if(ParcelETA != null)
+    <h3>The carrier of this package is: @Parcel.Company</h3>
+    <p2>@Parcel.StatusDescription</p2>
+    @if(Parcel.DeliveredAt != null)
     {
-        <p2>Estimated time of arrival: @ParcelETA</p2>
+        <p>Estimated time of arrival: @Parcel.DeliveredAt</p>
     }
     else 
     {
@@ -47,17 +47,22 @@
 
     public ParcelWidget() 
     {
-        //ParcelID = Parcel.TrackingId ?? "Couldn't find the tracking ID";
-        //ParcelCarrier = Parcel.Company ?? "Couldn't find the company";
-        //ParcelState = Parcel.StatusDescription ?? "Couldn't find the status description";
-        //ParcelETA = Parcel.DeliveredAt;
+        //if (Parcel != null)
+        //{
+        //    ParcelID = Parcel.TrackingId ?? "Couldn't find the tracking ID";
+        //    ParcelCarrier = Parcel.Company ?? "Couldn't find the company";
+        //    ParcelState = Parcel.StatusDescription ?? "Couldn't find the status description";
+        //    ParcelETA = Parcel.DeliveredAt;
+        //}
+        //else
+        //{
+        //    // test values
+        //    ParcelID = "AB12334";
+        //    ParcelCarrier = "Matkahuolto";
+        //    ParcelState = "In Delivery";
+        //    ParcelETA = DateTimeOffset.Now;
+        //}
 
-
-        // test values
-        ParcelID = "AB12334";
-        ParcelCarrier = "Matkahuolto";
-        ParcelState = "In Delivery";
-        ParcelETA = DateTimeOffset.Now;
     }
 
     private async Task HandleUpdate()
