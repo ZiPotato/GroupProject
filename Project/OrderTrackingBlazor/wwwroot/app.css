@@ -2,7 +2,6 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-image: linear-gradient(to right, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
-
 a, .btn-link {
     color: #006bb7;
 }
