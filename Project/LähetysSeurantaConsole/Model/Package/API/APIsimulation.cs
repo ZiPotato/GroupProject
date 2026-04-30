@@ -89,7 +89,7 @@ namespace LähetysSeurantaConsole.Model.Package.API
                 "104"
             ];
 
-            return statuses[Rand.Next(statuses.Length)];
+            return statuses[Rand.Next(0, statuses.Length)];
         }
 
         private static string GetTheCity()
