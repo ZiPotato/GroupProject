@@ -1,15 +1,29 @@
-.thisclass {
+
+.ourbtn {
     flex-direction: column;
     font-family: 'Segoe UI';
     border-bottom-right-radius: 7px;
-    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
     background: linear-gradient(to right, #f8fafc 0%, #b7c6de 100%);
     border: 1px solid #d6dde8;
     box-shadow: 0 6px 18px rgba(15, 23, 42, 0.2);
-    transition: all 0.3s;
+    transition: all 0.5s;
 }
 
-.thisclass:hover {
-    border-radius: 20px;
-    cursor: pointer
-}    
+    .ourbtn:hover {
+        border-radius: 10px;
+        cursor: pointer
+    }
+
+.ourtxt {
+    flex-direction: column;
+    font-family: 'Segoe UI';
+    margin-right: .5rem;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    transition: all 0.4s;
+}
+
+    .ourtxt:focus {
+        font-size: 1.4rem;
+    }

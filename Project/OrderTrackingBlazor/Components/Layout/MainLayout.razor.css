@@ -8,8 +8,10 @@
 main {
     flex: 1;
 }
+
 @media (min-width: 641px) {
     .page {
+        align-items: start;
         flex-direction: row;
     }
 }

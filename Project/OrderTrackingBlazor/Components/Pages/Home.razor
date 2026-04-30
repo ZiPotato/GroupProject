@@ -3,9 +3,9 @@
 @using LähetysSeurantaConsole.Presenter;
 <PageTitle>Home</PageTitle>
 
-<input type="text" @bind-value="ID"/>
+<input class="ourtxt" type="text" @bind-value="ID"/>
 
-<button class="thisclass" onclick="@Click()">Add a package</button>
+<button class="ourbtn" onclick="@Click()">Add a package</button>
 <!-- basic test loop -->
 @foreach (var parcel in parcelList)
 {
@@ -16,11 +16,11 @@
 
 @code {
 	private string ID { get; set; }
-	private PackageIDHandling _package = new();
+//	private PackageIDHandling _package = new();
 
 	public async Task<Parcel> Click()
 	{
-		if (!string.IsNullOrEmpty(ID)) return await _package.AddPackage(ID);
+//		if (!string.IsNullOrEmpty(ID)) return await _package.AddPackage(ID);
 		return null;
 	}
 	// replace this if we don't want to have the parcel list here
