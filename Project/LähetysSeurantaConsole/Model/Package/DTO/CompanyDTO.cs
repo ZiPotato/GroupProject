@@ -1,10 +1,9 @@
-﻿using LähetysSeurantaConsole.Model.Package.DTO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace LähetysSeurantaConsole.Model.Package
+namespace LähetysSeurantaConsole.Model.Package.DTO
 {
-    internal class CompanyDTO
+    public class CompanyDTO
     {
         public Parcel Completed { get; }
         /// <summary>
@@ -22,7 +21,7 @@ namespace LähetysSeurantaConsole.Model.Package
         {
             return company switch
             {
-                "MA" => MatkahuoltoDTO.ToParcel(json),
+                "MH" => MatkahuoltoDTO.ToParcel(json),
                 _ => throw new ArgumentException("Couldn't find the firm")
             };
         }

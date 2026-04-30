@@ -9,27 +9,33 @@ namespace LähetysSeurantaConsole.Model.Package
     {
         public required string TrackingId { get; init; }
         public required string Company { get; init; }
-        public string URL { get; set; }
-        public string? CurrentStatus { get; init; }
+        public string? URL { get; set; }
         public string? StatusDescription { get; init; }
-
-        public DateTimeOffset? EstimatedDelivery { get; init; }
-        public DateTimeOffset? DeliveredAt { get; init; }
-
-        public string? RecipientName { get; init; }
-        public string? ServiceName { get; init; }
-
+        public DateTimeOffset? DeliveredAt{ get; init; }
+        public DateTime LastUpdated = DateTime.Now;
         public IReadOnlyList<ParcelEvent> Events { get; init; } = [];
-
         public bool IsDelivered => DeliveredAt is not null;
-        public override string ToString() { return $"{TrackingId},\n{CurrentStatus}, \n{StatusDescription}, \nETA: {EstimatedDelivery.ToString()}"; }
+        public override string ToString() 
+        {
+             return $"" +            // Yes. There's probably a better way to do this...
+            $"ID              : {TrackingId}\n" +
+            $"Carrier company : {Company}\n" +
+            $"Current status  : {StatusDescription}\n" +
+            $"Current city    : {Events.Last().Location}\n"; 
+        }
     }
 
     public sealed record ParcelEvent
     {
         public DateTimeOffset? Timestamp { get; init; }
-        public string? Status { get; init; }
         public string? Description { get; init; }
         public string? Location { get; init; }
+        public override string ToString()
+        {
+            return $"" +
+                $"Time     : {Timestamp}\n" +
+                $"Status   : {Description}\n" +
+                $"Location : {Location}\n";
+        }
     }
 }

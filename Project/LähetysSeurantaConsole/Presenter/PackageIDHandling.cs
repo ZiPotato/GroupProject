@@ -1,47 +1,59 @@
 ﻿using LähetysSeurantaConsole.Model.Customer;
 using LähetysSeurantaConsole.Model.Package;
 using LähetysSeurantaConsole.View;
-using System.ComponentModel;
-using System.Text.RegularExpressions;
 
 namespace LähetysSeurantaConsole.Presenter
 {
     public class PackageIDHandling
     {
-        // We Receive the ID from the customer and construct it into the desired url
         IView _view;
         IPackage _package;
+        ICustomer _customer;        // All of customer is currently useless in our code
 
         public PackageIDHandling(IView view)
         {
             _view = view;
             _view.AddPackage += AddPackage;
-            _view.DisplayLatestPackage += DisplayTheLatestPackage;
+            // _view.DisplayLatestPackage += DisplayTheLatestPackage;
+            _package = new PackageModeling();
         }
 
-        public void AddPackage(object sender, EventArgs e)
+        private async void AddPackage(object sender, EventArgs e)
         {
-            string iD = _view.Id;
-            iD = iD.ToUpper().Trim();
-            char[] iDarray = iD.ToCharArray();
-
-            if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
-            else if (!char.IsLetter(iDarray[0]) || !char.IsLetter(iDarray[1])) throw new ArgumentException("First two characters of a trackingnumber should be letters");
-
-            Parcel p = _package.GetTheParcel(iD);
-            
-            if (p != null)
+            try
             {
-            //    _customer.ParcelList.Add(p);
-                Console.WriteLine("Success");
+                string iD = _view.Id;
+                iD = iD.ToUpper().Trim();
+                char[] iDarray = iD.ToCharArray();
+
+                if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
+
+                if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) || 
+                    !char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2]))
+                {
+                    throw new ArgumentException("Invalid tracking number");
+                }
+
+                Parcel p = await _package.GetTheParcelAsync(iD);
+                // _customer.ParcelList.Add(p);
+                Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
             }
-            else Console.WriteLine("Something went wrong creating the parcel");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Request failed: {ex.Message}");
+            }
         }
 
         private void DisplayTheLatestPackage(object sender, EventArgs e)
         {
-            //if (_customer.ParcelList.Last() == null) throw new ArgumentNullException("The list of packages is empty.");
-            //Console.WriteLine(_customer.ParcelList.Last().ToString());
+            try
+            {
+                Console.WriteLine(_customer.ParcelList.Last().ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentNullException($"Fetching Parcel failed: {ex.Message}");
+            }
         }
     }
 }
