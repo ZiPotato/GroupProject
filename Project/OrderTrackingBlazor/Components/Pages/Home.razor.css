@@ -1,7 +1,5 @@
 
 .ourbtn {
-    flex-direction: column;
-    font-family: 'Segoe UI';
     border-bottom-right-radius: 7px;
     border-top-right-radius: 7px;
     background: linear-gradient(to right, #f8fafc 0%, #b7c6de 100%);
@@ -11,6 +9,18 @@
 }
 
     .ourbtn:hover {
+        border-radius: 10px;
+        cursor: pointer
+    }
+
+.updatebtn {
+    flex-direction: column;
+    font-family: 'Segoe UI';
+    border-radius: 5px;
+    transition: all 0.5s;
+    background: linear-gradient(to right, #f8fafc 0%, #b7c6de 100%);
+}
+    .updatebtn:hover {
         border-radius: 10px;
         cursor: pointer
     }
