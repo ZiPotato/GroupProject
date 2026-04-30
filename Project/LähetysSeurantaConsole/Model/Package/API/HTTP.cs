@@ -50,7 +50,14 @@ namespace LähetysSeurantaConsole.Model.Package.API
         /// <summary>
         /// Generates a Base64-encoded HTTP Basic Authentication header value using a predefined username and password.
         /// We need to create a local file that is referenced rather than the code, but since we don't have any keys this is low priority.
-        /// The keys in the comments are just there so I remember that they don't work for our purposes.
+        /// 
+        /// There is a simple way in my mind we could make this "work".
+        /// We simply copy paste:
+        /// var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+        /// return File.ReadAllText(path + "/model/package/api/Keys.json");
+        /// 
+        /// into the code and exclude the Keys.json from the github with the gitignore. This way we may read it as much we want and use it as much as we want while it is still only kept locally. 
+        /// This is quite barbaric and and simple way of it, but at the same time it should be fine.
         /// </summary>
         private static string MHAuthentication()
         {
