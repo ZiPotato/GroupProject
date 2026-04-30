@@ -1,13 +1,6 @@
 ﻿
-<div class="body">
-    <div class="d-flex flex-row">
-        <div class="flex-grow-1">
-            <h2>@Parcel.TrackingId</h2>
-        </div>
-        <div>
-            <button @onclick="HandleUpdate">Update</button>
-        </div>
-    </div>
+<div class="body" onclick="@HandleUpdate">
+    <h2>@Parcel.TrackingId</h2>
     <h3>The carrier of this package is: @Parcel.Company</h3>
     <p2>@Parcel.StatusDescription</p2>
     @if(Parcel.DeliveredAt != null)
@@ -67,7 +60,8 @@
 
     private async Task HandleUpdate()
     {
-        if (Parcel != null)
+        // change this, thinks parcel to be null for no reason
+        //if (Parcel != null)
             await OnUpdateCallBack.InvokeAsync(Parcel);
     }
 }
