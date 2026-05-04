@@ -7,7 +7,7 @@
 
 <input class="ourtxt" type="text" @bind-value="ID"/>
 
-<button class="ourbtn" onclick="@Click()">Add a package</button>
+<button class="ourbtn" onclick="@HandleAdd()">Add a package</button>
 <!-- basic test loop -->
 @foreach (var parcel in parcelList)
 {
@@ -22,7 +22,7 @@
 
 	private PackageModeling _modeling = new();
 
-	public string Id { get; set; }
+	public string ID { get; set; }
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
@@ -35,7 +35,7 @@
 	{
 		try
 		{
-			string iD = Id;
+			string iD = ID;
 			iD = iD.ToUpper().Trim();
 			char[] iDarray = iD.ToCharArray();
 
