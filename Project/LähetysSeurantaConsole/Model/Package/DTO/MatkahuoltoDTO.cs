@@ -96,12 +96,14 @@ namespace LähetysSeurantaConsole.Model.Package.DTO
         /// </summary>
         /// <param name="eventCode"> The number given to us by the API </param>
         /// <returns> A string that describes the state of the parcel </returns>
-        private static string? DecipherEvent(string? eventCode)
+        public static string? DecipherEvent(string? eventCode)
         {
             return eventCode switch
             {
                 "02" => "Electronic advance information received",
                 "08" => "Picked up",
+                "2" => "Electronic advance information received",
+                "8" => "Picked up",
                 "10" => "Left parcel point",
                 "12" => "Consolidated",
                 "15" => "Received for transport",
