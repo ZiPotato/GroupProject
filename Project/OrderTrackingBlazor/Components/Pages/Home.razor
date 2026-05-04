@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using LähetysSeurantaConsole.View;
 @using LähetysSeurantaConsole.Presenter;
+@rendermode InteractiveServer
+
 <PageTitle>Home</PageTitle>
 
 <input class="ourtxt" type="text" @bind-value="ID"/>
@@ -15,14 +17,45 @@
 
 
 @code {
-	private string ID { get; set; }
-//	private PackageIDHandling _package = new();
-
-	public async Task<Parcel> Click()
-	{
-//		if (!string.IsNullOrEmpty(ID)) return await _package.AddPackage(ID);
-		return null;
-	}
 	// replace this if we don't want to have the parcel list here
-	private List<Parcel> parcelList = new() { null, null }; // test null values
+	private List<Parcel> parcelList = new() {}; // test null values
+
+	private PackageModeling _modeling = new();
+
+	public string Id { get; set; }
+
+	private async Task UpdateParcelInfo(Parcel parcel)
+	{
+		// update parcel info
+		parcel = await _modeling.UpdateParcelAsync(parcel);
+	}
+
+
+	private async Task HandleAdd()
+	{
+		try
+		{
+			string iD = Id;
+			iD = iD.ToUpper().Trim();
+			char[] iDarray = iD.ToCharArray();
+
+			if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
+
+			// MH302164795FI
+			if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) ||
+				!char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2]))
+			{
+				throw new ArgumentException("Invalid tracking number");
+			}
+
+			Parcel p = await _modeling.GetTheParcelAsync(iD);
+			parcelList.Add(p);
+			//Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Exception: {ex.Message}");
+		}
+	}
 }
