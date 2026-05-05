@@ -7,7 +7,7 @@
 
 <input class="ourtxt" type="text" @bind-value="ID"/>
 
-<button class="ourbtn" onclick="@HandleAdd">Add a package</button>
+<button class="ourbtn" @onclick="HandleAdd">Add a package</button>
 <!-- basic test loop -->
 @foreach (var parcel in parcelList)
 {
