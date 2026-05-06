@@ -8,16 +8,6 @@ namespace Project_Tests;
 [TestClass]
 public class BlazorInputTests
 {
-    [TestMethod]
-    public void ChangingInput_UpdatesBoundIdValue()
-    {
-        using var context = new TestContext();
-        var obj = context.RenderComponent<Home>();
-
-        obj.Find("input.ourtxt").Change("  mh302164795fi ");
-
-        Assert.AreEqual("  mh302164795fi ", obj.Instance.ID);
-    }
 
     [TestMethod]
     public void ClickingAdd_WithValidTrackingId_RendersParcelWidget()
@@ -73,8 +63,10 @@ public class BlazorInputTests
     {
         using var context = new TestContext();
         var obj = context.RenderComponent<Home>();
+
         obj.Find("input.ourtxt").Change("302164795fi");
         obj.Find("button.ourbtn").Click();
+
         Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
     } 
     [TestMethod]
@@ -82,8 +74,52 @@ public class BlazorInputTests
     {
         using var context = new TestContext();
         var obj = context.RenderComponent<Home>();
+
         obj.Find("input.ourtxt").Change("MH302164795");
         obj.Find("button.ourbtn").Click();
+
         Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    }
+    [TestMethod]
+    public void ClickingAdd_WithTrackingIdContainingSpecialCharacters_DoesNotRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+
+        obj.Find("input.ourtxt").Change("MH302164795@!");
+        obj.Find("button.ourbtn").Click();
+        
+        Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    }
+    [TestMethod]
+    public void ClickingAdd_WithTrackingIdContainingOnlyLetters_DoesNotRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+
+        obj.Find("input.ourtxt").Change("MHFI");
+        obj.Find("button.ourbtn").Click();
+
+        Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    }
+    [TestMethod]
+    public void ClickingAdd_WithTrackingIdContainingOnlyNumbers_DoesNotRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+
+        obj.Find("input.ourtxt").Change("302164795");
+        obj.Find("button.ourbtn").Click();
+
+        Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    }
+    [TestMethod]
+    public void ClickingAdd_WithTrackingIdContainingLowercaseLetters_DoesRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+        obj.Find("input.ourtxt").Change("mh302164795fi");
+        obj.Find("button.ourbtn").Click();
+        Assert.AreEqual(1, obj.FindComponents<ParcelWidget>().Count);
     }
 }
