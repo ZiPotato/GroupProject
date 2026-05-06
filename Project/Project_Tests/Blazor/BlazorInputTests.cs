@@ -46,4 +46,44 @@ public class BlazorInputTests
 
         Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
     }
+    [TestMethod]
+    public void ClickingAdd_WithEmptyTrackingId_DoesNotRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+
+        obj.Find("input.ourtxt").Change("");
+        obj.Find("button.ourbtn").Click();
+
+        Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    }
+    [TestMethod]
+    public void ClickingAdd_WithWhitespaceTrackingId_DoesNotRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+
+        obj.Find("input.ourtxt").Change("   ");
+        obj.Find("button.ourbtn").Click();
+
+        Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    }
+    [TestMethod]
+    public void ClickingAdd_WithTrackingIdMissingLetters_DoesNotRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+        obj.Find("input.ourtxt").Change("302164795fi");
+        obj.Find("button.ourbtn").Click();
+        Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    } 
+    [TestMethod]
+    public void ClickingAdd_WithTrackingIdMissingLettersAtTheEnd_DoesNotRenderParcelWidget()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+        obj.Find("input.ourtxt").Change("MH302164795");
+        obj.Find("button.ourbtn").Click();
+        Assert.AreEqual(0, obj.FindComponents<ParcelWidget>().Count);
+    }
 }
