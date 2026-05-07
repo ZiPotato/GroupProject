@@ -61,8 +61,8 @@ namespace LähetysSeurantaConsole.Model.Package.API
         /// </summary>
         private static string MHAuthentication()
         {
-            string? username = "";                // UlkAPIAvoin
-            string? password = "";                // BUs28DefuNab?8aj3p3eqega
+            string? username = "";                
+            string? password = "";                
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
         }
 

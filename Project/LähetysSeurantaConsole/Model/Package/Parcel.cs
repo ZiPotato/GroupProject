@@ -17,7 +17,7 @@ namespace LähetysSeurantaConsole.Model.Package
         public bool IsDelivered => DeliveredAt is not null;
         public override string ToString() 
         {
-             return $"" +            // Yes. There's probably a better way to do this...
+             return $"" +           
             $"ID              : {TrackingId}\n" +
             $"Carrier company : {Company}\n" +
             $"Current status  : {StatusDescription}\n" +
