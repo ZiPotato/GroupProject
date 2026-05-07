@@ -12,6 +12,8 @@ namespace LähetysSeurantaConsole.Model.Package
         public string? URL { get; set; }
         public string? StatusDescription { get; init; }
         public DateTimeOffset? DeliveredAt{ get; init; }
+
+        public DateTime? ETA { get; init; }
         public DateTime LastUpdated = DateTime.Now;
         public IReadOnlyList<ParcelEvent> Events { get; init; } = [];
         public bool IsDelivered => DeliveredAt is not null;

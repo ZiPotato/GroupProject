@@ -1,66 +1,45 @@
-﻿<div class="body" @onclick="HandleUpdate">
-    <h2>@Parcel.TrackingId</h2>
-    <h3>The carrier of this package is: @Parcel.Company</h3>
-    <p2>@Parcel.StatusDescription</p2>
-    @if(Parcel.DeliveredAt != null)
-    {
-        <p>Estimated time of arrival: @Parcel.DeliveredAt</p>
-    }
-    else 
-    {
-        <p>We couldn't fetch the ETA for this package.</p>
-    }
-</div>
+﻿<article class="parcel-card @(Parcel.IsDelivered ? "parcel-card--delivered" : null)" @onclick="HandleUpdate">
+    <div class="parcel-card__header">
+        <div>
+            <p class="parcel-card__eyebrow">Tracking number</p>
+            <h2>@Parcel.TrackingId</h2>
+        </div>
+    </div>
+
+    <div class="parcel-card__grid">
+        <section class="parcel-card__section">
+            <h3>Carrier</h3>
+            <p>@Parcel.Company</p>
+        </section>
+
+        <section class="parcel-card__section">
+            <h3>Status</h3>
+            <p>@Parcel.StatusDescription</p>
+        </section>
+
+        <section class="parcel-card__section parcel-card__section--full">
+            <h3>Estimated arrival</h3>
+            @if (Parcel.ETA != null)
+            {
+                <p>@Parcel.ETA</p>
+            }
+            else
+            {
+                <p>We couldn't fetch the ETA for this package.</p>
+            }
+        </section>
+    </div>
+</article>
 
 @code {
-
     [Parameter, EditorRequired]
     public Parcel Parcel { get; init; }
 
     [Parameter, EditorRequired]
     public EventCallback<Parcel> OnUpdateCallBack { get; set; }
 
-    string ParcelID;
-    string ParcelState;
-    string ParcelCarrier;
-    DateTimeOffset? ParcelETA;
-
-
-    /// <summary>
-    /// Here we are assuming a check already happened that the package is not yet delivered.
-    /// 
-    /// Currently we are extracting the bare minimum of the potential information into the widget.
-    /// If we do not need other information we will be likely deleting it from the Parcel record,
-    /// but we probably still do want to use hopefully the events at the very least.
-    /// 
-    /// Basically the idea is that we will be able to call this layout in the main code as many times as we need and it will be drawn without a hitch.
-    /// The call should be as simple as @RenderPage() and it should render this here, but I have not tested it at all.
-    /// </summary>
-
-    public ParcelWidget() 
-    {
-        //if (Parcel != null)
-        //{
-        //    ParcelID = Parcel.TrackingId ?? "Couldn't find the tracking ID";
-        //    ParcelCarrier = Parcel.Company ?? "Couldn't find the company";
-        //    ParcelState = Parcel.StatusDescription ?? "Couldn't find the status description";
-        //    ParcelETA = Parcel.DeliveredAt;
-        //}
-        //else
-        //{
-        //    // test values
-        //    ParcelID = "AB12334";
-        //    ParcelCarrier = "Matkahuolto";
-        //    ParcelState = "In Delivery";
-        //    ParcelETA = DateTimeOffset.Now;
-        //}
-
-    }
-
     private async Task HandleUpdate()
     {
-        // change this, thinks parcel to be null for no reason
-        //if (Parcel != null)
-            await OnUpdateCallBack.InvokeAsync(Parcel);
+        await OnUpdateCallBack.InvokeAsync(Parcel);
     }
 }
