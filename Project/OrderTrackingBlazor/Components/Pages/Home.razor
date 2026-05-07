@@ -8,6 +8,11 @@
 <input class="ourtxt" type="text" @bind-value="ID"/>
 
 <button class="ourbtn" onclick="@HandleAdd">Add a package</button>
+
+<button @onclick="ShowPopup">Notification</button>
+
+<NotificationWidget @ref="notification" />
+
 <!-- basic test loop -->
 @foreach (var parcel in parcelList)
 {
@@ -24,10 +29,24 @@
 
 	private string ID { get; set; }
 
+	private NotificationWidget notification;
+
+	private void ShowPopup()
+	{
+		notification.Show("moi");
+	}
+
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
 		// update parcel info
-		parcel = await _modeling.UpdateParcelAsync(parcel);
+		try
+		{
+			parcel = await _modeling.UpdateParcelAsync(parcel);
+		}
+		catch (Exception ex)
+		{
+			notification.Show(ex.Message, "Exception:");
+		}
 	}
 
 
@@ -56,6 +75,7 @@
 		catch (Exception ex)
 		{
 			Console.WriteLine($"Exception: {ex.Message}");
+			notification.Show(ex.Message, "Exception:");
 		}
 	}
 }
