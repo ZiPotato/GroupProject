@@ -26,10 +26,14 @@
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
-		// update parcel info
-		parcel = await _modeling.UpdateParcelAsync(parcel);
-	}
+		var updatedParcel = await _modeling.UpdateParcelAsync(parcel);
 
+		var index = parcelList.FindIndex(p => p.TrackingId == parcel.TrackingId);
+		if (index >= 0)
+		{
+			parcelList[index] = updatedParcel;
+		}
+	}
 
 	private async Task HandleAdd()
 	{
