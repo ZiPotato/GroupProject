@@ -1,39 +1,29 @@
-
 .ourbtn {
-    border-bottom-right-radius: 7px;
-    border-top-right-radius: 7px;
-    background: linear-gradient(to right, #f8fafc 0%, #b7c6de 100%);
-    border: 1px solid #d6dde8;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.2);
-    transition: all 0.5s;
+    height: 2.8rem;
+    border: 1px solid #cbd5e1;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-    .ourbtn:hover {
-        border-radius: 10px;
-        cursor: pointer
-    }
-
-.updatebtn {
-    flex-direction: column;
-    font-family: 'Segoe UI';
-    border-radius: 5px;
-    transition: all 0.5s;
-    background: linear-gradient(to right, #f8fafc 0%, #b7c6de 100%);
+.ourbtn:hover {
+    cursor: pointer;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
 }
-    .updatebtn:hover {
-        border-radius: 10px;
-        cursor: pointer
-    }
-
 .ourtxt {
-    flex-direction: column;
-    font-family: 'Segoe UI';
-    margin-right: .5rem;
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
-    transition: all 0.4s;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    min-width: 10rem;
+    height: 2.8rem;
+    margin-right: 0;
+    padding-left: 0.5rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
 }
-
-    .ourtxt:focus {
-        font-size: 1.4rem;
-    }
