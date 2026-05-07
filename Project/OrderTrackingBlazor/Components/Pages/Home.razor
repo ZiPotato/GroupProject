@@ -9,7 +9,7 @@
 
 <button class="ourbtn" onclick="@HandleAdd">Add a package</button>
 
-<button @onclick="ShowPopup">Notification</button>
+<button @onclick="ShowTestPopup">Test Notification</button>
 
 <NotificationWidget @ref="notification" />
 
@@ -31,9 +31,9 @@
 
 	private NotificationWidget notification;
 
-	private void ShowPopup()
+	private void ShowTestPopup()
 	{
-		notification.Show("moi");
+		notification.Show("moi", "Otsikko");
 	}
 
 	private async Task UpdateParcelInfo(Parcel parcel)
