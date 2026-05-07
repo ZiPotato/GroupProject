@@ -7,8 +7,10 @@
 <PageTitle>Home</PageTitle>
 
 <input class="ourtxt" type="text" @bind-value="ID"/>
-
 <button class="ourbtn" @onclick="HandleAdd">Add a package</button>
+
+<NotificationWidget @ref="notification" />
+
 <!-- basic test loop -->
 <div class="parcel-grid">
 	@foreach (var parcel in parcelList)
@@ -26,6 +28,8 @@
 	private PackageModeling _modeling = new();
 
 	private string ID { get; set; }
+
+	private NotificationWidget notification;
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
@@ -67,6 +71,7 @@
 		catch (Exception ex)
 		{
 			Console.WriteLine($"Exception: {ex.Message}");
+			notification.Show(ex.Message, "Exception:");
 		}
 	}
 }
