@@ -18,14 +18,22 @@
         </section>
 
         <section class="parcel-card__section parcel-card__section--full">
-            <h3>Estimated arrival</h3>
-            @if (Parcel.ETA != null)
+            @if (Parcel.IsDelivered)
             {
-                <p>@Parcel.ETA</p>
+                <h3>Package was delivered</h3>
+                <p>@Parcel.DeliveredAt</p>
             }
             else
             {
-                <p>We couldn't fetch the ETA for this package.</p>
+                <h3>Estimated time of arrival</h3>
+                @if (Parcel.ETA != null)
+                {
+                    <p>@Parcel.ETA</p>
+                }
+                else
+                {
+                    <p>We couldn't fetch the ETA for this package.</p>
+                }
             }
         </section>
     </div>
