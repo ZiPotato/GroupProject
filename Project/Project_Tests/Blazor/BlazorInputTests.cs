@@ -123,7 +123,28 @@ public class BlazorInputTests
         Assert.AreEqual(1, obj.FindComponents<ParcelWidget>().Count);
     }
     [TestMethod]
-    public void UpdateParcel_ValidParcelWidget_AfterClickingParcelWidget()
+    public void UpdateParcel_ValidParcelWidget_TryingToUpdateParcelWhileItsStillTooNewToBeUpdated()
+    {
+        using var context = new TestContext();
+        var obj = context.RenderComponent<Home>();
+
+        obj.Find("input.ourtxt").Change("mh302164795fi");
+        obj.Find("button.ourbtn").Click();
+
+
+        var widget = obj.FindComponent<ParcelWidget>();
+        var before = widget.Instance.Parcel.ToString();
+
+        obj.Find("div.body").Click();
+       
+        obj.WaitForAssertion(() =>
+        {
+            var after = obj.FindComponent<ParcelWidget>().Instance.Parcel.ToString();
+            Assert.AreEqual(before, after);
+        });
+    }
+    [TestMethod]
+    public void UpdateParcel_ValidParcelWidget_AfterClickingParcelWidgetItWillUpdateNormally()
     {
         using var context = new TestContext();
         var obj = context.RenderComponent<Home>();

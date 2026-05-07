@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using LähetysSeurantaConsole.View;
 @using LähetysSeurantaConsole.Presenter;
+@using System.Text.RegularExpressions;
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -18,6 +19,7 @@
 
 @code {
 	// replace this if we don't want to have the parcel list here
+
 	private List<Parcel> parcelList = new() {}; // test null values
 
 	private PackageModeling _modeling = new();
@@ -46,8 +48,12 @@
 			if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
 
 			// MH302164795FI
+
+			Regex reg = new Regex(@"\d");
+
 			if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) ||
-				!char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2]))
+				!char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2])||
+				reg.Count(iDarray) <= 2)
 			{
 				throw new ArgumentException("Invalid tracking number");
 			}
