@@ -9,8 +9,6 @@
 
 <button class="ourbtn" onclick="@HandleAdd">Add a package</button>
 
-<button @onclick="ShowTestPopup">Test Notification</button>
-
 <NotificationWidget @ref="notification" />
 
 <!-- basic test loop -->
@@ -30,11 +28,6 @@
 	private string ID { get; set; }
 
 	private NotificationWidget notification;
-
-	private void ShowTestPopup()
-	{
-		notification.Show("moi", "Otsikko");
-	}
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
