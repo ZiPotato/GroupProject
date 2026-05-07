@@ -10,11 +10,12 @@
 
 <button class="ourbtn" @onclick="HandleAdd">Add a package</button>
 <!-- basic test loop -->
-@foreach (var parcel in parcelList)
-{
-	<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" />
-	<h1></h1> <!-- temp? seperator -->
-}
+<div class="parcel-grid">
+	@foreach (var parcel in parcelList)
+	{
+		<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" />
+	}
+</div>
 
 
 @code {

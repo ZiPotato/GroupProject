@@ -1,4 +1,4 @@
-﻿<article class="parcel-card" @onclick="HandleUpdate">
+﻿<article class="parcel-card @(Parcel.IsDelivered ? "parcel-card--delivered" : null)" @onclick="HandleUpdate">
     <div class="parcel-card__header">
         <div>
             <p class="parcel-card__eyebrow">Tracking number</p>
@@ -19,9 +19,9 @@
 
         <section class="parcel-card__section parcel-card__section--full">
             <h3>Estimated arrival</h3>
-            @if (Parcel.DeliveredAt != null)
+            @if (Parcel.ETA != null)
             {
-                <p>@Parcel.DeliveredAt</p>
+                <p>@Parcel.ETA</p>
             }
             else
             {
