@@ -7,10 +7,11 @@
     </div>
 
     <div class="parcel-card__grid">
-        <section class="parcel-card__section">
-            <h3>Carrier</h3>
-            <p>@Parcel.Company</p>
-        </section>
+
+        <a class="parcel-card__section parcel-card__section--Link" @onclick:stopPropagation="true" href="@($"https://{Parcel.Company}.fi")">
+                <h3>Carrier</h3>
+                <p>@Parcel.Company</p>
+        </a>
 
         <section class="parcel-card__section">
             <h3>Status</h3>
