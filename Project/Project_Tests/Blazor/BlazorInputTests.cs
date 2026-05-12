@@ -135,7 +135,7 @@ public class BlazorInputTests
         var widget = obj.FindComponent<ParcelWidget>();
         var before = widget.Instance.Parcel.ToString();
 
-        obj.Find("div.body").Click();
+        obj.Find("article.parcel-card").Click();
        
         obj.WaitForAssertion(() =>
         {
@@ -158,7 +158,7 @@ public class BlazorInputTests
 
         widget.Instance.Parcel.LastUpdated = DateTime.Now.AddHours(-2);
 
-        obj.Find("div.body").Click();
+        obj.Find("article.parcel-card").Click();
 
         obj.WaitForAssertion(() =>
         {
