@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics.Tracing;
+
 namespace LähetysSeurantaConsole.Model.Package
 {
     /// <summary>
@@ -12,11 +14,11 @@ namespace LähetysSeurantaConsole.Model.Package
         public string? URL { get; set; }
         public string? StatusDescription { get; init; }
         public DateTimeOffset? DeliveredAt{ get; init; }
-
         public DateTime? ETA { get; init; }
         public DateTime LastUpdated = DateTime.Now;
         public IReadOnlyList<ParcelEvent> Events { get; init; } = [];
         public bool IsDelivered => DeliveredAt is not null;
+        public string Location { get => Events.Last().Location; }
         public override string ToString() 
         {
              return $"" +           
@@ -24,6 +26,7 @@ namespace LähetysSeurantaConsole.Model.Package
             $"Carrier company : {Company}\n" +
             $"Current status  : {StatusDescription}\n" +
             $"Current city    : {Events.Last().Location}\n"; 
+        
         }
     }
 
