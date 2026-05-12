@@ -1,43 +1,11 @@
-# GroupProject
+# About this project.
 
-### Minimum usable product idea 1 sisältää:
-- Mahdollisuus hakea toimitukset suoraan kuljetusyrityksiltä.
+## What is this?
 
-### Aloitus ideat:
-- Tutkinta jos kyseinen on mahdollista suorittaa URI informaation muokkaamisella
-- Tutkinta onko mahdollista saada suora Widget haettua kuljetusyrityksiltä
+This project is a student group project that we created with the simple idea of wanting to fetch packages from API:s without going to the carrier sites individually.  
+Currently instead of using the actual API:s, we simulate the Json data that we would get from them locally. Using the Json data we create Parcel records that we use to display the current state of the package.
 
-### Muuta tehtävää ennenkuin voi aloittaa kirjoittamaan koodia
-- Suunnitella pohja millaisen käyttöliittymän haluaa ekaksi sivuksi asiakkaalle
-- Päättää miten haluamme että tieto kerätään käyttäjältä. (Onko se että käyttäjä asettaa lähetystunnuksen manuaalisesti vai hakeeko se suoraan sähköpostista
-- SQLlite?
-- Serverside blazor hybrid?
-- MVP Malli suunnittelu
-- Ensimmainen versio voi mahdollisesti olla vain konsoli versio
-- Suunnittelu mitä kaikkea halutaan laittaa backendiin palvelumielessä
-- Pitää varmistaa, että ei kerätä turhaa informaatiota liikaa. Eli jos haetaan tieto sähköpostista varmistetaan viestin pvm jotta ei lähetä etsimään liian vanhoja paketteja.
+## How to use the program?
 
-### Toiminta
-#### miten hakea pakettien tiedot
-Verrannollisesti "pakettiseuranta.fi" Avoimesti käyttää ideaa "https://{sivustojostapakettihaetaan}/seuranta{sivustonperusteellaolevaaloite}{KäännettyURIkomponentti}"  
-Kyseisen sivun tracking.js tiedostosta voi käydä hakemsassa kyseisen logiikan ja kokeilla saada selville tarkalleen mitä tapahtuu. Sivustoon ei ole tehty sen suurempia defensiivisiä nimeämisiä tai muuta piilottelua joten se on vain kunhan lukaa.  
-
-#### Kuinka usein haluamme päivittää tiedon per käyttäjä
-Todellisuudessa olisi fiksua varmaan kerätä tunnin välein, joka voidaan tietona päivittää tietokantaan.
-
-#### Tietokanta
-Mitä tietoa haluamme kerätä tietokantaan?
-
-Lähettäjä | Saaja | Sijainti | Tila ? Onko nämä riittävät vai onko nämä liikaa? Tarvitsemmeko tietokantaa kyseiseen?
-
-
-## To-DO
-
-- Exception luokka.
-- CustomerHandling.
-- Yritysten simulointi ilman API avainta.
-- Blazor UI
-
-### Clean architechture
-
-[Arkkitehtuurista](https://github.com/gmagana/clean-architecture-example-csharp?tab=readme-ov-file)
+Program can simply be run from the published folder by using the OrderTrackingBlazor.exe. After this it should automatically open your browser to the program, but if it doesn't for one reason or another the default ip is "127.0.0.1:5161".  
+Here you can simply put in your trackingID given to you by the carrier company usually through an email. If the carrier company is supported by our program you should be able to get a widget with its current information.  
