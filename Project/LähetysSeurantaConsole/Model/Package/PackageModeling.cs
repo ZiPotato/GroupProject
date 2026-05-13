@@ -17,9 +17,7 @@ namespace LähetysSeurantaConsole.Model.Package
         {
             if (par.LastUpdated.Hour == DateTime.Now.Hour) 
             {
-                //Console.WriteLine("It's been less than an hour from the last update");
                 throw new Exception("It's been less than an hour from the last update");
-                return par;
             }
             ID = par.TrackingId;
             Url = par.URL;

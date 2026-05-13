@@ -5,9 +5,10 @@
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
-
-<input class="ourtxt" type="text" @bind-value="ID" placeholder="Insert tracking ID here"/>
-<button class="ourbtn" @onclick="HandleAdd">Add a package</button>
+<div class="inputs">
+	<input class="ourtxt" type="text" @bind-value="ID" placeholder="Insert tracking ID here"/>
+	<button class="ourbtn" @onclick="HandleAdd">Add a package</button>
+</div>
 
 <NotificationWidget @ref="notification" />
 
