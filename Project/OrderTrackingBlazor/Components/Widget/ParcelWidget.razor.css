@@ -107,6 +107,15 @@
         background: linear-gradient(180deg, #f8fafc 0%, #cbd5e1 100%);
     }
 
+.parcel-card__section--Remove {
+    padding: 0.75rem;
+    margin: 0 0 0.75rem 0;
+}
+
+    .parcel-card__section--Remove:hover {
+        background: linear-gradient(180deg, #f8fafc 0%, #e0c9c9 100%);
+    }
+
 .parcel-card__section--full {
     grid-column: 1 / -1;
 }

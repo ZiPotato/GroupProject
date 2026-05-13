@@ -1,13 +1,13 @@
 ﻿<article class="parcel-card @(Parcel.IsDelivered ? "parcel-card--delivered" : null)" @onclick="HandleUpdate">
-    <div class="parcel-card__header">
-        <div>
+    <div class="parcel-card__header d-flex flex-row">
+        <div class="px-2 flex-grow-1">
             <p class="parcel-card__eyebrow">Tracking number</p>
             <h2>@Parcel.TrackingId</h2>
         </div>
 
-        <div>
-            <button type="button" class="btn-danger" @onclick:stopPropagation="true" @onclick="HandleRemove"></button>
-        </div>
+        <section class="parcel-card__section parcel-card__section--Remove" @onclick:stopPropagation="true" @onclick="HandleRemove">
+            <i class="bi bi-trash-fill text-danger"></i>
+        </section>
     </div>
 
     <div class="parcel-card__grid">
