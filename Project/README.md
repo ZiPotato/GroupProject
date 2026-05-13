@@ -9,3 +9,58 @@ Currently instead of using the actual API:s, we simulate the Json data that we w
 
 Program can simply be run from the published folder by using the OrderTrackingBlazor.exe (Once we actually merge the published version). After this it should automatically open your browser to the program, but if it doesn't for one reason or another the default ip is "127.0.0.1:5161".  
 Here you can simply put in your trackingID given to you by the carrier company usually through an email. If the carrier company is supported by our program you should be able to get a widget with its current information.
+
+## Model
+
+This is the backend of our program.
+
+### Model responsibility
+
+Use `Model` for:
+
+- DTOs
+- API response models
+- request models
+- domain data containers
+
+### Maintenance
+
+When adding a new model:
+
+1. place it in this folder
+2. give it a name that describes the data it represents
+3. keep it independent from UI or infrastructure concerns
+4. document any non-obvious JSON field mappings
+5. update this README if the folder structure changes significantly
+
+### Summary
+
+The `Model` folder defines the application's data structures and provides a clean boundary between raw data and application behavior.
+
+
+## Presenter
+
+This is the part of our program that handles how data is shown in our console application.
+
+### Presenter responsibility
+
+Use `Presenter` for:
+
+- formatting output for the user
+- presenting model data in a readable way
+- separating display logic from data logic
+- preparing information before printing it
+
+### Maintenance
+
+When adding a new presenter:
+
+1. place it in this folder
+2. give it a name that describes what it presents
+3. keep it focused on output and formatting
+4. avoid putting data-fetching logic here
+5. update this README if the folder structure changes significantly
+
+### Summary
+
+The `Presenter` folder defines how application data is displayed and provides a clean boundary between data and presentation.
