@@ -64,3 +64,31 @@ When adding a new presenter:
 ### Summary
 
 The `Presenter` folder defines how application data is displayed and provides a clean boundary between data and presentation.
+
+## Blazor / View 
+
+This part of the program is everything the user sees. It collects input, handles UI logic and shows information.
+The blazor part of this program is its own project that depends on LähetysSeurantaConsole's classes (models).
+Right now the Home page file is both the presenter and view in blazor.
+
+### Blazor resposibility
+
+Use `Blazor` for:
+
+- Displaying information
+- Collecting input
+- All graphical components
+- UI logic
+
+### Maintenance
+
+When adding a new blazor component:
+
+1. place it in the blazor project's Components folder and from there, the components type folder (Pages, Widget)
+2. name it appropriately
+3. keep it independent of presenter or model
+4. update this README if the folder structure changes significantly
+
+### Summary
+
+The `Blazor` project acts as a presenter aswell a view and uses LähetysSeurantaConsole's classes (models).
