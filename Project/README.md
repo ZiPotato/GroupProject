@@ -92,3 +92,11 @@ When adding a new blazor component:
 ### Summary
 
 The `Blazor` project acts as a presenter aswell a view and uses LähetysSeurantaConsole's classes (models).
+
+
+
+# TLDR
+
+- Model: models data
+- Presenter: presents data
+- View: shows data
