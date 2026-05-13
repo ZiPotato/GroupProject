@@ -89,6 +89,7 @@
 			Parcel p = await _modeling.GetTheParcelAsync(iD);
 			parcelList.Add(p);
 			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
+			ID = string.Empty;
 
 		}
 		catch (Exception ex)
