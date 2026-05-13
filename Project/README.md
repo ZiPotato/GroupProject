@@ -7,7 +7,7 @@ Currently instead of using the actual API:s, we simulate the Json data that we w
 
 ## How to use the program?
 
-Program can simply be run from the published folder by using the OrderTrackingBlazor.exe (Once we actually merge the published version). After this it should automatically open your browser to the program, but if it doesn't for one reason or another the default ip is "127.0.0.1:5161".  
+Program can simply be run from the published folder by using the OrderTrackingBlazor.exe (Once we actually merge the published version). After this it should automatically open your browser to the program, but if it doesn't for one reason or another the default ip is "127.0.0.1:5161". This is the simple "localhost" without the local host approach and can be changed naturally in the blazor projects program.cs.  
 Here you can simply put in your trackingID given to you by the carrier company usually through an email. If the carrier company is supported by our program you should be able to get a widget with its current information.
 
 ## Model
