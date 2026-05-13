@@ -196,6 +196,13 @@ main[b-pwej1cfq87] {
     }
 }
 /* /Components/Pages/Home.razor.rz.scp.css */
+.inputs[b-lv5b4bmr8x] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
 .ourbtn[b-lv5b4bmr8x] {
     height: 2.8rem;
     border: 1px solid #cbd5e1;
