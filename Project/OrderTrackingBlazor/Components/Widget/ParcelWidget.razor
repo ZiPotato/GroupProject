@@ -4,6 +4,10 @@
             <p class="parcel-card__eyebrow">Tracking number</p>
             <h2>@Parcel.TrackingId</h2>
         </div>
+
+        <div>
+            <button type="button" class="btn-danger" @onclick:stopPropagation="true" @onclick="HandleRemove"></button>
+        </div>
     </div>
 
     <div class="parcel-card__grid">
@@ -47,8 +51,16 @@
     [Parameter, EditorRequired]
     public EventCallback<Parcel> OnUpdateCallBack { get; set; }
 
+    [Parameter, EditorRequired]
+    public EventCallback<Parcel> OnRemoveCallBack { get; set; }
+
     private async Task HandleUpdate()
     {
         await OnUpdateCallBack.InvokeAsync(Parcel);
+    }
+
+    private async Task HandleRemove()
+    {
+        await OnRemoveCallBack.InvokeAsync(Parcel);
     }
 }
