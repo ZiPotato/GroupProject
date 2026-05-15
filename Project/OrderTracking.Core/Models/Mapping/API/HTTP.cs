@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace LähetysSeurantaConsole.Model.Package.API
+namespace OrderTracking.Core.Models.Mapping.API
 {
     internal class HTTP
     {

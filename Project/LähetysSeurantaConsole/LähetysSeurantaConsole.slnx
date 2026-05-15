@@ -7,5 +7,5 @@
   <Project Path="../Project_Tests/Project_Tests.csproj">
     <Build Solution="Debug|*" Project="false" />
   </Project>
-  <Project Path="LähetysSeurantaConsole.csproj" />
+  <Project Path="OrderTracking.Console.csproj" />
 </Solution>

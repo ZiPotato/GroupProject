@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LähetysSeurantaConsole.Model.Package;
+using OrderTracking.Core.Models.Package;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace LähetysSeurantaConsole.Model.Package.DTO
+namespace OrderTracking.Core.Models.Mapping.DTO
 {
     internal static class MatkahuoltoDTO
     {

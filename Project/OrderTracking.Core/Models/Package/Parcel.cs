@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics.Tracing;
 
-namespace LähetysSeurantaConsole.Model.Package
+namespace OrderTracking.Core.Models.Package
 {
     /// <summary>
     /// This is what we use to actually mold all of the companyDTO:s into same shape so it will be easier to use later.

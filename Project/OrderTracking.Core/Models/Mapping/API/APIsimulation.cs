@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace LähetysSeurantaConsole.Model.Package.API
+namespace OrderTracking.Core.Models.Mapping.API
 {
     public class APIsimulation
     {

@@ -1,6 +1,7 @@
 ﻿using LähetysSeurantaConsole.Model.Package;
 using LähetysSeurantaConsole.Model.Package.API;
 using Moq;
+using OrderTracking.Core.Models.Mapping.API;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
