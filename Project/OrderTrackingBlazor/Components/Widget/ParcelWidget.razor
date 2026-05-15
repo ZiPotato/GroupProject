@@ -22,6 +22,16 @@
             <p>@Parcel.StatusDescription</p>
         </section>
 
+        <section class="parcel-card__section">
+            <h3>Location</h3>
+            <p>@Parcel.Location</p>
+        </section>
+
+        <section class="parcel-card__section">
+            <h3>Last Updated</h3>
+            <p>@Parcel.LastUpdated.ToString("g")</p>
+        </section>
+
         <section class="parcel-card__section parcel-card__section--full">
             @if (Parcel.IsDelivered)
             {
