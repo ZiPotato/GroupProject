@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace OrderTracking.Core.Validation
 {
-    internal class Validation
+    public class Validation
     {
         private PackageModeling model = new();
 
@@ -20,7 +20,6 @@ namespace OrderTracking.Core.Validation
             {
                 return await model.UpdateParcelAsync(par);
             }
-
         }
 
         public async Task<Parcel> TrackingIDValidation(string id)
