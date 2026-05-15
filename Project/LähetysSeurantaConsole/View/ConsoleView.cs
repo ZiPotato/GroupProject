@@ -26,7 +26,7 @@ namespace LähetysSeurantaConsole.View
             {
                 Id = ReadInput("ID: ");
                 latest = await _validation.ValidateNewTrackingId(Id);
-                latest.ToString();
+                Console.WriteLine(latest.ToString());
             }
             else if (input == "2") 
             {
