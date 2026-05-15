@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LähetysSeurantaConsole\LähetysSeurantaConsole.csproj" />
+    <ProjectReference Include="..\OrderTracking.Core\OrderTracking.Core.csproj" />
   </ItemGroup>
 
 </Project>

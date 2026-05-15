@@ -2,8 +2,8 @@
   <Folder Name="/Solution Items/">
     <File Path="../../.gitignore" />
   </Folder>
-  <Project Path="../OrderTrackingBlazor/OrderTrackingBlazor.csproj" Id="0ddf5ba8-62d7-438d-9647-b845c198da6e">
-  </Project>
+  <Project Path="../OrderTracking.Core/OrderTracking.Core.csproj" Id="c17c5517-060d-4cf5-90ff-3d42173486a3" />
+  <Project Path="../OrderTrackingBlazor/OrderTrackingBlazor.csproj" Id="0ddf5ba8-62d7-438d-9647-b845c198da6e" />
   <Project Path="../Project_Tests/Project_Tests.csproj">
     <Build Solution="Debug|*" Project="false" />
   </Project>
