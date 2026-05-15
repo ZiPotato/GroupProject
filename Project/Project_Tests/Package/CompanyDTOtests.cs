@@ -1,6 +1,6 @@
-﻿using LähetysSeurantaConsole.Model.Package;
-using LähetysSeurantaConsole.Model.Package.API;
-using Moq;
+﻿using Moq;
+using OrderTracking.Core.Models.Mapping.API;
+using OrderTracking.Core.Models.Package;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -11,8 +11,7 @@ namespace Project_Tests.Package
     public sealed class CompanyDTOtests
     {
         public PackageModeling testmodel;
-        public Mock<IPackage> interfacemock;
-
+        
         private string json = string.Empty;
         [TestInitialize]
         public void SetUp()

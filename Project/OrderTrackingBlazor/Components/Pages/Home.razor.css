@@ -1,3 +1,10 @@
+.inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
 .ourbtn {
     height: 2.8rem;
     border: 1px solid #cbd5e1;

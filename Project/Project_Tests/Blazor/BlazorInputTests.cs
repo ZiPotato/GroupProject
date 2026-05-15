@@ -5,6 +5,14 @@ using TestContext = Bunit.TestContext;
 
 namespace Project_Tests;
 
+
+/// <summary>
+/// Contains unit tests for verifying the behavior of the Blazor input and parcel widget components in the Home page.
+/// </summary>
+/// <remarks>These tests validate scenarios related to entering tracking IDs and interacting with the UI, ensuring
+/// that only valid tracking IDs render the parcel widget and that updates to parcels occur as expected. The tests use
+/// bUnit and MSTest frameworks to simulate user interactions and assert component rendering and state
+/// changes. (These tests are not meant to be run often, but just after tweaks to the ParcelWidget) </remarks>
 [TestClass]
 public class BlazorInputTests
 {

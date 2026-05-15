@@ -1,17 +1,15 @@
 ﻿@page "/"
-@using LähetysSeurantaConsole.View;
-@using LähetysSeurantaConsole.Presenter;
-@using System.Text.RegularExpressions;
+@using CoreValidation = OrderTracking.Core.Validation.TrackingIDValidation
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
-
-<input class="ourtxt" type="text" @bind-value="ID" placeholder="Insert tracking ID here"/>
-<button class="ourbtn" @onclick="HandleAdd">Add a package</button>
+<div class="inputs">
+	<input class="ourtxt" type="text" @bind-value="ID" placeholder="Insert tracking ID here"/>
+	<button class="ourbtn" @onclick="HandleAdd">Add a package</button>
+</div>
 
 <NotificationWidget @ref="notification" />
 
-<!-- basic test loop -->
 <div class="parcel-grid">
 	@foreach (var parcel in parcelList)
 	{
@@ -19,13 +17,10 @@
 	}
 </div>
 
-
 @code {
-	// replace this if we don't want to have the parcel list here
-
 	private List<Parcel> parcelList = new();
 
-	private PackageModeling _modeling = new();
+	private CoreValidation _validation = new();
 
 	private string ID { get; set; } = "";
 
@@ -36,7 +31,7 @@
 		Parcel updatedParcel;
 		try
 		{
-			updatedParcel = await _modeling.UpdateParcelAsync(parcel);
+			updatedParcel = await _validation.ValidateParcelUpdate(parcel);
 		}
 		catch (Exception ex)
 		{
@@ -69,28 +64,9 @@
 	{
 		try
 		{
-			string iD = ID;
-			iD = iD.ToUpper().Trim();
-			char[] iDarray = iD.ToCharArray();
-
-			if (string.IsNullOrEmpty(iD)) throw new ArgumentNullException("ID cannot be null or empty");
-
-			// MH302164795FI
-
-			Regex reg = new Regex(@"\d");
-
-			if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) ||
-				!char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2])||
-				reg.Count(iDarray) <= 2)
-			{
-				throw new ArgumentException("Invalid tracking number");
-			}
-
-			Parcel p = await _modeling.GetTheParcelAsync(iD);
+			Parcel p = await _validation.ValidateNewTrackingId(ID);
 			parcelList.Add(p);
 			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
-			ID = string.Empty;
-
 		}
 		catch (Exception ex)
 		{
