@@ -100,3 +100,5 @@ The `Blazor` project acts as a presenter aswell a view and uses LähetysSeuranta
 - Model: models data
 - Presenter: presents data
 - View: shows data
+
+[Arkkitehtuurista](https://github.com/gmagana/clean-architecture-example-csharp?tab=readme-ov-file)
