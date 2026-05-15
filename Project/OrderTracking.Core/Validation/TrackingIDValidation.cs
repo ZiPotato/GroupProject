@@ -6,11 +6,11 @@ using System.Text.RegularExpressions;
 
 namespace OrderTracking.Core.Validation
 {
-    public class Validation
+    public class TrackingIDValidation
     {
         private PackageModeling model = new();
 
-        public async Task<Parcel> UpdateValidation(Parcel par)
+        public async Task<Parcel> ValidateParcelUpdate(Parcel par)
         {
             if (par.LastUpdated.Hour == DateTime.Now.Hour)
             {
@@ -22,7 +22,7 @@ namespace OrderTracking.Core.Validation
             }
         }
 
-        public async Task<Parcel> TrackingIDValidation(string id)
+        public async Task<Parcel> ValidateNewTrackingId(string id)
         {
 
             try

@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using CoreValidation = OrderTracking.Core.Validation.Validation
+@using CoreValidation = OrderTracking.Core.Validation.TrackingIDValidation
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -31,7 +31,7 @@
 		Parcel updatedParcel;
 		try
 		{
-			updatedParcel = await _validation.UpdateValidation(parcel);
+			updatedParcel = await _validation.ValidateParcelUpdate(parcel);
 		}
 		catch (Exception ex)
 		{
@@ -50,7 +50,7 @@
 	{
 		try
 		{
-			Parcel p = await _validation.TrackingIDValidation(ID);
+			Parcel p = await _validation.ValidateNewTrackingId(ID);
 			parcelList.Add(p);
 			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
 		}

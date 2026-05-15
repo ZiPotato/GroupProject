@@ -1,6 +1,6 @@
 ﻿
 using OrderTracking.Core.Models.Package;
-using OrderTracking.Core.Validation;
+using CoreValidation = OrderTracking.Core.Validation.TrackingIDValidation;
 
 namespace LähetysSeurantaConsole.View
 {
@@ -10,7 +10,7 @@ namespace LähetysSeurantaConsole.View
         public string Display { get; set; }
         public string Id { get; set; }
         public bool running = true;
-        public Validation _validation = new();
+        public CoreValidation _validation = new();
         public Parcel latest;
         /// <summary>
         /// One of the currently known bugs is that the menu does not wait for the API response to be printed before printing the menu again
@@ -25,7 +25,7 @@ namespace LähetysSeurantaConsole.View
             if (input == "1")
             {
                 Id = ReadInput("ID: ");
-                latest = await _validation.TrackingIDValidation(Id);
+                latest = await _validation.ValidateNewTrackingId(Id);
                 latest.ToString();
             }
             else if (input == "2") 
