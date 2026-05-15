@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OrderTracking.Core\OrderTracking.Core.csproj" />
     <ProjectReference Include="..\OrderTrackingBlazor\OrderTrackingBlazor.csproj" />
-    <ProjectReference Include="..\LähetysSeurantaConsole\OrderTracking.Console.csproj" />
   </ItemGroup>
 
   <ItemGroup>

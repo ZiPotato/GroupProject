@@ -1,6 +1,6 @@
-﻿using Moq;
+﻿using OrderTracking.Core.Models.Package;
 using OrderTracking.Core.Models.Mapping.API;
-using OrderTracking.Core.Models.Package;
+using Moq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
