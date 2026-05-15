@@ -13,7 +13,7 @@
 <div class="parcel-grid">
 	@foreach (var parcel in parcelList)
 	{
-		<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" />
+		<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" OnRemoveCallBack="RemoveParcel" />
 	}
 </div>
 
@@ -35,7 +35,7 @@
 		}
 		catch (Exception ex)
 		{
-			notification.Show(ex.Message, "Exception:");
+			notification.Show(ex.Message, "Update Exception:");
 			return;
 		}
 
@@ -43,6 +43,20 @@
 		if (index >= 0)
 		{
 			parcelList[index] = updatedParcel;
+		}
+	}
+
+	private async Task RemoveParcel(Parcel parcel)
+	{
+		try
+		{
+			string removedID = parcel.TrackingId;
+			parcelList.Remove(parcel);
+			notification.Show($"Removed parcel with ID: {removedID}", "Succsess!");
+		}
+		catch (Exception ex)
+		{
+			notification.Show(ex.Message, "Remove Exception:");
 		}
 	}
 
@@ -57,7 +71,7 @@
 		catch (Exception ex)
 		{
 			Console.WriteLine($"Exception: {ex.Message}");
-			notification.Show(ex.Message, "Exception:");
+			notification.Show(ex.Message, "Add Exception:");
 		}
 	}
 }
