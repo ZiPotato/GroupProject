@@ -32,7 +32,10 @@ namespace OrderTracking.Core.Validation
 
                 if (string.IsNullOrEmpty(id)) throw new ArgumentNullException("ID cannot be null or empty");
 
+                if (!Regex.IsMatch(id, @"^[A-Z0-9]+$")) throw new ArgumentException("Tracking number cannot contain special characters");
+
                 Regex reg = new Regex(@"\d");
+
 
                 if (!char.IsLetter(iDarray[0]) && !char.IsLetter(iDarray[1]) ||
                     !char.IsLetter(iDarray[iDarray.Length - 1]) && !char.IsLetter(iDarray[iDarray.Length - 2]) ||
