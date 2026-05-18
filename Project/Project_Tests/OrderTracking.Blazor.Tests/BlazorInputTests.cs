@@ -3,7 +3,7 @@ using OrderTrackingBlazor.Components.Pages;
 using OrderTrackingBlazor.Components.Widget;
 using TestContext = Bunit.TestContext;
 
-namespace Project_Tests;
+namespace Ordertracking.Blazor.Tests;
 
 
 /// <summary>

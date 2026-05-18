@@ -4,7 +4,7 @@ using Moq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Project_Tests.Package
+namespace OrderTracking.Core.Package.Mapping
 {
     // To Do: Test for parcel update.
     [TestClass]
