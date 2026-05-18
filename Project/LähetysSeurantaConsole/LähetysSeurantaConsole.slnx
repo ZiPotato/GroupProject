@@ -6,7 +6,7 @@
     <Build Solution="Debug|*" Project="false" />
   </Project>
   <Project Path="../OrderTrackingBlazor/OrderTrackingBlazor.csproj" Id="0ddf5ba8-62d7-438d-9647-b845c198da6e" />
-  <Project Path="../Project_Tests/Project_Tests.csproj">
+  <Project Path="../Project_Tests/OrderTracking.Tests.csproj">
     <Build Solution="Debug|*" Project="false" />
   </Project>
   <Project Path="OrderTracking.Console.csproj">

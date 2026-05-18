@@ -4,7 +4,7 @@ using Moq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Project_Tests.Package
+namespace OrderTracking.Core.Models.Mapping.Tests
 {
     // To Do: Test for parcel update.
     [TestClass]
@@ -113,10 +113,26 @@ namespace Project_Tests.Package
             Assert.AreEqual(string.Empty, testmodel.Url);
         }
         [TestMethod]
-
-        public void djodsa()
+        public void JsonToParcel_InvalidJson_ThrowsJsonReaderException()
         {
+            string invalidJson = "{ \"MHTrackingEvents\": { \"Event\": [ }";
+
+            Assert.Throws<Exception>(() => testmodel.JsonToParcel(invalidJson));    // I mean naturally it should be tested, but if the Json data we get from an API is damaged there's nothing we can do other than to make another call etc.
+        }                                                                           // So basically we could make the 3 / 5 tries that if all fail we'll throw the exception, but it's monday so I don't have enough imagination for it.
+        [TestMethod]
+        public void JsonToParcel_NonJsonText_ThrowsJsonReaderException()
+        {
+            string invalidJson = "this is not json at all";
+
+            Assert.Throws<Exception>(() => testmodel.JsonToParcel(invalidJson));
+        }
+        [TestMethod]
+        public void JsonToParcel_InvalidEventList_ThrowsException()
+        {
+            string invalidEventListJson = Regex.Replace(json, @"""Event""\s*:\s*\[[\s\S]*?\]", @"""Event"": ""invalid-event-list""", RegexOptions.Singleline);
             
+            Parcel par = testmodel.JsonToParcel(invalidEventListJson);
+            Assert.IsNotNull(par); 
         }
     }
 }

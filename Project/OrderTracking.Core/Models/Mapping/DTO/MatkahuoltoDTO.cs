@@ -43,8 +43,7 @@ namespace OrderTracking.Core.Models.Mapping.DTO
         {
             if (dto.MHTrackingEvents?.Error is not null)
             {
-                throw new ArgumentException(
-                    $"Matkahuolto returned an error: {dto.MHTrackingEvents.Error.ErrorCode} {dto.MHTrackingEvents.Error.ErrorText}");
+                throw new ArgumentException($"Matkahuolto returned an error: {dto.MHTrackingEvents.Error.ErrorCode} {dto.MHTrackingEvents.Error.ErrorText}");
             }
 
             List<Event> events = dto.MHTrackingEvents?.Events ?? [];
@@ -58,25 +57,31 @@ namespace OrderTracking.Core.Models.Mapping.DTO
                 .OrderByDescending(e => e.EventTime)
                 .Select(e => e.EventTime)
                 .FirstOrDefault();
-
-            return new Parcel
+            try
             {
-                TrackingId = latestEvent?.ShipmentNumber
-                    ?? latestEvent?.ParcelNumber
-                    ?? string.Empty,
-                Company = "Matkahuolto",
-                StatusDescription = DecipherEvent(latestEvent?.EventCode),
-                DeliveredAt = deliveredAt,
-                Events = events
-                    .OrderBy(e => e.EventTime)
-                    .Select(e => new ParcelEvent
-                    {
-                        Timestamp = e.EventTime,
-                        Description = EventToDescription(e),
-                        Location = e.EventPlace
-                    })
-                    .ToList()
-            };
+                return new Parcel
+                {
+                    TrackingId = latestEvent?.ShipmentNumber
+                        ?? latestEvent?.ParcelNumber
+                        ?? string.Empty,
+                    Company = "Matkahuolto",
+                    StatusDescription = DecipherEvent(latestEvent?.EventCode),
+                    DeliveredAt = deliveredAt,
+                    Events = events
+                        .OrderBy(e => e.EventTime)
+                        .Select(e => new ParcelEvent
+                        {
+                            Timestamp = e.EventTime,
+                            Description = EventToDescription(e),
+                            Location = e.EventPlace
+                        })
+                        .ToList()
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"The information we recieved from the company was broken, try again later.\nWhat went wrong: {ex.Message}");   
+            }
         }
 
         private static string EventToDescription(Event e)

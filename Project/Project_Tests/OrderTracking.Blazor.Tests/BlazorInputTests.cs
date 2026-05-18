@@ -3,7 +3,7 @@ using OrderTrackingBlazor.Components.Pages;
 using OrderTrackingBlazor.Components.Widget;
 using TestContext = Bunit.TestContext;
 
-namespace Project_Tests;
+namespace Ordertracking.Blazor.Tests;
 
 
 /// <summary>
@@ -13,6 +13,7 @@ namespace Project_Tests;
 /// that only valid tracking IDs render the parcel widget and that updates to parcels occur as expected. The tests use
 /// bUnit and MSTest frameworks to simulate user interactions and assert component rendering and state
 /// changes. (These tests are not meant to be run often, but just after tweaks to the ParcelWidget) </remarks>
+
 [TestClass]
 public class BlazorInputTests
 {
