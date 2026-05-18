@@ -20,6 +20,7 @@ public sealed class CompanyDTO
         company switch
         {
             "MH" => MatkahuoltoDTO.ToParcel(json),
+            "JJ" => PostiDTO.ToParcel(json),
             _ => throw new ArgumentException($"Couldn't find the firm")
         };
 }
