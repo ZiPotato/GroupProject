@@ -90,6 +90,10 @@
     word-break: break-word;
 }
 
+    .parcel-card h2:hover {
+        color: #2b4fa5;
+    }
+
 .parcel-card__grid {
     display: grid;
     grid-template-columns: 1fr;
