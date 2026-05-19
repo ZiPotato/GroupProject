@@ -90,15 +90,12 @@ public class BlazorInputTests
         _valmock.Verify(v => v.ValidateNewTrackingId(It.IsAny<string>()), Times.Once);
     }
 
-    [DataTestMethod]
-    [DataRow("12345")]
-    [DataRow("")]
-    [DataRow("   ")]
-    public void ClickingAdd_WithInvalidInput_DoesNotRenderParcelWidget(string trackingId)
+    [TestMethod]
+    public void ClickingAdd_WithInvalidInput_DoesNotRenderParcelWidget()  // This was originally three tests, but since we don't need to test the actual function of the program here just the UI I just made it one invalid ID test.
     {
         _valmock.Setup(v => v.ValidateNewTrackingId(It.IsAny<string>())).ThrowsAsync(new Exception("Invalid tracking id"));
 
-        AddTrackingId(trackingId);
+        AddTrackingId("321948");
 
         Assert.AreEqual(0, _comp.FindComponents<ParcelWidget>().Count);
         _valmock.Verify(v => v.ValidateNewTrackingId(It.IsAny<string>()), Times.Once);

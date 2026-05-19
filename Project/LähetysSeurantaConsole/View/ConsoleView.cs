@@ -6,12 +6,10 @@ namespace LähetysSeurantaConsole.View
 {
     internal class ConsoleView
     {
-        public string TrackingId { get; set; }
-        public string Display { get; set; }
-        public string Id { get; set; }
+        public string? Id { get; set; }
         public bool running = true;
         public CoreValidation _validation = new();
-        public Parcel latest;
+        public Parcel? latest;
         /// <summary>
         /// One of the currently known bugs is that the menu does not wait for the API response to be printed before printing the menu again
         /// </summary>
@@ -27,11 +25,12 @@ namespace LähetysSeurantaConsole.View
                 {
                     Id = ReadInput("ID: ");
                     latest = await _validation.ValidateNewTrackingId(Id);
-                    Console.WriteLine($"\nPackage retrieved successfully: \n{latest.ToString()}");
+                    Console.WriteLine($"\nPackage retrieved successfully: \n");
+                    PrintParcel();
                 }
                 else if (input == "2") 
                 {
-                    Console.WriteLine(latest.ToString());
+                    PrintParcel();
                 }
                 else
                 {
@@ -57,6 +56,12 @@ namespace LähetysSeurantaConsole.View
         {
             Console.Write(message);
             return Console.ReadLine();
+        }
+        private void PrintParcel()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{latest.ToString()}");
+            Console.ResetColor();
         }
     }
 }
