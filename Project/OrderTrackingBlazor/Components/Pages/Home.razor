@@ -66,11 +66,9 @@
 		{
 			Parcel p = await _validation.ValidateNewTrackingId(ID);
 			parcelList.Add(p);
-			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine($"Exception: {ex.Message}");
 			notification.Show(ex.Message, "Add Exception:");
 		}
 	}
