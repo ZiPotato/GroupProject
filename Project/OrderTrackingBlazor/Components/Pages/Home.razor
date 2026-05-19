@@ -1,6 +1,7 @@
 ﻿@page "/"
-@using CoreValidation = OrderTracking.Core.Validation.TrackingIDValidation
+@using OrderTracking.Core.Validation
 @rendermode InteractiveServer
+@inject ITrackingValidation Validation
 
 <PageTitle>Home</PageTitle>
 <div class="inputs">
@@ -19,19 +20,15 @@
 
 @code {
 	private List<Parcel> parcelList = new();
-
-	private CoreValidation _validation = new();
-
 	private string ID { get; set; } = "";
-
-	private NotificationWidget notification;
+	private NotificationWidget notification = default!;
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
 		Parcel updatedParcel;
 		try
 		{
-			updatedParcel = await _validation.ValidateParcelUpdate(parcel);
+			updatedParcel = await Validation.ValidateParcelUpdate(parcel);
 		}
 		catch (Exception ex)
 		{
@@ -46,7 +43,7 @@
 		}
 	}
 
-	private async Task RemoveParcel(Parcel parcel)
+	private Task RemoveParcel(Parcel parcel)
 	{
 		try
 		{
@@ -58,19 +55,19 @@
 		{
 			notification.Show(ex.Message, "Remove Exception:");
 		}
+
+		return Task.CompletedTask;
 	}
 
 	private async Task HandleAdd()
 	{
 		try
 		{
-			Parcel p = await _validation.ValidateNewTrackingId(ID);
+			Parcel p = await Validation.ValidateNewTrackingId(ID);
 			parcelList.Add(p);
-			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine($"Exception: {ex.Message}");
 			notification.Show(ex.Message, "Add Exception:");
 		}
 	}

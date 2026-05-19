@@ -1,5 +1,6 @@
-using System.Diagnostics;
+using OrderTracking.Core.Validation;
 using OrderTrackingBlazor.Components;
+using System.Diagnostics;
 
 namespace OrderTrackingBlazor
 {
@@ -34,6 +35,8 @@ namespace OrderTrackingBlazor
 
                 builder.Services.AddRazorComponents()
                     .AddInteractiveServerComponents();
+
+                builder.Services.AddScoped<ITrackingValidation, TrackingIDValidation>();
 
                 builder.Logging.ClearProviders();
                 builder.Logging.AddConsole();
