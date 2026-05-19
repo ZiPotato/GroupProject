@@ -5,8 +5,9 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Data;
 using System.Net.Http.Headers;
+using OrderTracking.Core.Models.Package;
 
-namespace LähetysSeurantaConsole.Model.Package.Fetched
+namespace OrderTracking.Models.Package.Fetched
 {
     internal class FetchFileHandling
     {
