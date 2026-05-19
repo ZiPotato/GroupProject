@@ -21,20 +21,28 @@ namespace LähetysSeurantaConsole.View
 
             string input;
             do { input = ReadInput("> "); } while (!int.TryParse(input, out int _));
-
-            if (input == "1")
+            try
             {
-                Id = ReadInput("ID: ");
-                latest = await _validation.ValidateNewTrackingId(Id);
-                Console.WriteLine(latest.ToString());
+                if (input == "1")
+                {
+                    Id = ReadInput("ID: ");
+                    latest = await _validation.ValidateNewTrackingId(Id);
+                    Console.WriteLine($"\nPackage retrieved successfully: \n{latest.ToString()}");
+                }
+                else if (input == "2") 
+                {
+                    Console.WriteLine(latest.ToString());
+                }
+                else
+                {
+                    running = false;
+                }
             }
-            else if (input == "2") 
+            catch (Exception ex)
             {
-                Console.WriteLine(latest.ToString());
-            }
-            else
-            {
-                running = false;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\nAn error has occured: {ex.Message}\n");
+                Console.ResetColor();
             }
         }
 
