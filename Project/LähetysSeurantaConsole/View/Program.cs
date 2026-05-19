@@ -2,12 +2,14 @@
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            ConsoleView view = new ConsoleView();
-            while (view.running)
+            ConsoleView view = new();
+
+            while (view.Running)
             {
-                view.Menu();
+                Console.WriteLine("If you're able to read this, your console is slow or you're debugging...\nWhich is cheating!");
+                await view.MenuAsync();
             }
         }
     }
