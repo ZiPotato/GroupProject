@@ -1,8 +1,10 @@
-﻿<article class="parcel-card @(Parcel.IsDelivered ? "parcel-card--delivered" : null)" @onclick="HandleUpdate">
+﻿@inject IJSRuntime JSRuntime
+
+<article class="parcel-card @(Parcel.IsDelivered ? "parcel-card--delivered" : null)" @onclick="HandleUpdate">
     <div class="parcel-card__header d-flex flex-row">
         <div class="px-2 flex-grow-1">
             <p class="parcel-card__eyebrow">Tracking number</p>
-            <h2>@Parcel.TrackingId</h2>
+            <h2 @onclick:stopPropagation="true" @onclick="HandleCopy">@Parcel.TrackingId</h2>
         </div>
 
         <section class="parcel-card__section parcel-card__section--Remove" @onclick:stopPropagation="true" @onclick="HandleRemove">
@@ -72,5 +74,10 @@
     private async Task HandleRemove()
     {
         await OnRemoveCallBack.InvokeAsync(Parcel);
+    }
+
+    private async Task HandleCopy()
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Parcel.TrackingId);
     }
 }
