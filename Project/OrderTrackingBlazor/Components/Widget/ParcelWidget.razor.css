@@ -91,7 +91,11 @@
 }
 
     .parcel-card h2:hover {
-        color: #2b4fa5;
+        color: #3e5da5;
+    }
+
+    .parcel-card h2:active {
+        color: #7ba2fc;
     }
 
 .parcel-card__grid {
