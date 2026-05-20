@@ -9,7 +9,7 @@ namespace OrderTracking.Core.Validation
 
         public async Task<Parcel> ValidateParcelUpdate(Parcel par)
         {
-            if (par.LastUpdated.Hour == DateTime.Now.Hour)
+            if (DateTime.Now - par.LastUpdated < TimeSpan.FromHours(1))
             {
                 throw new Exception("It's been less than an hour from the last update");
             }

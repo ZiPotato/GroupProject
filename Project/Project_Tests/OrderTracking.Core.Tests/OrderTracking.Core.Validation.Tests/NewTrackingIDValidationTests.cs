@@ -1,3 +1,4 @@
+using OrderTracking.Core.Models.Package;
 using OrderTracking.Core.Validation;
 
 namespace OrderTracking.Core.Validation.Tests;
@@ -53,5 +54,31 @@ public class NewTrackingIDValidationTests
     public async Task ValidateNewParcelTrackingId_IDContainsSpecialCharactersThatShouldntBeThere_ThrowsAnException()
     {
         await Assert.ThrowsAsync<Exception>(async () => await _validation.ValidateNewTrackingId("MH321!!!49312Fi"));
+    }
+    [TestMethod]
+    public async Task ValidateNewTrackingId_LeadingWhitespace_ThrowsException()
+    {
+        Parcel par = await _validation.ValidateNewTrackingId(("  MH302164795FI"));
+        Assert.IsNotNull(par);
+    }
+
+    [TestMethod]
+    public async Task ValidateNewTrackingId_TrailingWhitespace_ThrowsException()
+    {
+        Parcel par = await _validation.ValidateNewTrackingId("MH302164795FI  ");
+        Assert.IsNotNull(par);
+    }
+
+    [TestMethod]
+    public async Task ValidateNewTrackingId_InternalWhitespace_ThrowsException()
+    {
+        await Assert.ThrowsAsync<Exception>(async () => await _validation.ValidateNewTrackingId("MH 302164795 FI"));
+    }
+
+    [TestMethod]
+    public async Task ValidateNewTrackingId_ValidLowercase_ReturnsNormalizedUppercase()
+    {
+        Parcel result = await _validation.ValidateNewTrackingId("mh302164795fi");
+        Assert.AreEqual("MH302164795FI", result.TrackingId);
     }
 }

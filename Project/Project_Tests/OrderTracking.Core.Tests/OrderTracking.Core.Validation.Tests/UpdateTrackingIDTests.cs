@@ -30,4 +30,33 @@ public class UpdateTrackingIDTests
     {
         await Assert.ThrowsAsync<Exception>(async () => await _validation.ValidateParcelUpdate(par));
     }
+    [TestMethod]
+    public async Task ValidateParcelUpdate_NullParcel_ThrowsException()
+    {
+        await Assert.ThrowsAsync<Exception>(async () => await _validation.ValidateParcelUpdate(null));
+    }
+
+    [TestMethod]
+    public async Task ValidateParcelUpdate_Parcel59Minutes59SecondsOld_ThrowsException()
+    {
+        par.LastUpdated = DateTime.Now.AddMinutes(-59).AddSeconds(-59);
+        await Assert.ThrowsAsync<Exception>(async () => await _validation.ValidateParcelUpdate(par));
+    }
+
+    [TestMethod]
+    public async Task ValidateParcelUpdate_ParcelExactly60MinutesOld_ReturnsUpdatedParcel()
+    {
+        par.LastUpdated = DateTime.Now.AddMinutes(-60);
+        Parcel result = await _validation.ValidateParcelUpdate(par);
+        Assert.IsNotNull(result);
+        Assert.AreNotEqual(par.LastUpdated, result.LastUpdated);
+    }
+
+    [TestMethod]
+    public async Task ValidateParcelUpdate_ParcelOver60MinutesOld_ReturnsUpdatedParcel()
+    {
+        par.LastUpdated = DateTime.Now.AddHours(-2);
+        Parcel result = await _validation.ValidateParcelUpdate(par);
+        Assert.IsNotNull(result);
+    }
 }
