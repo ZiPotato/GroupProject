@@ -97,7 +97,7 @@
     @keyframes activationFadeout {
         0% {color: #0f172a;}
         20% {color: #7ba2fc;}
-        30% {color: #5e85e0;}
+        25% {color: #5e85e0;}
         100% {color: #0f172a;}
     }
 
