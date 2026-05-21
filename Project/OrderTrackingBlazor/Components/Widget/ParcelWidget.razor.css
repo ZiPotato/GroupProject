@@ -91,7 +91,7 @@
 }
 
     .h2-active-fadeout {
-        animation: activationFadeout 0.75s;
+        animation: activationFadeout 1s;
     }
 
     @keyframes activationFadeout {
