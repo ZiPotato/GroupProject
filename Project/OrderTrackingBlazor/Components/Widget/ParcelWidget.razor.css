@@ -90,12 +90,14 @@
     word-break: break-word;
 }
 
-    .parcel-card h2:hover {
-        color: #3e5da5;
+    .h2-active-fadeout {
+        animation: activationFadeout 1s;
     }
 
-    .parcel-card h2:active {
-        color: #7ba2fc;
+    @keyframes activationFadeout {
+        from { color: #7ba2fc }
+        to { color: #5e85e0 }
+        to { color: #0f172a }
     }
 
 .parcel-card__grid {

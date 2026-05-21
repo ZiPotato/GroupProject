@@ -4,7 +4,7 @@
     <div class="parcel-card__header d-flex flex-row">
         <div class="px-2 flex-grow-1">
             <p class="parcel-card__eyebrow">Tracking number</p>
-            <h2 @onclick:stopPropagation="true" @onclick="HandleCopy">@Parcel.TrackingId</h2>
+            <h2 class="@(_copyFadeout ? "h2-active-fadeout" : null)" @onclick:stopPropagation="true" @onclick="HandleCopy">@Parcel.TrackingId</h2>
         </div>
 
         <section class="parcel-card__section parcel-card__section--Remove" @onclick:stopPropagation="true" @onclick="HandleRemove">
@@ -66,6 +66,8 @@
     [Parameter, EditorRequired]
     public EventCallback<Parcel> OnRemoveCallBack { get; set; }
 
+    private bool _copyFadeout = false;
+
     private async Task HandleUpdate()
     {
         await OnUpdateCallBack.InvokeAsync(Parcel);
@@ -79,5 +81,10 @@
     private async Task HandleCopy()
     {
         await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Parcel.TrackingId);
+        _copyFadeout = true;
+        StateHasChanged();
+        await Task.Delay(1000);
+        _copyFadeout = false;
+        StateHasChanged();
     }
 }
