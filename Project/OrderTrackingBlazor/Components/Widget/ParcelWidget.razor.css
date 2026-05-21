@@ -91,13 +91,14 @@
 }
 
     .h2-active-fadeout {
-        animation: activationFadeout 1s;
+        animation: activationFadeout 0.75s;
     }
 
     @keyframes activationFadeout {
-        from { color: #7ba2fc }
-        to { color: #5e85e0 }
-        to { color: #0f172a }
+        0% {color: #0f172a;}
+        20% {color: #7ba2fc;}
+        30% {color: #5e85e0;}
+        100% {color: #0f172a;}
     }
 
 .parcel-card__grid {
