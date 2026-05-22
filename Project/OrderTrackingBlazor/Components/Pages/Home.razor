@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using CoreValidation = OrderTracking.Core.Validation.TrackingIDValidation
 @using OrderTracking.Core.Services
+@using OrderTracking.Core.Models.Package.Fetched
 @inject ParcelState state
 @rendermode InteractiveServer
 @inject ITrackingValidation Validation
@@ -35,14 +36,16 @@
 		Parcel updatedParcel;
 		try
 		{
-			updatedParcel = await Validation.ValidateParcelUpdate(parcel);
+			updatedParcel = await _validation.ValidateParcelUpdate(parcel);
+			state.RemoveParcel(parcel);
+			state.SaveParcel(updatedParcel);
 		}
 		catch (Exception ex)
 		{
 			notification.Show(ex.Message, "Update Exception:");
 			return;
 		}
-		
+
 		var index = state.ActiveParcels.FindIndex(p => p.TrackingId == parcel.TrackingId);
 		if (index >= 0)
 		{
@@ -63,6 +66,7 @@
 		{
 			string removedID = parcel.TrackingId;
 			state.ActiveParcels.Remove(parcel);
+			state.RemoveParcel(parcel);
 			notification.Show($"Removed parcel with ID: {removedID}", "Succsess!");
 		}
 		catch (Exception ex)
@@ -78,7 +82,8 @@
 		try
 		{
 			Parcel p = await _validation.ValidateNewTrackingId(ID);
-			parcelList.Add(p);
+			state.ActiveParcels.Add(p);
+			state.SaveParcel(p);
 			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
 		}
 		catch (Exception ex)

@@ -30,7 +30,7 @@
         {
             string removedID = parcel.TrackingId;
             state.DeliveredParcels.Remove(parcel);
-
+            state.RemoveParcel(parcel);
             notification.Show($"Removed parcel with ID: {removedID}", "Success!");
         }
         catch (Exception ex)

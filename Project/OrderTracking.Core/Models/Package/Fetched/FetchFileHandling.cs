@@ -127,5 +127,9 @@ namespace OrderTracking.Core.Models.Package.Fetched
             File.WriteAllLines(DeliveredFilePath, all.Select(p => JsonConvert.SerializeObject(p)));
         }
 
+        public bool FileExists()
+        {
+            return File.Exists(DeliveredFilePath);
+        }
     }
 }
