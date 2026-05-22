@@ -8,59 +8,6 @@ using Newtonsoft.Json.Linq;
 
 namespace OrderTracking.Core.Models.Mapping.DTO
 {
-    public class PostiTrackingDto
-    {
-        [JsonProperty("trackingCode")]
-        public string? TrackingCode { get; init; }
-        
-        [JsonProperty("productName")]
-        public string? ProductName { get; init; }
-
-        [JsonProperty("events")]
-        public List<PostiEvent>? Events { get; init; }
-
-        [JsonProperty("estimatedDeliveryTime")]
-        public DateTime? EstimatedDeliveryTime { get; init; }
-    }
-    public class PostiEvent
-    {
-        [JsonProperty("timestamp")]
-        public DateTimeOffset Timestamp{ get; init; }
-
-        [JsonProperty("locationName")]
-        public string? LocationName { get; init; }
-
-        [JsonProperty("description")]
-        public string? Description { get; init; }
-
-        [JsonProperty("trackingCode")]
-        public string? TrackingCode { get; init; }
-    }
-    internal sealed record TrackingEvents
-    {
-        [JsonProperty("events")]
-        public List<PostiEvent>? Events { get; init; }
-
-        [JsonProperty("Error")]
-        public Error? Error { get; init; }
-
-    }
-    internal sealed record Response
-    {
-        [JsonProperty("PostiTrackingEvents")]
-        public TrackingEvents? PostiTrackingEvents { get; init; }
-    }
-    internal sealed record Error
-    {
-        [JsonProperty("EventId")]
-        public string? EventId { get; init; }
-
-        [JsonProperty("ErrorCode")]
-        public string? ErrorCode { get; init; }
-
-        [JsonProperty("ErrorText")]
-        public string? ErrorText { get; init; }
-    }
     public static class PostiDTO
     {
 
@@ -97,10 +44,16 @@ namespace OrderTracking.Core.Models.Mapping.DTO
             List<PostiEvent> events = dto.PostiTrackingEvents?.Events ?? [];
 
             PostiEvent? latestEvent = events
-                .OrderByDescending(e => e.Timestamp)
+                .OrderByDescending(e => e.EventTime)
                 .FirstOrDefault();
 
-            string trackingId = 
+            DateTimeOffset? deliveredAt = events
+                .Where(e => e.EventCode is "60" or "61")
+                .OrderByDescending(e => e.EventTime)
+                .Select(e => e.EventTime)
+                .FirstOrDefault();
+
+            string trackingId =
                 latestEvent?.TrackingCode
                 ?? rootTracingCode
                 ?? latestEvent?.Description
@@ -108,15 +61,17 @@ namespace OrderTracking.Core.Models.Mapping.DTO
 
             return new Parcel
             {
-                TrackingId = trackingId,
+                TrackingId = latestEvent?.ShipmentNumber
+                    ?? latestEvent?.ParcelNumber
+                    ?? string.Empty,
                 Company = "Posti",
                 StatusDescription = latestEvent?.Description,
-                DeliveredAt = latestEvent?.Timestamp.UtcDateTime,
+                DeliveredAt = deliveredAt,
                 Events = events
-                    .OrderBy(e => e.Timestamp)
+                    .OrderBy(e => e.EventTime)
                     .Select(e => new ParcelEvent
                     {
-                        Timestamp = e.Timestamp,
+                        Timestamp = e.EventTime,
                         Location = e.LocationName,
                         Description = e.Description
                     })
@@ -124,4 +79,68 @@ namespace OrderTracking.Core.Models.Mapping.DTO
             };
         }
     }
+    public class PostiTrackingDto
+    {
+        [JsonProperty("trackingCode")]
+        public string? TrackingCode { get; init; }
+        
+        [JsonProperty("productName")]
+        public string? ProductName { get; init; }
+
+        [JsonProperty("events")]
+        public List<PostiEvent>? Events { get; init; }
+
+        [JsonProperty("estimatedDeliveryTime")]
+        public DateTime? EstimatedDeliveryTime { get; init; }
+    }
+    public class PostiEvent
+    {
+        [JsonProperty("ShipmentNumber")]
+        public string? ShipmentNumber { get; init; }
+
+        [JsonProperty("ParcelNumber")]
+        public string? ParcelNumber { get; init; }
+        
+        [JsonProperty("EventCode")]
+        public string? EventCode { get; init; }
+
+        [JsonProperty("EventTime")]
+        public DateTimeOffset? EventTime { get; init; }
+
+
+        [JsonProperty("locationName")]
+        public string? LocationName { get; init; }
+
+        [JsonProperty("description")]
+        public string? Description { get; init; }
+
+        [JsonProperty("trackingCode")]
+        public string? TrackingCode { get; init; }
+    }
+    internal sealed record TrackingEvents
+    {
+        [JsonProperty("events")]
+        public List<PostiEvent>? Events { get; init; }
+
+        [JsonProperty("Error")]
+        public Error? Error { get; init; }
+
+    }
+    internal sealed record Response
+    {
+        [JsonProperty("PostiTrackingEvents")]
+        public TrackingEvents? PostiTrackingEvents { get; init; }
+    }
+    internal sealed record Error
+    {
+        [JsonProperty("EventId")]
+        public string? EventId { get; init; }
+
+        [JsonProperty("ErrorCode")]
+        public string? ErrorCode { get; init; }
+
+        [JsonProperty("ErrorText")]
+        public string? ErrorText { get; init; }
+    }
+    
 }
