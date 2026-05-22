@@ -60,10 +60,6 @@ namespace OrderTracking.Core.Models.Package.Fetched
             {
                 writer.WriteLine(json);
             }
-            else
-            {
-                CreateFile();
-            }
         }
         public void CreateFile()
         {
