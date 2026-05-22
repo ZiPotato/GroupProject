@@ -1,11 +1,19 @@
 ﻿using OrderTracking.Core.Models.Package;
 using System.Text.RegularExpressions;
+using System.Xml;
+using OrderTracking.Core.Models.Package.Fetched;
 
 namespace OrderTracking.Core.Validation
 {
     public class TrackingIDValidation : ITrackingValidation
     {
         private PackageModeling model = new();
+        private readonly FetchFileHandling fetch;
+
+        public TrackingIDValidation() 
+        {
+            fetch = new FetchFileHandling();
+        }
 
         public async Task<Parcel> ValidateParcelUpdate(Parcel par)
         {
@@ -13,8 +21,19 @@ namespace OrderTracking.Core.Validation
             {
                 throw new Exception("It's been less than an hour from the last update");
             }
+            var update = await model.UpdateParcelAsync(par);
 
-            return await model.UpdateParcelAsync(par);
+            if (update.IsDelivered)
+            {
+                fetch.WriteDelivered(update);
+
+                return update;
+            }
+            
+            else
+            {
+                return await model.UpdateParcelAsync(par);
+            }
         }
 
         public async Task<Parcel> ValidateNewTrackingId(string id)
@@ -35,8 +54,14 @@ namespace OrderTracking.Core.Validation
                 {
                     throw new ArgumentException("Invalid tracking number");
                 }
-
-                return await model.GetTheParcelAsync(id);
+                
+                Parcel par = await model.GetTheParcelAsync(id);
+                
+                if (par.IsDelivered)
+                {
+                    fetch.WriteDelivered(par);
+                }
+                return par;
             }
             catch (Exception ex)
             {
