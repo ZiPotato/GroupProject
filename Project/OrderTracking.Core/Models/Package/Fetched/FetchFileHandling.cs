@@ -41,22 +41,24 @@ namespace OrderTracking.Core.Models.Package.Fetched
         {
             string json = JsonConvert.SerializeObject(delivered);
             var file = DeliveredFilePath;
-            if (File.Exists(file))
+            if (!File.Exists(file))
             {
-                foreach (var line in File.ReadLines(file))
+                CreateFile();
+            }
+
+            foreach (var line in File.ReadLines(file))
+            {
+                try
                 {
-                    try
-                    {
-                        var existing = JsonConvert.DeserializeObject<Parcel>(line);
-                        if (existing != null && existing.TrackingId == delivered.TrackingId)
-                            return;
-                    }
-                    catch { }
+                    var existing = JsonConvert.DeserializeObject<Parcel>(line);
+                    if (existing != null && existing.TrackingId == delivered.TrackingId)
+                        return;
                 }
-                using (var writer = new StreamWriter(file, true))
-                {
-                    writer.WriteLine(json);
-                }
+                catch { }
+            }
+            using (var writer = new StreamWriter(file, true))
+            {
+                writer.WriteLine(json);
             }
             else
             {
