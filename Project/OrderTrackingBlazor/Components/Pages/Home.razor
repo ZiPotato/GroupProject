@@ -1,5 +1,7 @@
 ﻿@page "/"
-@using OrderTracking.Core.Validation
+@using CoreValidation = OrderTracking.Core.Validation.TrackingIDValidation
+@using OrderTracking.Core.Services
+@inject ParcelState state
 @rendermode InteractiveServer
 @inject ITrackingValidation Validation
 
@@ -12,7 +14,7 @@
 <NotificationWidget @ref="notification" />
 
 <div class="parcel-grid">
-	@foreach (var parcel in parcelList)
+	@foreach (var parcel in state.ActiveParcels)
 	{
 		<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" OnRemoveCallBack="RemoveParcel" />
 	}
@@ -20,8 +22,13 @@
 
 @code {
 	private List<Parcel> parcelList = new();
+
+	private CoreValidation _validation = new();
+
 	private string ID { get; set; } = "";
 	private NotificationWidget notification = default!;
+
+	private NotificationWidget notification;
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
@@ -35,11 +42,18 @@
 			notification.Show(ex.Message, "Update Exception:");
 			return;
 		}
-
-		var index = parcelList.FindIndex(p => p.TrackingId == parcel.TrackingId);
+		
+		var index = state.ActiveParcels.FindIndex(p => p.TrackingId == parcel.TrackingId);
 		if (index >= 0)
 		{
-			parcelList[index] = updatedParcel;
+			state.ActiveParcels[index] = updatedParcel;
+		}
+		if (updatedParcel.IsDelivered)
+		{
+			state.ActiveParcels.Remove(state.ActiveParcels[index]);
+			state.DeliveredParcels.Add(updatedParcel);
+			notification.Show("Parcel delivered");
+			return;
 		}
 	}
 
@@ -48,7 +62,7 @@
 		try
 		{
 			string removedID = parcel.TrackingId;
-			parcelList.Remove(parcel);
+			state.ActiveParcels.Remove(parcel);
 			notification.Show($"Removed parcel with ID: {removedID}", "Succsess!");
 		}
 		catch (Exception ex)
@@ -63,8 +77,9 @@
 	{
 		try
 		{
-			Parcel p = await Validation.ValidateNewTrackingId(ID);
+			Parcel p = await _validation.ValidateNewTrackingId(ID);
 			parcelList.Add(p);
+			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
 		}
 		catch (Exception ex)
 		{

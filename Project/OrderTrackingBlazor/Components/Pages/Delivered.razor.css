@@ -1,0 +1,37 @@
+.inputs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .ourbtn {
+        height: 2.8rem;
+        border: 1px solid #cbd5e1;
+        border-left: none;
+        border-radius: 0 10px 10px 0;
+        background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+        transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+        .ourbtn:hover {
+            cursor: pointer;
+            border-color: #94a3b8;
+            transform: translateY(-1px);
+        }
+
+    .ourtxt {
+        font-family: 'Segoe UI', sans-serif;
+        font-weight: 600;
+        min-width: 10rem;
+        height: 2.8rem;
+        margin-right: 0;
+        padding-left: 0.5rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px 0 0 10px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
