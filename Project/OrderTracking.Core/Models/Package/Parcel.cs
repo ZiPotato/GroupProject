@@ -18,7 +18,7 @@ namespace OrderTracking.Core.Models.Package
         public DateTime LastUpdated = DateTime.Now;
         public IReadOnlyList<ParcelEvent> Events { get; init; } = [];
         public bool IsDelivered => DeliveredAt is not null;
-        public string Location { get => Events.Last().Location; }
+        public string Location { get => Events.Last().Location ?? "Could not find location."; }
         public override string ToString() 
         {
              return $"" +           
