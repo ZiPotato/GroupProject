@@ -25,7 +25,7 @@ namespace OrderTracking.Core.Models.Package
             $"ID              : {TrackingId}\n" +
             $"Carrier company : {Company}\n" +
             $"Current status  : {StatusDescription}\n" +
-            $"Current city    : {Events.Last().Location}\n"; 
+            $"Current city    : {Events.Last().Location}"; 
         
         }
     }
