@@ -26,9 +26,24 @@ namespace LähetysSeurantaConsole.View
             Console.Write(message);
             Console.ResetColor();
         }
+        /// <summary>
+        /// Writes the line as blue
+        /// </summary>
         private static void WriteInfo(string message) => WriteLineColored(message, ConsoleColor.Cyan);
+
+        /// <summary>
+        /// Writes the line as green
+        /// </summary>
         private static void WriteSuccess(string message) => WriteLineColored(message, ConsoleColor.Green);
+
+        /// <summary>
+        /// Writes the line as yellow
+        /// </summary>
         private static void WriteWarning(string message) => WriteLineColored(message, ConsoleColor.Yellow);
+
+        /// <summary>
+        /// Writes the line as red with a beep
+        /// </summary>
         private static void WriteError(string message)
         {
             Console.Beep();
