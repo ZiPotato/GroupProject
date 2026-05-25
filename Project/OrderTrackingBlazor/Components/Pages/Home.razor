@@ -46,15 +46,20 @@
 			return;
 		}
 
-		var index = state.ActiveParcels.FindIndex(p => p.TrackingId == parcel.TrackingId);
+	}
+	private void HandleDelivered(Parcel par)
+	{
+
+		var index = state.ActiveParcels.FindIndex(p => p.TrackingId == par.TrackingId);
 		if (index >= 0)
 		{
-			state.ActiveParcels[index] = updatedParcel;
+			state.ActiveParcels[index] = par;
 		}
-		if (updatedParcel.IsDelivered)
+
+		if (par.IsDelivered)
 		{
 			state.ActiveParcels.Remove(state.ActiveParcels[index]);
-			state.DeliveredParcels.Add(updatedParcel);
+			state.DeliveredParcels.Add(par);
 			notification.Show("Parcel delivered");
 			return;
 		}
@@ -82,9 +87,11 @@
 		try
 		{
 			Parcel p = await _validation.ValidateNewTrackingId(ID);
+
 			state.ActiveParcels.Add(p);
 			state.SaveParcel(p);
 			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
+			HandleDelivered(p);
 		}
 		catch (Exception ex)
 		{
