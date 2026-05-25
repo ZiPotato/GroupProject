@@ -65,7 +65,7 @@ namespace LähetysSeurantaConsole.View
                     break;
 
                 case "2":
-                    PrintParcel();
+                    DisplayParcel();
                     break;
 
                 case "3":
@@ -80,28 +80,9 @@ namespace LähetysSeurantaConsole.View
 
         private async Task UpdateParcel()
         {
-            if (parcels.All(p => p is null))
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nNo recent parcels yet. Add a tracking ID first.\n");
-                Console.ResetColor();
-                return;
-            }
-
-            UpdateOptions();
-
-            int slot = ReadUpdateChoice();
-            if (slot == 0)
-            {
-                return;
-            }
-
-            Parcel? selected = parcels[slot - 1];
+            Parcel? selected = PickParcel();
             if (selected is null)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nThat slot is empty.\n");
-                Console.ResetColor();
                 return;
             }
 
@@ -120,6 +101,47 @@ namespace LähetysSeurantaConsole.View
             PrintParcel();
         }
 
+        private void DisplayParcel()
+        {
+            Parcel? selected = PickParcel();
+            if (selected is null)
+            {
+                return;
+            }
+
+            PrintParcel(selected);
+        }
+
+        private Parcel? PickParcel()
+        {
+            if (parcels.All(p => p is null))
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nNo recent parcels yet. Add a tracking ID first.\n");
+                Console.ResetColor();
+                return null;
+            }
+
+            ParcelOptions();
+
+            int slot = ReadParcelChoice();
+            if (slot == 0)
+            {
+                return null;
+            }
+
+            Parcel? selected = parcels[slot - 1];
+            if (selected is null)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nThat slot is empty.\n");
+                Console.ResetColor();
+                return null;
+            }
+
+            return selected;
+        }
+
         private void AddParcel(Parcel parcel)
         {
             for (int i = parcels.Length - 1; i > 0; i--)
@@ -129,7 +151,7 @@ namespace LähetysSeurantaConsole.View
             parcels[0] = parcel;
         }
 
-        private void UpdateOptions()
+        private void ParcelOptions()
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n------ Latest 3 Parcels ------");
@@ -151,7 +173,7 @@ namespace LähetysSeurantaConsole.View
             Console.ResetColor();
         }
 
-        private int ReadUpdateChoice()
+        private int ReadParcelChoice()
         {
             while (true)
             {
@@ -178,8 +200,8 @@ namespace LähetysSeurantaConsole.View
         {
             Console.WriteLine("\nChoose an action:");
             Console.WriteLine("[1] Add Tracking ID");
-            Console.WriteLine("[2] Display Latest Package");
-            Console.WriteLine("[3] Update one of latest 3 packages");
+            Console.WriteLine("[2] Display package");
+            Console.WriteLine("[3] Update package");
             Console.WriteLine("[0] Exit");
             Console.ResetColor();
             Console.WriteLine();
@@ -207,9 +229,10 @@ namespace LähetysSeurantaConsole.View
             return Console.ReadLine() ?? string.Empty;
         }
 
-        private void PrintParcel()
+        private void PrintParcel(Parcel? parcel = null)
         {
-            if (_latest is null)
+            Parcel? toDisplay = parcel ?? _latest;
+            if (toDisplay is null)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\nNo package loaded yet. Add a tracking ID first.\n");
@@ -219,7 +242,7 @@ namespace LähetysSeurantaConsole.View
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n----------- Latest Package -----------");
-            Console.WriteLine(_latest);
+            Console.WriteLine(toDisplay);
             Console.WriteLine("--------------------------------------\n");
             Console.ResetColor();
         }
