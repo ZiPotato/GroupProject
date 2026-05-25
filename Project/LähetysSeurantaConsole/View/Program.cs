@@ -5,7 +5,7 @@
         static async Task Main(string[] args)
         {
             ConsoleView view = new();
-
+            Console.Title = "Order tracking application (Console)";
             while (view.Running)
             {
                 Console.WriteLine("If you're able to read this, your console is slow or you're debugging...\nWhich is cheating!");

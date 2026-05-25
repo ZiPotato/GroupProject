@@ -3,20 +3,43 @@ using Validation = OrderTracking.Core.Validation.TrackingIDValidation;
 
 namespace LähetysSeurantaConsole.View
 {
+    /// <summary>
+    /// Over designed user interface for our console application.
+    /// </summary>
     internal class ConsoleView
     {
         private readonly Validation _validation = new();
-        private Parcel?[] parcels = new Parcel?[3];
+        private readonly Parcel?[] _parcels = new Parcel?[3];
         private Parcel? _latest;
 
         public bool Running { get; private set; } = true;
+        private static void WriteLineColored(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        private static void WriteColored(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(message);
+            Console.ResetColor();
+        }
+        private static void WriteInfo(string message) => WriteLineColored(message, ConsoleColor.Cyan);
+        private static void WriteSuccess(string message) => WriteLineColored(message, ConsoleColor.Green);
+        private static void WriteWarning(string message) => WriteLineColored(message, ConsoleColor.Yellow);
+        private static void WriteError(string message)
+        {
+            Console.Beep();
+            WriteLineColored(message, ConsoleColor.Red);
+        }
 
         public async Task MenuAsync()
         {
             Console.Clear();
             PrintHeader();
             PrintMenu();
-
             string input = ReadMenuChoice();
 
             try
@@ -25,9 +48,7 @@ namespace LähetysSeurantaConsole.View
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\nAn error occurred: {ex.Message}\n");
-                Console.ResetColor();
+                WriteError($"\nAn error occurred: {ex.Message}\n");
             }
 
             if (Running)
@@ -44,22 +65,16 @@ namespace LähetysSeurantaConsole.View
                     string trackingId = ReadInput("Enter tracking ID: ");
                     if (string.IsNullOrWhiteSpace(trackingId))
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("\nTracking ID cannot be empty.");
-                        Console.ResetColor();
+                        WriteWarning("\nTracking ID cannot be empty.");
                         return;
                     }
 
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine("\nFetching package details...");
-                    Console.ResetColor();
+                    WriteInfo("\nFetching package details...");
 
                     _latest = await _validation.ValidateNewTrackingId(trackingId);
                     AddParcel(_latest);
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\nPackage retrieved successfully.\n");
-                    Console.ResetColor();
+                    WriteSuccess("\nPackage retrieved successfully.\n");
 
                     PrintParcel();
                     break;
@@ -86,17 +101,13 @@ namespace LähetysSeurantaConsole.View
                 return;
             }
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"\nTrying to update parcel '{selected.TrackingId}'...");
-            Console.ResetColor();
+            WriteInfo($"\nTrying to update parcel '{selected.TrackingId}'...");
 
             Parcel updated = await _validation.ValidateParcelUpdate(selected);
             _latest = updated;
             AddParcel(updated);
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\nParcel updated successfully.\n");
-            Console.ResetColor();
+            WriteSuccess("\nParcel updated successfully.\n");
 
             PrintParcel();
         }
@@ -114,11 +125,9 @@ namespace LähetysSeurantaConsole.View
 
         private Parcel? PickParcel()
         {
-            if (parcels.All(p => p is null))
+            if (_parcels.All(p => p is null))
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nNo recent parcels yet. Add a tracking ID first.\n");
-                Console.ResetColor();
+                WriteWarning("\nNo recent parcels yet. Add a tracking ID first.\n");
                 return null;
             }
 
@@ -130,12 +139,10 @@ namespace LähetysSeurantaConsole.View
                 return null;
             }
 
-            Parcel? selected = parcels[slot - 1];
+            Parcel? selected = _parcels[slot - 1];
             if (selected is null)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nThat slot is empty.\n");
-                Console.ResetColor();
+                WriteWarning("\nThat slot is empty.\n");
                 return null;
             }
 
@@ -144,33 +151,31 @@ namespace LähetysSeurantaConsole.View
 
         private void AddParcel(Parcel parcel)
         {
-            for (int i = parcels.Length - 1; i > 0; i--)
+            for (int i = _parcels.Length - 1; i > 0; i--)
             {
-                parcels[i] = parcels[i - 1];
+                _parcels[i] = _parcels[i - 1];
             }
-            parcels[0] = parcel;
+            _parcels[0] = parcel;
         }
 
         private void ParcelOptions()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n------ Latest 3 Parcels ------");
+            WriteLineColored("\n------ Latest 3 Parcels ------", ConsoleColor.Green);   // These technically can be written with WriteSuccess as well, but they're not success yet so it felt wrong.
 
-            for (int i = 0; i < parcels.Length; i++)
+            for (int i = 0; i < _parcels.Length; i++)
             {
-                Parcel? parcel = parcels[i];
+                Parcel? parcel = _parcels[i];
                 if (parcel is null)
                 {
-                    Console.WriteLine($"[{i + 1}] (empty)");
+                    WriteLineColored($"[{i + 1}] (empty)", ConsoleColor.Green);
                 }
                 else
                 {
-                    Console.WriteLine($"[{i + 1}] {parcel.TrackingId} | {parcel.Company} | {parcel.StatusDescription}");
+                    WriteLineColored($"[{i + 1}] {parcel.TrackingId} | {parcel.Company} | {parcel.StatusDescription}", ConsoleColor.Green);
                 }
             }
 
-            Console.WriteLine("------------------------------\n");
-            Console.ResetColor();
+            WriteLineColored("------------------------------\n", ConsoleColor.Green);
         }
 
         private int ReadParcelChoice()
@@ -183,9 +188,7 @@ namespace LähetysSeurantaConsole.View
                     return choice;
                 }
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Please enter 0, 1, 2, or 3.");
-                Console.ResetColor();
+                WriteWarning("Please enter 0, 1, 2, or 3.");
             }
         }
 
@@ -194,6 +197,7 @@ namespace LähetysSeurantaConsole.View
             Console.WriteLine("========================================");
             Console.WriteLine("         PACKAGE TRACKING CONSOLE       ");
             Console.WriteLine("========================================");
+            Console.ResetColor();
         }
 
         private void PrintMenu()
@@ -203,7 +207,6 @@ namespace LähetysSeurantaConsole.View
             Console.WriteLine("[2] Display package");
             Console.WriteLine("[3] Update package");
             Console.WriteLine("[0] Exit");
-            Console.ResetColor();
             Console.WriteLine();
         }
 
@@ -217,9 +220,7 @@ namespace LähetysSeurantaConsole.View
                     return input;
                 }
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Please enter 0, 1, 2, or 3.");
-                Console.ResetColor();
+                WriteWarning("Please enter 0, 1, 2, or 3.");
             }
         }
 
@@ -234,25 +235,20 @@ namespace LähetysSeurantaConsole.View
             Parcel? toDisplay = parcel ?? _latest;
             if (toDisplay is null)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nNo package loaded yet. Add a tracking ID first.\n");
-                Console.ResetColor();
+                WriteWarning("\nNo package loaded yet. Add a tracking ID first.\n");
                 return;
             }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n----------- Latest Package -----------");
-            Console.WriteLine(toDisplay);
-            Console.WriteLine("--------------------------------------\n");
-            Console.ResetColor();
+            WriteSuccess("\n----------- Latest Package -----------");
+            WriteSuccess(toDisplay.ToString());
+            WriteSuccess("--------------------------------------\n");
         }
 
         private void Pause()
         {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write("Press Enter to continue...");
-            Console.ResetColor();
+            WriteColored("Press Enter to continue...", ConsoleColor.DarkGray);
             Console.ReadLine();
         }
+
     }
 }
