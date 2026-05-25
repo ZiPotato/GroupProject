@@ -53,15 +53,14 @@
 		var index = state.ActiveParcels.FindIndex(p => p.TrackingId == par.TrackingId);
 		if (index >= 0)
 		{
-			state.ActiveParcels[index] = par;
-		}
-
-		if (par.IsDelivered)
-		{
-			state.ActiveParcels.Remove(state.ActiveParcels[index]);
-			state.DeliveredParcels.Add(par);
-			notification.Show("Parcel delivered");
-			return;
+			if (updatedParcel.IsDelivered)
+			{
+				state.ActiveParcels.Remove(state.ActiveParcels[index]);
+				state.DeliveredParcels.Add(updatedParcel);
+				notification.Show("Parcel delivered");
+			}
+			else
+				state.ActiveParcels[index] = updatedParcel;
 		}
 	}
 
