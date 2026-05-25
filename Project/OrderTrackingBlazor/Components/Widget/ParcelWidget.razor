@@ -60,7 +60,7 @@
     [Parameter, EditorRequired]
     public Parcel Parcel { get; init; }
 
-    [Parameter, EditorRequired]
+    [Parameter]
     public EventCallback<Parcel> OnUpdateCallBack { get; set; }
 
     [Parameter, EditorRequired]
@@ -70,7 +70,8 @@
 
     private async Task HandleUpdate()
     {
-        await OnUpdateCallBack.InvokeAsync(Parcel);
+        if (!Parcel.IsDelivered)
+            await OnUpdateCallBack.InvokeAsync(Parcel);
     }
 
     private async Task HandleRemove()
