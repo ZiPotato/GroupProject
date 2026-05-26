@@ -6,7 +6,7 @@ namespace OrderTracking.Core.Models.Package
 {
     public class PackageModeling
     {
-        public string ID { get; set; } = string.Empty;
+        public string company { get; set; } = string.Empty;
         public string Url = string.Empty;
 
         /// <summary>
@@ -19,11 +19,10 @@ namespace OrderTracking.Core.Models.Package
                 throw new Exception("It's been less than an hour from the last update");
             }
 
-            ID = par.TrackingId;
+            company = par.TrackingId;
             Url = par.URL ?? string.Empty;
 
-            string json = APIsimulation.SimulatingRandom(ID);
-            return JsonToParcel(json) ?? throw new InvalidOperationException("Parcel was not created from the API response.");
+            return JsonToParcel() ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
 
         /// <summary>
@@ -31,19 +30,18 @@ namespace OrderTracking.Core.Models.Package
         /// </summary>
         public async Task<Parcel> GetTheParcelAsync(string id)
         {
-            ID = id;
+            company = id;
             Url = string.Empty;
 
-            string json = APIsimulation.SimulatingRandom(ID);
-            return JsonToParcel(json) ?? throw new InvalidOperationException("Parcel was not created from the API response.");
+            return JsonToParcel() ?? throw new InvalidOperationException("Parcel was not created from the API response.");
         }
 
         /// <summary>
         /// Here we turn the json file from the API / whatever first into a dto and then to a parcel.
         /// </summary>
-        public Parcel JsonToParcel(string json)
+        public Parcel JsonToParcel()
         {
-            CompanyDTO dto = new(json, ID[..2]);
+            CompanyDTO dto = new(company, company[..2]);
             Parcel completed = dto.Completed with { URL = Url };
             Url = string.Empty;
             return completed;

@@ -21,8 +21,9 @@ public static class PostiDTO
         {
             TrackingId = dto.TrackingCode ?? string.Empty,
             Company = "Posti",
-            StatusDescription = latestEvent?.Description ?? dto.ProductName,
-            DeliveredAt = dto.DeliveredAt ?? latestEvent?.Timestamp,
+            StatusDescription = latestEvent?.Description,
+            DeliveredAt = dto.DeliveredAt,
+            
             ETA = dto.EstimatedDeliveryTime?.LocalDateTime,
             Events = orderedEvents
                 .Select(e => new ParcelEvent
