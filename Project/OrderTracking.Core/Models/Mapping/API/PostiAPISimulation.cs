@@ -9,6 +9,7 @@ namespace OrderTracking.Core.Models.Mapping.API
     {
         private static readonly Random Rand = Random.Shared;
 
+        //This is for testing purposes only.
         public static string SimulationFromTheJSON(string postiId)
         {
             return postiId[..2] switch
