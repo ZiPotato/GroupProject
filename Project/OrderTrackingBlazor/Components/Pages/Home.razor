@@ -85,6 +85,14 @@
 	{
 		try
 		{
+//			var trimmed = ID?.Trim();
+//			bool alreadyActive = state.ActiveParcels.Any(p => string.Equals(p.TrackingId, trimmed, StringComparison.OrdinalIgnoreCase));
+//			if (alreadyActive)
+//			{
+//				notification.Show($"The tracking ID is already in use", "Add Exception:");
+//				return;
+//			}
+
 			Parcel p = await _validation.ValidateNewTrackingId(ID);
 
 			state.ActiveParcels.Add(p);
