@@ -1,5 +1,8 @@
 ﻿@page "/"
-@using OrderTracking.Core.Validation
+@using CoreValidation = OrderTracking.Core.Validation.TrackingIDValidation
+@using OrderTracking.Core.Services
+@using OrderTracking.Core.Models.Package.Fetched
+@inject ParcelState state
 @rendermode InteractiveServer
 @inject ITrackingValidation Validation
 
@@ -12,7 +15,7 @@
 <NotificationWidget @ref="notification" />
 
 <div class="parcel-grid">
-	@foreach (var parcel in parcelList)
+	@foreach (var parcel in state.ActiveParcels)
 	{
 		<ParcelWidget Parcel="parcel" OnUpdateCallBack="UpdateParcelInfo" OnRemoveCallBack="RemoveParcel" />
 	}
@@ -20,15 +23,22 @@
 
 @code {
 	private List<Parcel> parcelList = new();
+
+	private CoreValidation _validation = new();
+
 	private string ID { get; set; } = "";
 	private NotificationWidget notification = default!;
+
+	private NotificationWidget notification;
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{
 		Parcel updatedParcel;
 		try
 		{
-			updatedParcel = await Validation.ValidateParcelUpdate(parcel);
+			updatedParcel = await _validation.ValidateParcelUpdate(parcel);
+			state.RemoveParcel(parcel);
+			state.SaveParcel(updatedParcel);
 		}
 		catch (Exception ex)
 		{
@@ -36,10 +46,21 @@
 			return;
 		}
 
-		var index = parcelList.FindIndex(p => p.TrackingId == parcel.TrackingId);
+	}
+	private void HandleDelivered(Parcel par)
+	{
+
+		var index = state.ActiveParcels.FindIndex(p => p.TrackingId == par.TrackingId);
 		if (index >= 0)
 		{
-			parcelList[index] = updatedParcel;
+			if (par.IsDelivered)
+			{
+				state.ActiveParcels.Remove(state.ActiveParcels[index]);
+				state.DeliveredParcels.Add(par);
+				notification.Show("Parcel delivered");
+			}
+			else
+				state.ActiveParcels[index] = par;
 		}
 	}
 
@@ -48,7 +69,8 @@
 		try
 		{
 			string removedID = parcel.TrackingId;
-			parcelList.Remove(parcel);
+			state.ActiveParcels.Remove(parcel);
+			state.RemoveParcel(parcel);
 			notification.Show($"Removed parcel with ID: {removedID}", "Succsess!");
 		}
 		catch (Exception ex)
@@ -58,13 +80,29 @@
 
 		return Task.CompletedTask;
 	}
-
+	/// <summary>
+	/// Adds parcels tarckingId and validates so it can't be duplicated.
+	/// </summary>
+	/// <returns></returns>
 	private async Task HandleAdd()
 	{
 		try
 		{
-			Parcel p = await Validation.ValidateNewTrackingId(ID);
-			parcelList.Add(p);
+			var trimmed = ID?.Trim();
+			bool alreadyActive = state.ActiveParcels.Any(p => string.Equals(p.TrackingId, trimmed, StringComparison.OrdinalIgnoreCase));
+			bool alreadyDelivered = state.DeliveredParcels.Any(p => string.Equals(p.TrackingId, trimmed, StringComparison.OrdinalIgnoreCase));
+			if (alreadyActive || alreadyDelivered)
+			{
+				notification.Show($"The tracking ID is already in use", "Add Exception:");
+				return;
+			}
+
+			Parcel p = await _validation.ValidateNewTrackingId(ID);
+
+			state.ActiveParcels.Add(p);
+			state.SaveParcel(p);
+			Console.WriteLine($"Success\nParcel: \n{p}\nWas added.");
+			HandleDelivered(p);
 		}
 		catch (Exception ex)
 		{

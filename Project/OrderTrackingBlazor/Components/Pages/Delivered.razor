@@ -1,0 +1,46 @@
+﻿@page "/delivered"
+@rendermode InteractiveServer
+@using OrderTracking.Core.Services
+@inject ParcelState state
+
+
+<PageTitle>Delivered</PageTitle>
+
+
+<NotificationWidget @ref="notification" />
+
+<div class="parcel-grid">
+    @foreach (var parcel in state.DeliveredParcels)
+    {
+        <div class="parcel-wrapper">
+            <ParcelWidget Parcel="parcel" OnRemoveCallBack="RemoveParcel" />
+            
+
+        </div>
+    }
+</div>
+
+@code {
+    private NotificationWidget notification = new();
+    /// <summary>
+    /// Handels removing parcels from delivered page.
+    /// </summary>
+    /// <param name="parcel"></param>
+    /// <returns></returns>
+
+    private async Task RemoveParcel(Parcel parcel)
+    {
+        try
+        {
+            string removedID = parcel.TrackingId;
+            state.DeliveredParcels.Remove(parcel);
+            state.RemoveParcel(parcel);
+            notification.Show($"Removed parcel with ID: {removedID}", "Success!");
+        }
+        catch (Exception ex)
+        {
+            notification.Show(ex.Message, "Remove Exception:");
+        }
+    }
+}
+

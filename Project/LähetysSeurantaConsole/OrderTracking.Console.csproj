@@ -15,4 +15,8 @@
     <ProjectReference Include="..\OrderTracking.Core\OrderTracking.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="OrderTrackingBlazor\Components\Pages\" />
+  </ItemGroup>
+
 </Project>

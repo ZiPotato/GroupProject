@@ -41,6 +41,10 @@ namespace OrderTracking.Core.Models.Mapping.API
                     {
                         return MHAuthentication();
                     }
+                case ("JJ"):
+                    {
+                        return MHAuthentication();
+                    }
                 default:
                     {
                         throw new ArgumentException("How did you get this far with a wrong firm? ");
@@ -84,9 +88,9 @@ namespace OrderTracking.Core.Models.Mapping.API
                 case "MH":
                     Company = "MH";
                     return $"https://extservicestest.matkahuolto.fi/mpaketti/public/tracking?ids={trackingId}&from={from}&to={to}"; // Likely real.
-//                case "FI":
-//                    Company = "FI";
-//                    return $"https://api.posti.fi/tracking/7/shipments/trackingnumber/{trackingId}"; Potentially not real.
+                case "JJ":
+                    Company = "JJ";
+                    return $"https://api.posti.fi/tracking/7/shipments/trackingnumber/{trackingId}"; //Potentially not real.
                 default:
                     switch (ID[(ID.Length - 3)..])
                     {

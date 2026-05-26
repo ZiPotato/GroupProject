@@ -1,4 +1,6 @@
-﻿using OrderTracking.Core.Models.Package;
+﻿using OrderTracking.Core.Models.Mapping.API;
+using OrderTracking.Core.Models.Package;
+using System.Text.Json.Serialization;
 
 namespace OrderTracking.Core.Models.Mapping.DTO;
 
@@ -11,8 +13,9 @@ public sealed class CompanyDTO
     /// </summary>
     /// <param name="json">Raw JSON from the carrier API.</param>
     /// <param name="company">Carrier identifier extracted from the tracking ID.</param>
-    public CompanyDTO(string json, string company)
+    public CompanyDTO(string ID, string company)
     {
+        string json = JsonHandle(company, ID);
         Completed = DTOHandle(json, company);
     }
 
@@ -20,6 +23,17 @@ public sealed class CompanyDTO
         company switch
         {
             "MH" => MatkahuoltoDTO.ToParcel(json),
+            "JJ" => PostiDTO.ToParcel(json),
             _ => throw new ArgumentException($"Couldn't find the firm")
         };
+
+    public static string JsonHandle(string company, string ID)
+    {
+       return company switch
+        {
+            "MH" => APIsimulation.SimulatingRandom(ID),
+            "JJ" => PostiAPISimulation.SimulatingRandomPosti(ID),
+            _ => throw new ArgumentException($"Couldn't find the firm")
+        };
+    }
 }
