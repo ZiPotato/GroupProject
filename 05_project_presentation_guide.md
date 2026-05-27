@@ -1,6 +1,6 @@
 # Final Project Presentation Guide
 
-This guide helps you present your team project to the class with your team.
+This guide helps you present your team project to the class with your team. It is based on the course paths, workflow expectations, and grading rubric.
 
 The goal of the presentation is not only to show that your app works, but also to show how your team planned, built, tested, and improved the application.
 
