@@ -4,7 +4,6 @@
 @using OrderTracking.Core.Models.Package.Fetched
 @inject ParcelState state
 @rendermode InteractiveServer
-@inject ITrackingValidation Validation
 
 <PageTitle>Home</PageTitle>
 <div class="inputs">
@@ -28,8 +27,6 @@
 
 	private string ID { get; set; } = "";
 	private NotificationWidget notification = default!;
-
-	private NotificationWidget notification;
 
 	private async Task UpdateParcelInfo(Parcel parcel)
 	{

@@ -1,10 +1,7 @@
 using OrderTracking.Core.Validation;
 using OrderTrackingBlazor.Components;
-<<<<<<< HEAD
 using System.Diagnostics;
-=======
 using OrderTracking.Core.Services;
->>>>>>> 24af931 (added scope for parcelState)
 
 namespace OrderTrackingBlazor
 {
@@ -40,8 +37,7 @@ namespace OrderTrackingBlazor
                 builder.Services.AddRazorComponents()
                     .AddInteractiveServerComponents();
 
-                builder.Services.AddScoped<ITrackingValidation, TrackingIDValidation>();
-
+                
                 builder.Logging.ClearProviders();
                 builder.Logging.AddConsole();
 
