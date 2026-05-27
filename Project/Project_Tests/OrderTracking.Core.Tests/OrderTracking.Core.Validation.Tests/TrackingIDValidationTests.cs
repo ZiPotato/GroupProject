@@ -4,7 +4,7 @@ using OrderTracking.Core.Validation;
 namespace OrderTracking.Core.Validation.Tests;
 
 [TestClass]
-public class NewTrackingIDValidationTests
+public class TrackingIDValidationTests
 {
     public TrackingIDValidation _validation;
     [TestInitialize]
@@ -56,14 +56,14 @@ public class NewTrackingIDValidationTests
         await Assert.ThrowsAsync<Exception>(async () => await _validation.ValidateNewTrackingId("MH321!!!49312Fi"));
     }
     [TestMethod]
-    public async Task ValidateNewTrackingId_LeadingWhitespace_ThrowsException()
+    public async Task ValidateNewTrackingId_LeadingWhitespace_DoesNotThrowException()
     {
         Parcel par = await _validation.ValidateNewTrackingId(("  MH302164795FI"));
         Assert.IsNotNull(par);
     }
 
     [TestMethod]
-    public async Task ValidateNewTrackingId_TrailingWhitespace_ThrowsException()
+    public async Task ValidateNewTrackingId_TrailingWhitespace_DoesntThrowException()
     {
         Parcel par = await _validation.ValidateNewTrackingId("MH302164795FI  ");
         Assert.IsNotNull(par);
