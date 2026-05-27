@@ -11,11 +11,7 @@ namespace LähetysSeurantaConsole.Modeling
 
         internal RecentParcels(int capacity = 3)
         {
-            if (capacity <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(capacity), "Capacity must be greater than 0.");
-            }
-
+            if (capacity <= 0) throw new ArgumentOutOfRangeException(nameof(capacity), "Capacity must be greater than 0.");
             _items = new Parcel?[capacity];
         }
 
@@ -31,11 +27,7 @@ namespace LähetysSeurantaConsole.Modeling
 
         internal Parcel? GetBySlot(int slot)
         {
-            if (slot < 1 || slot > Capacity)
-            {
-                return null;
-            }
-
+            if (slot < 1 || slot > Capacity) return null;
             return _items[slot - 1];
         }
 

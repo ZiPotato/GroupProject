@@ -10,8 +10,6 @@ namespace LähetysSeurantaConsole.View
         private readonly RecentParcels _recent = new();
         private readonly Dictionary<string, Func<Task>> _menu;
 
-        private Parcel? _latest;
-
         public bool Running { get; private set; } = true;
 
         public ConsoleView()
@@ -34,27 +32,14 @@ namespace LähetysSeurantaConsole.View
 
             string input = ReadMenuChoice();
 
-            try
-            {
-                await HandleChoiceAsync(input);
-            }
-            catch (Exception ex)
-            {
-                Style.WriteError($"\nAn error occurred: {ex.Message}\n");
-            }
-
-            if (Running)
-            {
-                Pause();
-            }
+            try { await HandleChoiceAsync(input); }
+            catch (Exception ex) { Style.WriteError($"\nAn error occurred: {ex.Message}\n"); }
+            if (Running) Pause();
         }
 
         private Task HandleChoiceAsync(string input)
         {
-            if (_menu.TryGetValue(input, out Func<Task>? action))
-            {
-                return action();
-            }
+            if (_menu.TryGetValue(input, out Func<Task>? action)) return action();
 
             Style.WriteWarning("Unknown menu option.");
             return Task.CompletedTask;
@@ -68,20 +53,16 @@ namespace LähetysSeurantaConsole.View
                 Style.WriteWarning("\nTracking ID cannot be empty.");
                 return;
             }
-
             Style.WriteInfo("\nFetching package details...");
 
-            Parcel parcel = await _service.AddIdAsync(id);
-            HandleParcelResult(parcel, "\nPackage retrieved successfully.\n");
+            Parcel par = await _service.AddIdAsync(id);
+            HandleParcelResult(par, "\nPackage retrieved successfully.\n");
         }
 
         private void DisplayParcel()
         {
             Parcel? selected = PickParcel();
-            if (selected is null)
-            {
-                return;
-            }
+            if (selected is null) return;
 
             PrintParcel(selected);
         }
@@ -89,10 +70,7 @@ namespace LähetysSeurantaConsole.View
         private async Task UpdateParcelAsync()
         {
             Parcel? selected = PickParcel();
-            if (selected is null)
-            {
-                return;
-            }
+            if (selected is null)  return;
 
             Style.WriteInfo($"\nTrying to update package '{selected.TrackingId}'...");
 
@@ -100,13 +78,12 @@ namespace LähetysSeurantaConsole.View
             HandleParcelResult(updated, "\nPackage updated successfully.\n");
         }
 
-        private void HandleParcelResult(Parcel parcel, string successMessage)
+        private void HandleParcelResult(Parcel par, string message)
         {
-            _latest = parcel;
-            _recent.Add(parcel);
+            _recent.Add(par);
 
-            Style.WriteSuccess(successMessage);
-            PrintParcel(parcel);
+            Style.WriteSuccess(message);
+            PrintParcel(par);
         }
 
         private void PrintDeliveredParcels()
@@ -143,14 +120,10 @@ namespace LähetysSeurantaConsole.View
                 Style.WriteWarning("\nNo recent package yet. Add a tracking ID first.\n");
                 return null;
             }
-
             PrintRecentParcelOptions();
 
             int slot = ReadParcelChoice();
-            if (slot == 0)
-            {
-                return null;
-            }
+            if (slot == 0) return null;
 
             Parcel? selected = _recent.GetBySlot(slot);
             if (selected is null)
@@ -164,9 +137,9 @@ namespace LähetysSeurantaConsole.View
 
         private void PrintHeader()
         {
-            Console.WriteLine("========================================");
-            Console.WriteLine("         PACKAGE TRACKING CONSOLE       ");
-            Console.WriteLine("========================================");
+            Console.WriteLine("========================================\n" + 
+                              "         PACKAGE TRACKING CONSOLE       \n" +
+                              "========================================");
         }
 
         private void PrintMenu()
@@ -185,10 +158,7 @@ namespace LähetysSeurantaConsole.View
             while (true)
             {
                 string input = ReadInput("> ");
-                if (input is "0" or "1" or "2" or "3" or "4")
-                {
-                    return input;
-                }
+                if (input is "0" or "1" or "2" or "3" or "4") return input;
 
                 Style.WriteWarning("Please enter 0, 1, 2, 3, or 4.");
             }
@@ -200,16 +170,9 @@ namespace LähetysSeurantaConsole.View
 
             foreach ((int slot, Parcel? parcel) in _recent.GetSlots())
             {
-                if (parcel is null)
-                {
-                    Style.WriteWarning($"[{slot}] (empty)");
-                }
-                else
-                {
-                    Style.WriteSuccess($"[{slot}] {parcel.TrackingId} | {parcel.Company} | {parcel.StatusDescription}");
-                }
+                if (parcel is null) Style.WriteWarning($"[{slot}] (empty)");
+                else                Style.WriteSuccess($"[{slot}] {parcel.TrackingId} | {parcel.Company} | {parcel.StatusDescription}");
             }
-
             Style.WriteSuccess("------------------------------\n");
         }
 
@@ -218,11 +181,7 @@ namespace LähetysSeurantaConsole.View
             while (true)
             {
                 string input = ReadInput($"Pick parcel slot [1-{_recent.Capacity}] (or 0 to cancel): ");
-                if (int.TryParse(input, out int choice) && choice >= 0 && choice <= _recent.Capacity)
-                {
-                    return choice;
-                }
-
+                if (int.TryParse(input, out int choice) && choice >= 0 && choice <= _recent.Capacity) return choice;
                 Style.WriteWarning("Please enter a valid slot.");
             }
         }
@@ -235,7 +194,7 @@ namespace LähetysSeurantaConsole.View
 
         private void PrintParcel(Parcel? par = null)
         {
-            Parcel? toDisplay = par ?? _latest;
+            Parcel? toDisplay = par;
             if (toDisplay is null)
             {
                 Style.WriteWarning("\nNo package loaded yet. Add a tracking ID first.\n");

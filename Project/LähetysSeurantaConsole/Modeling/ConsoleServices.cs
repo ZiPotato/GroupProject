@@ -13,9 +13,9 @@ namespace LähetysSeurantaConsole.Services
             return Fetch(() => _validation.ValidateNewTrackingId(id));
         }
 
-        internal Task<Parcel> UpdateParcelAsync(Parcel parcel)
+        internal Task<Parcel> UpdateParcelAsync(Parcel par)
         {
-            return Fetch(() => _validation.ValidateParcelUpdate(parcel));
+            return Fetch(() => _validation.ValidateParcelUpdate(par));
         }
     
         internal List<Parcel> GetDeliveredParcels()
@@ -35,16 +35,16 @@ namespace LähetysSeurantaConsole.Services
 
         private async Task<Parcel> Fetch(Func<Task<Parcel>> action)
         {
-            Parcel parcel = await action();
+            Parcel par = await action();
 
-            if (parcel.IsDelivered)
+            if (par.IsDelivered)
             {
                 ParcelState state = new();
-                state.RemoveParcel(parcel);
-                state.SaveParcel(parcel);
+                state.RemoveParcel(par);
+                state.SaveParcel(par);
             }
 
-            return parcel;
+            return par;
         }
     }
 }

@@ -13,6 +13,8 @@
         {
             Console.Beep();
             WriteLineColored(message, ConsoleColor.Red);
+            Thread.Sleep(100);
+            Console.Beep();
         }
 
         internal static void WriteInfo(string message) => WriteLineColored(message, ConsoleColor.Cyan);
