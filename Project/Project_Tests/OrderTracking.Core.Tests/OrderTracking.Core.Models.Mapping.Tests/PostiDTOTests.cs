@@ -3,7 +3,7 @@ using OrderTracking.Core.Models.Package;
 using System.Text.Json;
 using Newtonsoft.Json;
 
-namespace Project_Tests;
+namespace OrderTracking.Core.Models.Mapping.Tests;
 
 
 [TestClass]

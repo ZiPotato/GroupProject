@@ -1,7 +1,7 @@
 using OrderTracking.Core.Models.Mapping.API;
 using OrderTracking.Core.Models.Mapping.DTO;
 
-namespace Project_Tests;
+namespace OrderTracking.Core.Models.Mapping.Tests;
 
 [TestClass]
 public class RandomAPITests
