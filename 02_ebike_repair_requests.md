@@ -70,7 +70,7 @@ Follow the same process as Path B. See [01_git_github_theory.md](https://github.
 ### Mandatory Workflow
 
 1. **Feature branches:** each feature gets its own branch (for example `feature/add-repair-request`, `feature/status-update`)
-2. **.gitignore:** add immediately so binaries and IDE files do not get committed
+2. **.gitignore:** add immediately so binaries and IDE files do not get committed. [Guide for adding files to ignore](https://docs.github.com/en/get-started/git-basics/ignoring-files). Teacher might have added this, but be sure to check and update if needed :)
 3. **GitHub Projects:** create a project board with tasks broken into concrete issues
 4. **Pull requests:** every feature merges to main via PR with at least one peer approval
 5. **Merge conflict exercise:** once all features work, intentionally create a conflict (both edit the same method), then resolve it together
