@@ -1,0 +1,17 @@
+﻿{
+  "trackingCode": "JJFI00000000000000",
+  "productName": "Postipaketti",
+  "events": [
+    {
+      "timestamp": "2024-05-12T10:00:00+03:00",
+      "locationName": "HELSINKI",
+      "description": "Lähetys on toimitettu noutopisteeseen."
+    },
+    {
+      "timestamp": "2024-05-11T14:30:00+03:00",
+      "locationName": "VANTAA",
+      "description": "Lähetys on lajiteltu."
+    }
+  ],
+  "estimatedDeliveryTime": "2024-05-12T16:00:00+03:00"
+}

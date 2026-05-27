@@ -32,7 +32,7 @@ Voit tehda kurssin joko valmiin harjoituspolun mukaan tai opettajan hyvaksymaan 
 - pida commitit pienina ja viestit selkeina
 - varmista, etta koodi toimii ennen pushia
 
-## Tarkeaa
+## Tärkeää
 
 - tama repo toimii opiskelijatyon palautuspohjana
 - varsinainen kurssisisalto yllapidetaan alkuperaisessa materiaalirepossa

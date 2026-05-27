@@ -1,0 +1,91 @@
+﻿@inject IJSRuntime JSRuntime
+
+<article class="parcel-card @(Parcel.IsDelivered ? "parcel-card--delivered" : null)" @onclick="HandleUpdate">
+    <div class="parcel-card__header d-flex flex-row">
+        <div class="px-2 flex-grow-1">
+            <p class="parcel-card__eyebrow">Tracking number</p>
+            <h2 class="@(_copyFadeout ? "h2-active-fadeout" : null)" @onclick:stopPropagation="true" @onclick="HandleCopy">@Parcel.TrackingId</h2>
+        </div>
+
+        <section class="parcel-card__section parcel-card__section--Remove" @onclick:stopPropagation="true" @onclick="HandleRemove">
+            <i class="bi bi-trash-fill text-danger"></i>
+        </section>
+    </div>
+
+    <div class="parcel-card__grid">
+
+        <a class="parcel-card__section parcel-card__section--Link" @onclick:stopPropagation="true" href="@($"https://{Parcel.Company}.fi")" target="_blank">
+                <h3>Carrier</h3>
+                <p>@Parcel.Company</p>
+        </a>
+
+        <section class="parcel-card__section">
+            <h3>Status</h3>
+            <p>@Parcel.StatusDescription</p>
+        </section>
+
+        <section class="parcel-card__section">
+            <h3>Location</h3>
+            <p>@Parcel.Location</p>
+        </section>
+
+        <section class="parcel-card__section">
+            <h3>Last Updated</h3>
+            <p>@Parcel.LastUpdated.ToString("g")</p>
+        </section>
+
+        <section class="parcel-card__section parcel-card__section--full">
+            @if (Parcel.IsDelivered)
+            {
+                <h3>Package was delivered</h3>
+                <p>@Parcel.DeliveredAt</p>
+            }
+            else
+            {
+                <h3>Estimated time of arrival</h3>
+                @if (Parcel.ETA != null)
+                {
+                    <p>@Parcel.ETA</p>
+                }
+                else
+                {
+                    <p>We couldn't fetch the ETA for this package.</p>
+                }
+            }
+        </section>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public Parcel Parcel { get; init; }
+
+    [Parameter]
+    public EventCallback<Parcel> OnUpdateCallBack { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<Parcel> OnRemoveCallBack { get; set; }
+
+    private bool _copyFadeout = false;
+
+    private async Task HandleUpdate()
+    {
+        if (!Parcel.IsDelivered)
+            await OnUpdateCallBack.InvokeAsync(Parcel);
+    }
+
+    private async Task HandleRemove()
+    {
+        await OnRemoveCallBack.InvokeAsync(Parcel);
+    }
+
+    private async Task HandleCopy()
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Parcel.TrackingId);
+        _copyFadeout = true;
+        StateHasChanged();
+        await Task.Delay(1000);
+        _copyFadeout = false;
+        StateHasChanged();
+    }
+}
