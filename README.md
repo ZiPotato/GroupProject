@@ -20,7 +20,7 @@ Kurssin varsinainen teoria, taustamateriaalit ja tehtavien tarkemmat ohjeet loyt
 - [01_git_github_theory.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/01_git_github_theory.md) - Git ja GitHub -tyoskentelyn perusteet kurssin kontekstissa
 - [02_ebike_repair_requests.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/02_ebike_repair_requests.md) - Path A: rajattu harjoitusprojekti
 - [03_own_project_approval.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/03_own_project_approval.md) - Path B: oman projektin suunnittelu ja hyvaksymiskriteerit
-- [05_project_presentation_guide.md](05_project_presentation_guide.md): how to present your project to the class with your partner
+- [05_project_presentation_guide.md](https://github.com/gradia-ohjelmistokehitys-kurssipohjat/PohjaOhjelmointitiimissaToimiminenEN/blob/main/05_project_presentation_guide.md): how to present your project to the class with your partner
 
 Voit tehda kurssin joko valmiin harjoituspolun mukaan tai opettajan hyvaksymaan omaan projektiin perustuen.
 
