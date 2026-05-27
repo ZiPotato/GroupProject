@@ -24,9 +24,9 @@ The project is built using modern C# technologies:
 Our team utilized **feature branch workflow** with pull requests for all major work:
 
 **Key Contributors:**
-- **VPTas**: Architectural design, console development, UI styling, testing
-- **Avaisanen**: Blazor UI components, file handling, PostiDTO
-- **315097**: Blazor components, notifications, UI styling
+- **Vesa**: Architectural design, console development, UI styling, testing
+- **Aapo**: Blazor UI components, file handling, PostiDTO
+- **Aapeli**: Blazor components, notifications, UI styling
 
 **Workflow Practices:**
 - Create feature branches for each major feature
