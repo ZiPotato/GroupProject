@@ -8,15 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="OrderTrackingBlazor\**" />
+    <EmbeddedResource Remove="OrderTrackingBlazor\**" />
+    <None Remove="OrderTrackingBlazor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OrderTracking.Core\OrderTracking.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="OrderTrackingBlazor\Components\Pages\" />
   </ItemGroup>
 
 </Project>
