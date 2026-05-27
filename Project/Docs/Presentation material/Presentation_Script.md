@@ -25,7 +25,7 @@ This means we basically generated a branch for every feature individually.
 
 **Contributors :**
 - **Aapeli** : Blazor components, notifications, UI styling
-- **Aapo** : Blazor UI components, file handling, PostiDTO
+- **Aapo** : Blazor UI components, UI styling, file handling, PostiDTO
 - **Vesa** : Architectural design, console development, UI styling, testing
 
 **Workflow Practices we learned to use :**
