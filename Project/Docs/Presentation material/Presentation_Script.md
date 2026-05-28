@@ -13,7 +13,7 @@ The application solves the fragmentation problem of package tracking—instead o
 
 - **Backend** : C# (about 62% of codebase)
 - **Frontend** : Blazor (web UI framework)
-- **Styling** : CSS (about 22% of codebase)
+- **Styling** : CSS (about 23% of codebase)
 - **Structure** : Clean Architecture pattern
 
 ---
