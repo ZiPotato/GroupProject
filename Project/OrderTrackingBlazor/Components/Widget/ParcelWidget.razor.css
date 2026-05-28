@@ -47,7 +47,7 @@
     color: #1f2937;
     font-family: "Segoe UI", Arial, sans-serif;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
-    animation: fadeInAnimation 0s;
+    animation: fadeInAnimation 0.2s;
 }
 
 @keyframes fadeInAnimation {

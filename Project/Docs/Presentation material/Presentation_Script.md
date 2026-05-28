@@ -13,7 +13,7 @@ The application solves the fragmentation problem of package tracking—instead o
 
 - **Backend** : C# (about 62% of codebase)
 - **Frontend** : Blazor (web UI framework)
-- **Styling** : CSS (about 22% of codebase)
+- **Styling** : CSS (about 23% of codebase)
 - **Structure** : Clean Architecture pattern
 
 ---
@@ -25,7 +25,7 @@ This means we basically generated a branch for every feature individually.
 
 **Contributors :**
 - **Aapeli** : Blazor components, notifications, UI styling
-- **Aapo** : Blazor UI components, file handling, PostiDTO
+- **Aapo** : Blazor UI components, UI styling, file handling, PostiDTO
 - **Vesa** : Architectural design, console development, UI styling, testing
 
 **Workflow Practices we learned to use :**
